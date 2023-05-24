@@ -17,7 +17,21 @@ def getSearchID(zip):
         print("Request failed with status code:", response.status_code)
 
 
-def getOptions(searchID):
+def getPECORate(zip):
+    url = "https://www.papowerswitch.com/umbraco/Api/ShopApi/ZipSearch?zipcode=" + str(zip)  + "&servicetype=residential"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        return data[0]['Rates'][0]['Rate']
+        # Process the data
+    else:
+        print("Request failed with status code:", response.status_code)
+
+
+print(getPECORate(zip))
+
+def getOptions(searchID, PECO_rate):
 
     url = "https://www.papowerswitch.com/umbraco/Api/ShopApi/Rates?id=" + str(searchID) + "&servicetype=residential&ratetype=R+-+Regular+Residential+Service"
 
@@ -34,7 +48,7 @@ def getOptions(searchID):
         obj["MonthlyFeeAmount"] == "" and
         obj["CancellationFee"] == "" and 
         obj["EnrollmentFee"] == False and
-        obj["Rate"] < 0.9726 # need to dynamically get that PECO rate still
+        obj["Rate"] < PECO_rate # need to dynamically get that PECO rate still
 
         ]
 
@@ -52,5 +66,5 @@ def getOptions(searchID):
     else:
         print("Request failed with status code:", response.status_code)
 
-options = getOptions(getSearchID(zip))
+options = getOptions(getSearchID(zip), getPECORate(zip))
 print(options)
