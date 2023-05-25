@@ -4,12 +4,12 @@ on:
   push:
     branches: ["ft-stubbed-cicd"]
 env: 
-  POSTGRES_USER: ${{ env.POSTGRES_USER }}
-  POSTGRES_DB: ${{ env.POSTGRES_DB }}
-  POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-  DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }} 
-  POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
-  POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
+  POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+  POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+  POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+  DJANGO_SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }} 
+  POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
+  POSTGRES_PORT: ${{ vars.POSTGRES_PORT }}
 jobs:
   build:
     runs-on: ubuntu-latest
