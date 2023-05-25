@@ -1,6 +1,0 @@
-SECRET_KEY=django-insecure-4^wb=&%_n$)j1)*++#hhcw6y&mv2nae1p4km5xvkh%@1w^k+9z
-DB_NAME=dbtest
-DB_USER=postgres
-DB_PASSWORD=<some password>
-DB_HOST=localhost
-DB_PORT=5432
