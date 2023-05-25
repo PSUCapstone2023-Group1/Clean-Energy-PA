@@ -41,7 +41,7 @@ jobs:
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           DB_HOST: ${{ vars.POSTGRES_HOST }}
-          DB_DATANAME: ${{ vars.POSTGRES_DB }}
+          DB_NAME: ${{ vars.POSTGRES_DB }}
           DB_PORT: ${{ vars.POSTGRES_PORT }}
         run: |
           echo ***Executing Django Tests***
