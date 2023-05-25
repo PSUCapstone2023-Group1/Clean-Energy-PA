@@ -1,0 +1,48 @@
+name: Django Test w/PSQL
+
+on:
+  push:
+    branches: ["ft-stubbed-cicd"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres: 
+        image: postgres:12
+        env: 
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+            --health-cmd pg_isready 
+            --health-interval 10s 
+            --health-timeout 5s 
+            --health-retries 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Python [Version 3.10]
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Tests
+        env: 
+          DEBUG: "0"
+          # Note: Anything with env.* is pulled from the pipeline variables.
+          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }} 
+          DB_USERNAME: ${{ env.MY_POSTGRES_USER }}
+          DB_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
+          DB_HOST: localhost
+          DB_DATABASE: ${{ env.MY_POSTGRES_DB }}
+          DB_PORT: 5432
+        run: |
+          pwd
+          cd src/
+          python manage.py test
