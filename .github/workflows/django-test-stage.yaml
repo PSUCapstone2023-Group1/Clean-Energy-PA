@@ -3,17 +3,19 @@ name: Django Test w/PSQL
 on:
   push:
     branches: ["ft-stubbed-cicd"]
-
+env: 
+  POSTGRES_USER: ${{ env.POSTGRES_USER }}
+  POSTGRES_DB: ${{ env.POSTGRES_DB }}
+  POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+  DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }} 
+  POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
+  POSTGRES_PORT: ${{ env.POSTGRES_PORT }}
 jobs:
   build:
     runs-on: ubuntu-latest
     services:
       postgres: 
         image: postgres:12
-        env: 
-          POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -36,12 +38,6 @@ jobs:
         env: 
           DEBUG: "0"
           # Note: Anything with env.* is pulled from the pipeline variables.
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }} 
-          DB_USERNAME: ${{ env.MY_POSTGRES_USER }}
-          DB_PASSWORD: ${{ env.MY_POSTGRES_PASSWORD }}
-          DB_HOST: localhost
-          DB_DATABASE: ${{ env.MY_POSTGRES_DB }}
-          DB_PORT: 5432
         run: |
           pwd
           cd src/
