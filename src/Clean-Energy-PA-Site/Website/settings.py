@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("DJANGO_SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,13 +35,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "Database",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "Database.apps.DatabaseConfig",
+    "UserRegistration.apps.UserregistrationConfig",
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,12 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Added for cripsy forms
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Re-direct url for login
+# Django default is "/accounts/profile/"
+# Setting to redirect to home for now since profile does not exist
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

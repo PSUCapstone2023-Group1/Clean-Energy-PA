@@ -1,0 +1,13 @@
+{% extends 'Database/base.html' %}
+
+{% block title %}
+  <h3>View</h3>
+{% endblock %}
+
+{% block content %}
+  {% for up in user.user_preferences.all %}
+    <p>
+      <a href="/{{ up.id }}">{up.zip_code}</a>
+    </p>
+  {% endfor %}
+{% endblock %}
