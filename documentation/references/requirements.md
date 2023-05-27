@@ -18,6 +18,7 @@ The functional requirements section outlines all of the essential requirements f
 
 - 1.1.2.1. The system shall allow the user to delete an account.
 - 1.1.2.2. The system shall allow the user to de-register for email reminders.
+- 1.2.1.3. The UI shall support Edge, Chrome, and Firefox.
 
 ### 1.1.3 Optimal Green Option Display
 
@@ -46,13 +47,12 @@ The functional requirements section outlines all of the essential requirements f
 
 - 1.1.6.1. The system shall email users whenever a new contract option comes up in their zip code that is lower than the rate they are currently using.
 
-### 1.1.7 Web Scraping
+### 1.1.7 Web Parsing
 
-- 1.1.7.1. The system shall be capable of retrieving the PAPowerSwitch URL’s html.
-- 1.1.7.2. The system shall be capable of pulling data based on zip code.
-- 1.1.7.3. The system shall be capable of pulling data based on monthly usage.
-- 1.1.7.4. The system shall be capable of pulling data based on the “Fixed Price” selection.
-- 1.1.7.5. The system shall be capable of pulling data based on “100% renewable energy”.
+- 1.1.7.1. The system shall be capable of pulling data based on zip code.
+- 1.1.7.2. The system shall be capable of pulling data based on monthly usage.
+- 1.1.7.3. The system shall be capable of pulling data based on the “Fixed Price” selection.
+- 1.1.7.4. The system shall be capable of pulling data based on “100% renewable energy”.
 
 ## Non-Functional Requirements
 
@@ -77,3 +77,4 @@ The non-functional requirements will focus on the qualities and attributes of th
 ### 1.2.4 Application Security
 
 - 1.2.4.1 The website shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
+- 1.2.4.2 The CI/CD pipeline shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
