@@ -1,0 +1,52 @@
+name: Django Test w/PSQL
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres: 
+        image: postgres:12
+        env: 
+          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+            --health-cmd pg_isready 
+            --health-interval 10s 
+            --health-timeout 5s 
+            --health-retries 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Python [Version 3.10]
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Install Dependencies
+        run: |
+          ls 
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Tests
+        env: 
+          DEBUG: "0"
+          # Note: Anything with env.* is pulled from the pipeline variables.
+          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }} 
+          DB_USER: ${{ vars.POSTGRES_USER }}
+          DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+          DB_HOST: ${{ vars.POSTGRES_HOST }}
+          DB_NAME: ${{ vars.POSTGRES_DB }}
+          DB_PORT: ${{ vars.POSTGRES_PORT }}
+        run: |
+          echo ***Executing Django Tests***
+          cd src/Clean-Energy-PA-Site/
+          python manage.py test
+      - name: SAST
+        uses: AppThreat/sast-scan-action@master
+        with:
+          type: "python"

@@ -1,0 +1,17 @@
+{% extends 'Database/base.html' %}
+
+{% block title %}
+  <h3>Sign Up!</h3>
+{% endblock %}
+
+{% block content %}
+  <form action="/signup/" method="post" class="form-group">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        {{ form.as_p }}
+        <button type="submit" name="signup" class="btn btn-success">Sign Up</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}

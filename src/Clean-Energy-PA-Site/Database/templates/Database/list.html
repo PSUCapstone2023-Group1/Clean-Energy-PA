@@ -1,0 +1,17 @@
+{% extends 'Database/base.html' %}
+
+{% block title %}
+  View List
+{% endblock %}
+
+{% block content %}
+  <h1>{{ user.name }}</h1>
+
+  {% for user in user.user_preferences_set.all %}
+    <div class="input-group mb-3">{{ user.user_id }}
+      {{ user.zip_code }}
+      {{ user.rate_schedule }}
+      {{ user.distributor_id }}
+      {{ user.selected_offer_id }}</div>
+  {% endfor %}
+{% endblock %}
