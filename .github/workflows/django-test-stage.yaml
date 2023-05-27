@@ -36,7 +36,7 @@ jobs:
         env: 
           DEBUG: "0"
           # Note: Anything with env.* is pulled from the pipeline variables.
-          DJANGO_SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }} 
+          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }} 
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           DB_HOST: ${{ vars.POSTGRES_HOST }}
