@@ -46,3 +46,7 @@ jobs:
           echo ***Executing Django Tests***
           cd src/Clean-Energy-PA-Site/
           python manage.py test
+      - name: SAST
+        uses: AppThreat/sast-scan-action@master
+        with:
+          type: "python"
