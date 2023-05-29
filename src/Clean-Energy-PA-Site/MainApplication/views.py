@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from Database.models import User_Preferences
+from MainApplication.models import User_Preferences
 from .forms import RegisterUser
 
 
 # Create your views here.
 def index(response, id):
     user = User_Preferences.objects.get(id=id)
-    return render(response, "Database/list.html", {"user": user})
+    return render(response, "MainApplication/list.html", {"user": user})
 
 
 def home(response):
-    return render(response, "Database/home.html", {})
+    return render(response, "MainApplication/home.html", {})
 
 
 def signup(response):
@@ -33,8 +33,8 @@ def signup(response):
         return HttpResponseRedirect("/%i" % up.id)
     else:
         form = RegisterUser()
-    return render(response, "Database/signup.html", {"form": form})
+    return render(response, "MainApplication/signup.html", {"form": form})
 
 
 def view(response):
-    return render(response, "Database/view.html", {})
+    return render(response, "MainApplication/view.html", {})
