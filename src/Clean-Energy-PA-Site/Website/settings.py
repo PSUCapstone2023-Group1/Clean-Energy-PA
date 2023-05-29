@@ -142,3 +142,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Setting to redirect to home for now since profile does not exist
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# To get uniform output for testing
+APPEND_SLASH = True
