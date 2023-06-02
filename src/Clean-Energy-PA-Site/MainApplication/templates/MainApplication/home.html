@@ -1,5 +1,20 @@
 {% extends 'MainApplication/base.html' %}
 
 {% block content %}
-  <h1>Home Page</h1>
+  <div class="center">
+    <h4>Did you know that PA state law allows you to switch energy suppliers from PECO?</h4>
+    <h4>And - you can actually switch to 100% renewable</h4>
+
+    <form>
+      <div class="form-group">
+        <input type="zipcode" class="form-control" id="zipcode" placeholder="Enter Zip Code" />
+      </div>
+      <button type="submit" class="btn btn-success">Search Cheaper Green Energy</button>
+    </form>
+
+    <h4>Clean Energy PA is an open-source application made by graduate students at Penn State.</h4>
+
+    <h4>The service is free, and aims to heip make it easier to sign up and track for suppliers - finding an initial green rate at below PECO's price, keeping track of your contract lengts and alerting you when cheaper ones are available, or when you're is about to expire.</h4>
+    <h4>It's 100% free, the code is open-source, and all data is kept private.</h4>
+  </div>
 {% endblock %}
