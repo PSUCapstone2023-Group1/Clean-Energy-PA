@@ -1,35 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-      .sidenav {
-        height: 100%;
-        width: 160px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-      }
-      
-      .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-      }
-      
-      .sidenav a:hover {
-        color: #f1f1f1;
-      }
-      .main {
-        margin-left: 160px;
-        padding: 0px 10px;
-      }
-    </style>
     {% comment %}Start BOOTSTRAP{% endcomment %}
     {% comment %}Documentation at https://getbootstrap.com/docs/5.3/getting-started/introduction/{% endcomment %}
     <meta charset="utf-8" />
@@ -40,12 +11,23 @@
     <title>Clean Energy PA Website!!!</title>
   </head>
   <body>
-    <div class="sidenav">
-      <a href="/home">Home</a>
-      <a href="/register">Sign up</a>
-      <a href="/view">View</a>
-      <a href="/login">Login</a>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-right">
+      <a class="navbar-brand" href="#">Clean Energy PA</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div id="content" name="content" class="main">
       <div class="row justify-content-center">
         <div class="col-8">

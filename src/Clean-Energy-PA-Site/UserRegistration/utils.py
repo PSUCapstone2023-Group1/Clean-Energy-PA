@@ -22,3 +22,15 @@ def generate_password(length=12):
     # Generate a random password with the given length
     password = "".join(random.choice(characters) for _ in range(length))
     return password
+
+
+def generate_name(length=5):
+    # Generate a random name with the given length
+    username = "".join(random.choices(string.ascii_lowercase + string.digits, k=length))
+    return username
+
+
+def generate_zip_code(length=5):
+    # Generate a random zip code with the given length
+    zip_code = "".join(random.choices(string.digits, k=length))
+    return zip_code

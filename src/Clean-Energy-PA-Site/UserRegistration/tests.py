@@ -2,21 +2,29 @@ from django.test import TestCase
 from django.urls import reverse
 from django.shortcuts import resolve_url
 from django.contrib.auth.models import User
-from UserRegistration.utils import generate_username, generate_email, generate_password
+
+from UserRegistration.utils import (
+    generate_username,
+    generate_email,
+    generate_password,
+    generate_name,
+    generate_zip_code,
+)
 
 
 # Create your tests here.
 # Test that Signup link is visible
 class SignupLinkTest(TestCase):
     def test_signup_link_visible(self):
-        response = self.client.get("/register/")
+        response = self.client.get("/home/")
         self.assertEqual(response.status_code, 200)
 
         # Assert that the signup link is present in the rendered HTML
-        self.assertContains(response, '<a href="/register">Sign up</a>')
+        self.assertContains(
+            response, '<a class="nav-link" href="/register">Sign Up</a>'
+        )
 
 
-# Test that the user is re-directed to the login page
 class RegistrationTest(TestCase):
     def setUp(self):
         self.register_url = reverse("register")
@@ -25,10 +33,14 @@ class RegistrationTest(TestCase):
         self.form_data = {
             "username": generate_username(),
             "email": generate_email(),
+            "first_name": generate_name(),
+            "last_name": generate_name(),
+            "zip_code": generate_zip_code(),
             "password1": password,
             "password2": password,
         }
 
+    # Test that the user is re-directed to the login page
     def test_successful_registration_redirect_to_login(self):
         """Checking that valid form data will redirect to login"""
         # Simulate a POST request with valid registration data
