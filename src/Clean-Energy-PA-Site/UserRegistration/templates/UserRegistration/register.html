@@ -7,9 +7,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <form method="POST" class="form-group">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Register</button>
-  </form>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <form method="POST" class="form-group">
+          {% csrf_token %}
+          <div class="mb-3">{{ form.email|as_crispy_field }}</div>
+
+          <div class="mb-3">{{ form.first_name|as_crispy_field }}</div>
+
+          <div class="mb-3">{{ form.last_name|as_crispy_field }}</div>
+
+          <div class="mb-3">{{ form.zip_code|as_crispy_field }}</div>
+
+          <div class="mb-3">{{ form.password1|as_crispy_field }}</div>
+
+          <div class="mb-3">{{ form.password2|as_crispy_field }}</div>
+
+          <button type="submit" class="btn btn-success">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
