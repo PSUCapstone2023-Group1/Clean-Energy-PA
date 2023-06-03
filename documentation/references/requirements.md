@@ -62,7 +62,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.8.1. The system shall have a page that displays the user profile.
 - 1.1.8.2. The system shall only display a profile settings link when the user is logged on and authenticated.
 
-### 1.1.9 Display Rate Results
+### 1.1.9 Offer Results
 
 - 1.1.9.1. The system shall have a results page that displays rates regardless of logged in status.
 - 1.1.9.2. The system shall display additional contract related results when the user is logged in and authenticated.
