@@ -4,25 +4,27 @@ on:
   push:
 
 jobs:
-  build:
+  test-postgres:
     runs-on: ubuntu-latest
     services:
-      postgres: 
+      postgres:
         image: postgres:15
-        env: 
+        env:
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ vars.POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
-            --health-cmd pg_isready 
-            --health-interval 10s 
-            --health-timeout 5s 
-            --health-retries 5
+          --health-cmd pg_isready 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+
+  test-django:
+    runs-on: ubuntu-latest
+    needs: "test-postgres"
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
       - name: Set up Python [Version 3.10]
         uses: actions/setup-python@v3
         with:
@@ -32,17 +34,13 @@ jobs:
           ls 
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-  test: 
-      runs-on: ubuntu-latest
-      needs: "build"
-      steps: 
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Run Tests
-        env: 
+        env:
           DEBUG: "0"
           # Note: Anything with env.* is pulled from the pipeline variables.
-          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }} 
+          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           DB_HOST: ${{ vars.POSTGRES_HOST }}
@@ -56,27 +54,28 @@ jobs:
         uses: AppThreat/sast-scan-action@master
         with:
           type: "python"
-  deploy: 
+          
+  deploy:
     runs-on: ubuntu-latest
-    needs: ["build", "test"]
+    needs: ["test-django", "test-postgres"]
     if: github.ref == 'refs/heads/ft-aws-deploy'
-    steps: 
-    - name: Checkout source code
-      uses: actions/checkout@v2
-    - name: Install Dependencies
-      run: | 
-        echo ***Executing Django Tests***
-        cd src/Clean-Energy-PA-Site/
-        pip install -r requirements.txt
-    - name: Generate deployment package
-      run: zip -r deploy-${{github.sha}}.zip . -x '*.git*'
-    - name: Deploy to AWS 
-      uses: einaregilsson/beanstalk-deploy@v21
-      with:
-        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: Website
-        environment_name: Clean-Energy-PA
-        version_label: ver-${{ github.sha }}
-        region: us-east-2
-        deployment_package: deploy-${{github.sha}}.zip
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          echo ***Executing Django Tests***
+          cd src/Clean-Energy-PA-Site/
+          pip install -r requirements.txt
+      - name: Generate deployment package
+        run: zip -r deploy-${{github.sha}}.zip . -x '*.git*'
+      - name: Deploy to AWS
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: Website
+          environment_name: Clean-Energy-PA
+          version_label: ver-${{ github.sha }}
+          region: us-east-2
+          deployment_package: deploy-${{github.sha}}.zip
