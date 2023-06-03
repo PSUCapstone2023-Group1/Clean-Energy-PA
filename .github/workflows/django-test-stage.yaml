@@ -57,6 +57,11 @@ jobs:
     steps: 
     - name: Checkout source code
       uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: | 
+        echo ***Executing Django Tests***
+        cd src/Clean-Energy-PA-Site/
+        pip install -r requirements.txt
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
     - name: Deploy to AWS 
