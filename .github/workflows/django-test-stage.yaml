@@ -34,7 +34,7 @@ jobs:
       - name: Set up Python [Version 3.10]
         uses: actions/setup-python@v3
         with:
-          python-version: "3.10"
+          python-version: "3.9"
       - name: Install Dependencies
         run: |
           ls 
@@ -69,17 +69,16 @@ jobs:
       - name: Install Dependencies
         run: |
           echo ***Executing Django Tests***
-          cd src/Clean-Energy-PA-Site/
-          pip install -r requirements.txt
-      - name: Generate deployment package
-        run: zip -r deploy-${{github.sha}}.zip . -x '*.git*'
-      - name: Deploy to AWS
-        uses: einaregilsson/beanstalk-deploy@v21
+          pip install -r src/Clean-Energy-PA-Site/requirements.txt
+      - name: Django AWS EB Deployment
+        uses: joel-hanson/django-aws-eb-deploy@V1.1
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Website
-          environment_name: Clean-Energy-PA
-          version_label: ver-${{ github.sha }}
-          region: us-east-2
-          deployment_package: deploy-${{github.sha}}.zip
+          python_version: "3.9"
+          aws_access_key_id:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          django_path: src/Clean-Energy-PA-Site/
+          unit_testing: false
+          deploy: true
+          min_coverage: 0
+          postgresql_required: false
+          security_check: false
