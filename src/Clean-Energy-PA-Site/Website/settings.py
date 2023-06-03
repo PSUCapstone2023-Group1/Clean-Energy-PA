@@ -44,7 +44,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1",
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "172.31.2.113",
                  "clean-energy-pa.us-east-2.elasticbeanstalk.com"]
 
 
@@ -96,6 +96,7 @@ WSGI_APPLICATION = "Website.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# Add production flag
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
@@ -108,15 +109,14 @@ if 'RDS_DB_NAME' in os.environ:
         }
     }
 else:
-    env_vars = get_environ_vars()
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            'NAME': env_vars['RDS_DB_NAME'],
-            'USER': env_vars['RDS_USERNAME'],
-            'PASSWORD': env_vars['RDS_PASSWORD'],
-            'HOST': env_vars['RDS_HOSTNAME'],
-            'PORT': env_vars['RDS_PORT'],
+            "NAME": env("DB_NAME"),
+            "USER": env("DB_USER"),
+            "PASSWORD": env("DB_PASSWORD"),
+            "HOST": env("DB_HOST"),
+            "PORT": env("DB_PORT"),
         }
     }
 
