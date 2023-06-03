@@ -29,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: "test-postgres"
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
       - name: Set up Python [Version 3.10]
         uses: actions/setup-python@v3
         with:
@@ -37,9 +39,7 @@ jobs:
         run: |
           ls 
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Checkout Code
-        uses: actions/checkout@v3
+          pip install -r  
       - name: Run Tests
         env:
           DEBUG: "0"
