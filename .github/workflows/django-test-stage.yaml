@@ -64,6 +64,7 @@ jobs:
       - name: Install Dependencies
         run: |
           echo ***Installing Dependencies***
+          python -m pip install --upgrade pip
           pip install -r src/Clean-Energy-PA-Site/requirements.txt
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v20
@@ -73,6 +74,7 @@ jobs:
           application_name: Website
           environment_name: Clean-Energy-PA
           version_label: 1
+          version_description: ${{github.SHA}}
           region: "us-east-2"
           deployment_package: deploy.zip
           wait_for_environment_recovery: 60
