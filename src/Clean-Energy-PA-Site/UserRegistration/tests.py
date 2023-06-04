@@ -21,7 +21,8 @@ class SignupLinkTest(TestCase):
 
         # Assert that the signup link is present in the rendered HTML
         self.assertContains(
-            response, '<a class="nav-link" href="/register">Sign Up</a>'
+            response,
+            '<a class="btn btn-secondary" href="/register" role="button">Sign Up</a>',
         )
 
 
