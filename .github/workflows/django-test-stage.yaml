@@ -68,6 +68,9 @@ jobs:
           echo ***Installing Dependencies***
           python -m pip install --upgrade pip
           pip install -r src/Clean-Energy-PA-Site/requirements.txt
+      - name: Init Elastic Beanstalk
+        run: |
+          eb init --platform Python --region us-east-2
       - name: Deploy to Elastic Beanstalk
         run: |
           eb deploy
