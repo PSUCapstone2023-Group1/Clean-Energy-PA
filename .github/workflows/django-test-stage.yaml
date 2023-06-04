@@ -1,14 +1,14 @@
-name: Django Test w/PSQL
+name: Django CI/CD
 
 on:
   push:
 
 jobs:
-  test-postgres:
+  SAST:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:15
+        image: postgres:12
         env:
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
@@ -24,13 +24,6 @@ jobs:
       # Will eventually have steps to test virtualized DB 
       - name: Checkout Code
         uses: actions/checkout@v3
-
-  test-django:
-    runs-on: ubuntu-latest
-    needs: "test-postgres"
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
       - name: Set up Python [Version 3.10]
         uses: actions/setup-python@v3
         with:
@@ -43,7 +36,7 @@ jobs:
       - name: Run Tests
         env:
           DEBUG: "0"
-          # Note: Anything with env.* is pulled from the pipeline variables.
+          # Note: Anything with vars.* is pulled from the pipeline variables.
           SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
@@ -59,26 +52,26 @@ jobs:
         with:
           type: "python"
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: ["test-django", "test-postgres"]
-    if: github.ref == 'refs/heads/ft-aws-deploy'
-    steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
-      - name: Install Dependencies
-        run: |
-          echo ***Executing Django Tests***
-          pip install -r src/Clean-Energy-PA-Site/requirements.txt
-      - name: Django AWS EB Deployment
-        uses: joel-hanson/django-aws-eb-deploy@V1.1
-        with:
-          python_version: "3.9"
-          aws_access_key_id:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-          django_path: src/Clean-Energy-PA-Site/
-          unit_testing: false
-          deploy: true
-          min_coverage: 0
-          postgresql_required: false
-          security_check: false
+  # Deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: "SAST"
+  #   if: github.ref == 'refs/heads/ft-aws-deploy'
+  #   steps:
+  #     - name: Checkout source code
+  #       uses: actions/checkout@v3
+  #     - name: Install Dependencies
+  #       run: |
+  #         echo ***Executing Django Tests***
+  #         pip install -r src/Clean-Energy-PA-Site/requirements.txt
+  #     - name: Django AWS EB Deployment
+  #       uses: joel-hanson/django-aws-eb-deploy@V1.1
+  #       with:
+  #         python_version: "3.9"
+  #         aws_access_key_id:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws_secret_access_key:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         django_path: src/Clean-Energy-PA-Site/
+  #         unit_testing: false
+  #         deploy: true
+  #         min_coverage: 0
+  #         postgresql_required: false
+  #         security_check: false
