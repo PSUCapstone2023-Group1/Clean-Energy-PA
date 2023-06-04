@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
-    "Database.apps.DatabaseConfig",
+    "MainApplication.apps.MainApplicationConfig",
     "UserRegistration.apps.UserregistrationConfig",
 ]
 
@@ -169,3 +169,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Setting to redirect to home for now since profile does not exist
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+# To get uniform output for testing
+APPEND_SLASH = True
