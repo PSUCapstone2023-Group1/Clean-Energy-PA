@@ -1,35 +1,11 @@
 <!DOCTYPE html>
+<style>
+  .center {
+    text-align: center;
+  }
+</style>
 <html>
   <head>
-    <style type="text/css">
-      .sidenav {
-        height: 100%;
-        width: 160px;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-      }
-      
-      .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-      }
-      
-      .sidenav a:hover {
-        color: #f1f1f1;
-      }
-      .main {
-        margin-left: 160px;
-        padding: 0px 10px;
-      }
-    </style>
     {% comment %}Start BOOTSTRAP{% endcomment %}
     {% comment %}Documentation at https://getbootstrap.com/docs/5.3/getting-started/introduction/{% endcomment %}
     <meta charset="utf-8" />
@@ -37,19 +13,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     {% comment %}END BOOTSTRAP{% endcomment %}
 
-    <title>Clean Energy PA Website!!!</title>
+    <title>Clean Energy PA Website</title>
   </head>
   <body>
-    <div class="sidenav">
-      <a href="/home">Home</a>
-      <a href="/register">Sign up</a>
-      <a href="/view">View</a>
-      <a href="/login">Login</a>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-right">
+      <a class="navbar-brand" href="/home" style="padding-left: 20px;">Clean Energy PA</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <div class="btn-group me-2" role="group">
+              <a class="btn btn-light" href="/home" role="button">Home</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="btn-group me-2" role="group">
+              <a class="btn btn-secondary" href="/login" role="button">Login</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="btn-group me-2" role="group">
+              <a class="btn btn-secondary" href="/register" role="button">Sign Up</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <div id="content" name="content" class="main">
       <div class="row justify-content-center">
         <div class="col-8">
-          <h1 class="mt-2">Clean Energy PA</h1>
+          <div class="center">
+            <h1 class="mt-2">Clean Energy PA</h1>
+          </div>
           <hr class="mt-0 mb-4" />
           {% block content %}
 
