@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from MainApplication.models import User_Preferences
+from django.urls import reverse
 
 
 # Create your views here.
@@ -17,7 +18,7 @@ def register(response):
                 user_id=user, zip_code=form.cleaned_data["zip_code"]
             )
             user_preferences.save()
-            return redirect("/login/")
+            return redirect(reverse("login"))
     else:
         form = RegisterForm()
     return render(response, "UserRegistration/register.html", {"form": form})
