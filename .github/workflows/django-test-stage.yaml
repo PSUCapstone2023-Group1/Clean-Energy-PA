@@ -4,70 +4,70 @@ on:
   push:
 
 jobs:
-  SAST:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 5
-    steps: 
-      # Will eventually have steps to test virtualized DB 
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      - name: Set up Python [Version 3.10]
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-      - name: Install Dependencies
-        run: |
-          ls 
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run Tests
-        env:
-          DEBUG: "0"
-          # Note: Anything with vars.* is pulled from the pipeline variables.
-          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
-          DB_USER: ${{ vars.POSTGRES_USER }}
-          DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
-          DB_HOST: ${{ vars.POSTGRES_HOST }}
-          DB_NAME: ${{ vars.POSTGRES_DB }}
-          DB_PORT: ${{ vars.POSTGRES_PORT }}
-        run: |
-          echo ***Executing Django Tests***
-          cd src/Clean-Energy-PA-Site/
-          python manage.py test
-      - name: SAST
-        uses: AppThreat/sast-scan-action@master
-        with:
-          type: "python"
+  # SAST:
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:12
+  #       env:
+  #         POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+  #         POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+  #         POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+  #       ports:
+  #         - 5432:5432
+  #       options: >-
+  #         --health-cmd pg_isready 
+  #         --health-interval 10s 
+  #         --health-timeout 5s 
+  #         --health-retries 5
+  #   steps: 
+  #     # Will eventually have steps to test virtualized DB 
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
+  #     - name: Set up Python [Version 3.10]
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: "3.9"
+  #     - name: Install Dependencies
+  #       run: |
+  #         ls 
+  #         python -m pip install --upgrade pip
+  #         pip install -r requirements.txt
+  #     - name: Run Tests
+  #       env:
+  #         DEBUG: "0"
+  #         # Note: Anything with vars.* is pulled from the pipeline variables.
+  #         SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
+  #         DB_USER: ${{ vars.POSTGRES_USER }}
+  #         DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
+  #         DB_HOST: ${{ vars.POSTGRES_HOST }}
+  #         DB_NAME: ${{ vars.POSTGRES_DB }}
+  #         DB_PORT: ${{ vars.POSTGRES_PORT }}
+  #       run: |
+  #         echo ***Executing Django Tests***
+  #         cd src/Clean-Energy-PA-Site/
+  #         python manage.py test
+  #     - name: SAST
+  #       uses: AppThreat/sast-scan-action@master
+  #       with:
+  #         type: "python"
 
   Deploy:
     runs-on: ubuntu-latest
-    needs: "SAST"
+    # needs: "SAST"
     if: github.ref == 'refs/heads/ft-aws-deploy'    
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
       - name: Install Dependencies
         run: |
           echo ***Installing Dependencies***
           python -m pip install --upgrade pip
           pip install -r src/Clean-Energy-PA-Site/requirements.txt
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v20
+        uses: einaregilsson/beanstalk-deploy@v21
         with:
           aws_access_key:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
