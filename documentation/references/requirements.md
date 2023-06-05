@@ -27,6 +27,9 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.3.3. The system shall display providers with 100% renewable energy.
 - 1.1.3.4. The system shall display providers with options that are cheaper or within 5 cents of the current PECO rate.
 - 1.1.3.5. The system shall display the contract length of each energy supplier.
+- 1.1.3.6. The optimal green option display shall allow the user to search for offers within their zip code.
+- 1.1.3.7. The system shall display a message to the user if the zip code entered on the search page is not a valid PA zip code.
+- 1.1.3.8. The system shall display the offer results to the user when the zip code entered is valid.
 
 ### 1.1.4 Provider Selection & Decision Retention
 
@@ -53,6 +56,16 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.7.2. The system shall be capable of pulling data based on monthly usage.
 - 1.1.7.3. The system shall be capable of pulling data based on the “Fixed Price” selection.
 - 1.1.7.4. The system shall be capable of pulling data based on “100% renewable energy”.
+
+### 1.1.8 User Profile
+
+- 1.1.8.1. The system shall have a page that displays the user profile.
+- 1.1.8.2. The system shall only display a profile settings link when the user is logged on and authenticated.
+
+### 1.1.9 Offer Results
+
+- 1.1.9.1. The system shall have a results page that displays rates regardless of logged in status.
+- 1.1.9.2. The system shall display additional contract related results when the user is logged in and authenticated.
 
 ## Non-Functional Requirements
 
