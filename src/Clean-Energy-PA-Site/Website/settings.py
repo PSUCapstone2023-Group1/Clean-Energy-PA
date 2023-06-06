@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
-    "MainApplication.apps.MainApplicationConfig",
+    "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserRegistration.apps.UserregistrationConfig",
 ]
 

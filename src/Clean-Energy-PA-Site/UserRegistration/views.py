@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import RegisterForm
-from MainApplication.models import User_Preferences
+from GreenEnergySearch.models import User_Preferences
 from django.urls import reverse
 
 

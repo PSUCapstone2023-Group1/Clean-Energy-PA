@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MainApplicationConfig(AppConfig):
+class GreenEnergySearchConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "MainApplication"
+    name = "GreenEnergySearch"
