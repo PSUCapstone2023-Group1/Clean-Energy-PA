@@ -12,7 +12,6 @@
       <div class="col-md-4">
         <form method="POST" class="form-group">
           {% csrf_token %}
-          <div class="mb-3">{{ form.username|as_crispy_field }}</div>
 
           <div class="mb-3">{{ form.email|as_crispy_field }}</div>
 
