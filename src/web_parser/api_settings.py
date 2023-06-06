@@ -1,0 +1,1 @@
+base_url = "https://www.papowerswitch.com/umbraco/Api/ShopApi/"
