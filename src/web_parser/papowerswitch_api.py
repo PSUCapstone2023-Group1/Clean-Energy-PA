@@ -2,7 +2,7 @@ import requests
 import json
 import api_settings
 
-class api:
+class papowerswitch_api:
     failed_preface = "Request failed with status code:"
     request_log_preface = "Retrieving from the following endpoint:"
     base_url = api_settings.base_url
