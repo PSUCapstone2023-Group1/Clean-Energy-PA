@@ -51,8 +51,6 @@ class papowerswitch_api:
             filtered_data = [rate_obj for rate_obj in data if rate_obj.default_filter(peco_rate)] # need to dynamically get that PECO rate still
 
             # Sort by lowest 
-
-            # Sort the JSON array based on the "id" attribute
             sorted_data = sorted(filtered_data, key=lambda rate_obj: rate_obj.rate)
 
             return sorted_data

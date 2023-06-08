@@ -6,6 +6,9 @@ class zipsearch_response:
         self.phone = str(zipsearch_json["Phone"])
         self.website = str(zipsearch_json["Website"])
         self.rates = list(map(lambda x: zipsearch_rate(x), zipsearch_json["Rates"]))
+    
+    def __str__(self):
+        return self.id + ': ' + self.name
 
 class zipsearch_rate:
     # TODO: make this more robust to invalid responses
@@ -16,3 +19,6 @@ class zipsearch_rate:
         self.future_rate = float(zipsearch_rate_json["FutureRate"])
         self.future_rate_timeframe = str(zipsearch_rate_json["FutureRateTimeframe"])
         self.last_updated_date = str(zipsearch_rate_json["LastUpdatedDate"])
+
+    def __str__(self):
+        return self.id
