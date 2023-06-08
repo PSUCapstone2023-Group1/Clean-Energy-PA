@@ -84,38 +84,38 @@ class RegistrationTest(TestCase):
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count)
 
-    # def test_registration_fails_if_account_exists(self):
-    #     """Testing that no user is created in DB if one already exists"""
-    #     # Create a user account with the same username as in the form data
-    #     User.objects.create_user(
-    #         username=self.form_data["username"], password="password123"
-    #     )
-    #     existing_user_count = User.objects.count()
-    #     # Simulate a POST request with the same registration data
-    #     response = self.client.post(
-    #         self.register_url, data=self.form_data, follow=False
-    #     )
+    def test_registration_fails_if_account_exists(self):
+        """Testing that no user is created in DB if one already exists"""
+        # Create a user account with the same username as in the form data
+        User.objects.create_user(
+            username=self.form_data["username"], password="password123"
+        )
+        existing_user_count = User.objects.count()
+        # Simulate a POST request with the same registration data
+        response = self.client.post(
+            self.register_url, data=self.form_data, follow=False
+        )
 
-    #     # Check if the response status code is 200 (success)
-    #     self.assertEqual(response.status_code, 200)
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
 
-    #     # Check if the response contains an error message
-    #     self.assertContains(response, "A user with that username already exists.")
+        # Check if the response contains an error message
+        self.assertContains(response, "A user with that username already exists.")
 
-    #     # Check if no new user account is created
-    #     new_user_count = User.objects.count()
-    #     self.assertEqual(new_user_count, existing_user_count)
+        # Check if no new user account is created
+        new_user_count = User.objects.count()
+        self.assertEqual(new_user_count, existing_user_count)
 
-    # def test_username_character_count_limit(self):
-    #     # Modify the form_data to have a username with too many characters
-    #     self.form_data["username"] = "a" * 151  # Assuming the character limit is 150
+    def test_username_character_count_limit(self):
+        # Modify the form_data to have a username with too many characters
+        self.form_data["username"] = "a" * 151  # Assuming the character limit is 150
 
-    #     # Submit the form and get the response
-    #     response = self.client.post(self.register_url, self.form_data)
+        # Submit the form and get the response
+        response = self.client.post(self.register_url, self.form_data)
 
-    #     # Check if the response status code is 200 (success)
-    #     self.assertEqual(response.status_code, 200)
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
 
-    #     # Check if the expected error message is present in the response content
-    #     expected_error_message = "Ensure this value has at most 150 characters"
-    #     self.assertContains(response, expected_error_message)
+        # Check if the expected error message is present in the response content
+        expected_error_message = "Ensure this value has at most 150 characters"
+        self.assertContains(response, expected_error_message)
