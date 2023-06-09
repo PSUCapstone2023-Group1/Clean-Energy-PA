@@ -18,3 +18,7 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 ## Front-End
 
 - [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+
+## Other modules
+
+- [uszipcode](https://pypi.org/project/uszipcode/)
