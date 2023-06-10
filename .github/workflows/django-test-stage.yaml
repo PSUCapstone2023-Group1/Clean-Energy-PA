@@ -6,6 +6,17 @@ on:
 jobs:
   SAST:
     runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: SAST
+        uses: AppThreat/sast-scan-action@master
+        with:
+          type: "python"
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: "SAST" 
     services:
       postgres:
         image: postgres:12
@@ -20,17 +31,6 @@ jobs:
           --health-interval 10s 
           --health-timeout 5s 
           --health-retries 5
-    steps: 
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      - name: SAST
-        uses: AppThreat/sast-scan-action@master
-        with:
-          type: "python"
-
-  Test:
-    runs-on: ubuntu-latest
-    needs: "SAST"
     steps: 
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -64,7 +64,7 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     needs: ["Test", "SAST"]
-    if: github.ref == 'refs/heads/ft-aws-deploy'
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2  
