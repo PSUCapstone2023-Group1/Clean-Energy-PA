@@ -1,8 +1,13 @@
 from papowerswitch_api import papowerswitch_api
+from responses.zipsearch import zipsearch_response
+import tests.zipsearch_test_data
+import api_settings
 
 zip_code = 19473
 
 api = papowerswitch_api()
+
+print(api.get(api_settings.zip_seach_endpoint))
 
 residential = api.get_residential_from_zipcode(zip_code)
 print('Residential Response:', residential.json())
