@@ -59,7 +59,7 @@ jobs:
           cd src/Clean-Energy-PA-Site/
           python manage.py test
           coverage run manage.py test -v 2
-          coverage report
+          coverage report --fail-under=100
 
   Deploy:
     runs-on: ubuntu-latest
