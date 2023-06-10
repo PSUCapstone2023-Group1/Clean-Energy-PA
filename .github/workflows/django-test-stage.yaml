@@ -21,18 +21,29 @@ jobs:
           --health-timeout 5s 
           --health-retries 5
     steps: 
-      # Will eventually have steps to test virtualized DB 
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Set up Python [Version 3.10]
+      - name: SAST
+        uses: AppThreat/sast-scan-action@master
+        with:
+          type: "python"
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: "SAST"
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Python [Version 3.9]
         uses: actions/setup-python@v3
         with:
           python-version: "3.9"
       - name: Install Dependencies
         run: |
-          ls 
+
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install -r requirements.dev.txt
       - name: Run Tests
         env:
           DEBUG: "0"
@@ -47,14 +58,12 @@ jobs:
           echo ***Executing Django Tests***
           cd src/Clean-Energy-PA-Site/
           python manage.py test
-      - name: SAST
-        uses: AppThreat/sast-scan-action@master
-        with:
-          type: "python"
+          coverage run manage.py test -v 2
+          coverage report
 
   Deploy:
     runs-on: ubuntu-latest
-    needs: "SAST"
+    needs: ["Test", "SAST"]
     if: github.ref == 'refs/heads/ft-aws-deploy'
     steps:
     - name: Checkout source code
@@ -66,5 +75,5 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: Website
         environment_name: Clean-Energy-PA
-        version_label: app-230610_190232738347
+        version_label: ${{ vars.VERSION_LABEL }}
         region: us-east-2

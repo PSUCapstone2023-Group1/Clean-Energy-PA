@@ -10,7 +10,7 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 
 ## Getting started
 
-### Dependenciy Installs
+### Dependency Installs
 
 - `pip install -r requirements.txt` -- production requirements
 - `pip install -r requirements.dev.txt` -- development requirements
