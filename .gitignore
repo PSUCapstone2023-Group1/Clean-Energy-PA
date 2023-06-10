@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # ignore vscode settings
-.vscode/settings.json
+*.vscode/settings.json
 
 # Backup Files (Draw.io)
 *.bkp
