@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from uszipcode import SearchEngine
 
 User = get_user_model()
 
@@ -24,3 +26,17 @@ class RegisterForm(UserCreationForm):
             "password1",
             "password2",
         ]
+
+    def clean_zip_code(self):
+        zip_code = self.cleaned_data.get("zip_code")
+
+        # Perform validation and define custom error messages
+        if not self.is_valid_zip_code(zip_code):
+            raise forms.ValidationError("Invalid zip code.")
+
+        return zip_code
+
+    def is_valid_zip_code(self, zip_code):
+        search = SearchEngine()
+        result = search.by_zipcode(zip_code)
+        return result is not None

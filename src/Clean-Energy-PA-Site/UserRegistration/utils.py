@@ -30,7 +30,8 @@ def generate_name(length=5):
     return username
 
 
-def generate_zip_code(length=5):
-    # Generate a random zip code with the given length
-    zip_code = "".join(random.choices(string.digits, k=length))
-    return zip_code
+def generate_zip_code(is_valid):
+    if is_valid:
+        return "90210"
+    else:
+        return "000000"
