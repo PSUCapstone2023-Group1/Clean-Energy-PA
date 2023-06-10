@@ -36,7 +36,7 @@ class RegistrationTest(TestCase):
             "email": generate_email(),
             "first_name": generate_name(),
             "last_name": generate_name(),
-            "zip_code": generate_zip_code(),
+            "zip_code": generate_zip_code(is_valid=True),
             "password1": password,
             "password2": password,
         }
@@ -55,7 +55,6 @@ class RegistrationTest(TestCase):
         """Checking that valid form data will create user in database"""
         # Count the number of existing user accounts
         existing_user_count = User.objects.count()
-        print(f"Existing User Count: {existing_user_count}")
 
         # Simulate a POST request with valid registration data
         response = self.client.post(self.register_url, self.form_data, follow=True)
@@ -71,7 +70,6 @@ class RegistrationTest(TestCase):
         """Checking that invalid form data will NOT create user in database"""
         # Count the number of existing user accounts
         existing_user_count = User.objects.count()
-        print(f"Existing User Count: {existing_user_count}")
 
         # Simulate a POST request with invalid registration data
         self.form_data["email"] = "invalid email"
@@ -101,7 +99,6 @@ class RegistrationTest(TestCase):
 
         # Check if the response contains an error message
         self.assertContains(response, "A user with that username already exists.")
-
         # Check if no new user account is created
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count)
@@ -119,3 +116,39 @@ class RegistrationTest(TestCase):
         # Check if the expected error message is present in the response content
         expected_error_message = "Ensure this value has at most 150 characters"
         self.assertContains(response, expected_error_message)
+
+    def test_zip_code_invalid_no_redirect(self):
+        """Checking that submitting invalid zip_code will not redirect"""
+        self.form_data["zip_code"] = generate_zip_code(is_valid=False)
+        # Simulate a POST request with invalid registration data
+        response = self.client.post(self.register_url, self.form_data)
+        self.assertEqual(response.status_code, 200)
+        # Check that the response does not redirect, i.e. equal the register url
+        self.assertEqual(response.request["PATH_INFO"], self.register_url)
+
+    def test_invalid_zip__no_account_created(self):
+        """Checking that invalid zip_code will NOT create user in database"""
+
+        # Count the number of existing user accounts
+        existing_user_count = User.objects.count()
+        print(f"Existing User Count: {existing_user_count}")
+
+        # Simulate a POST request with invalid registration data
+        self.form_data["zip_code"] = generate_zip_code(is_valid=False)
+        response = self.client.post(self.register_url, self.form_data, follow=True)
+
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the number of user accounts remains the same
+        new_user_count = User.objects.count()
+        self.assertEqual(new_user_count, existing_user_count)
+
+    def test_zip_code_invalid_error_message(self):
+        """Checking that submitting invalid zip_code displays a validation error"""
+        self.form_data["zip_code"] = generate_zip_code(is_valid=False)
+        # Simulate a POST request with invalid registration data
+        response = self.client.post(self.register_url, self.form_data)
+        self.assertEqual(response.status_code, 200)
+        # Assert that the response contains the validation error message
+        self.assertContains(response, "Invalid zip code.")

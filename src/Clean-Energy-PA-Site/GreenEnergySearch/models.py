@@ -12,7 +12,7 @@ class User_Preferences(models.Model):
     rate_schedule = models.CharField(max_length=80, default="default")
     # Distributor id from the api
     distributor_id = models.BigIntegerField(default=-1)
-    # Offer id from the api 
+    # Offer id from the api
     selected_offer_id = models.BigIntegerField(default=-1)
     # The price per kWh rate that the user saved
     selected_offer_rate = models.FloatField(default=-1)
