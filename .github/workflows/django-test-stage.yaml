@@ -60,6 +60,12 @@ jobs:
           python manage.py test
           coverage run manage.py test -v 2
           coverage report --fail-under=90
+          
+          echo ***Executing WebParser Tests***
+          cd ../web_parser
+          pytest .
+          coverage run -m pytest .
+          coverage report --fail-under=90
 
   Deploy:
     runs-on: ubuntu-latest
