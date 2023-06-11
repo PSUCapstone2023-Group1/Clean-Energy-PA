@@ -30,13 +30,24 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 
 ### Web Parser Commands
 
-> First change your terminal directory to `src/web_parser`
+> First change your terminal's directory to `src/web_parser`
 
-- Run Tests: `pytest ./`
+- Run Tests: `pytest .`
 - Run coverage report:
-  - `coverage run pytest ./`
+  - `coverage run -m pytest .`
   - `coverage report`
   - `coverage html`
+
+## PyTest
+
+### Debugging
+
+To debug tests that are using the pytest framework you can either
+
+1. Use VS Code with the [Python extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) installed, follow the guide [here](https://code.visualstudio.com/docs/python/testing).
+   - This route makes it much easier to debug in the VS Code environment and see your tests pass in a nice interface
+2. Using the Python debugger (pdb) - [guide](https://docs.pytest.org/en/7.1.x/how-to/failures.html)
+   - This route is more versatile as it can be used in the terminal
 
 ## Dependency Documentation
 
