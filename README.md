@@ -1,6 +1,7 @@
 # Clean-Energy-PA
 
 ![CI/CD](https://github.com/PSUCapstone2023-Group1/Clean-Energy-PA/actions/workflows/django-test-stage.yaml/badge.svg)
+
 PaPowerSwitch support application to help connect PA citizens with the best energy suppliers
 
 ## Collaboration links
