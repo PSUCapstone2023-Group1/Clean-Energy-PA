@@ -60,7 +60,6 @@ jobs:
           python manage.py test
           coverage run manage.py test -v 2
           coverage report --fail-under=90
-          coverage-badge -o coverage.svg
 
   Deploy:
     runs-on: ubuntu-latest
