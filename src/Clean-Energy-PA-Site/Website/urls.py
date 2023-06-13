@@ -24,4 +24,5 @@ urlpatterns = [
     path("login/", v.login, name="login"),
     path("", include("GreenEnergySearch.urls")),
     path("", include("django.contrib.auth.urls")),
+    path("activate/<str:uidb64>/<str:token>/", v.activate, name="activate"),
 ]
