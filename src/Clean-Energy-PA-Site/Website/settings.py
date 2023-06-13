@@ -125,15 +125,9 @@ else:
 # Email Setttings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-
-if "RDS_DB_NAME" in os.environ:
-    EMAIL_FROM = os.environ["SMTP_USER"]
-    EMAIL_HOST_USER = os.environ["SMTP_USER"]
-    EMAIL_HOST_PASSWORD = os.environ["SMTP_PASSWORD"]
-else:
-    EMAIL_FROM = env("SMTP_USER")
-    EMAIL_HOST_USER = env("SMTP_USER")
-    EMAIL_HOST_PASSWORD = env("SMTP_PASSWORD")
+EMAIL_FROM = env("SMTP_USER")
+EMAIL_HOST_USER = env("SMTP_USER")
+EMAIL_HOST_PASSWORD = env("SMTP_PASSWORD")
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
