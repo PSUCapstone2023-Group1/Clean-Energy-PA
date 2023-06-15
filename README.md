@@ -17,6 +17,18 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 - `pip install -r requirements.txt` -- production requirements
 - `pip install -r requirements.dev.txt` -- development requirements
 
+In addition, make sure to have a local copy of Postgres installed.
+
+You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
+```
+SECRET_KEY=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=s
+DB_HOST=
+DB_PORT=
+```
+
 ### Django Commands
 
 > First be sure your terminal is at the same directory as `manage.py`, which will be under `src/Clean-Energy-PA-Site` (the Django starting point)
