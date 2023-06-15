@@ -13,13 +13,10 @@ from UserRegistration.utils import (
 
 
 # Create your tests here.
-# Test that Signup link is visible
 class SignupLinkTest(TestCase):
     def test_signup_link_visible(self):
         response = self.client.get("/home/")
         self.assertEqual(response.status_code, 200)
-
-        # Assert that the signup link is present in the rendered HTML
         self.assertContains(
             response,
             '<a class="btn btn-secondary" href="/register" role="button">Sign Up</a>',
@@ -41,13 +38,19 @@ class RegistrationTest(TestCase):
             "password2": password,
         }
 
-    # Test that the user is re-directed to the login page
+    def _set_up_name_test(self, first_name, last_name, expected_status_code=None):
+        self.form_data["first_name"] = first_name
+        self.form_data["last_name"] = last_name
+        response = self.client.post(self.register_url, self.form_data, follow=True)
+        if expected_status_code is not None:
+            self.assertEqual(response.status_code, expected_status_code)
+        return response
+
     def test_successful_registration_redirect_to_login(self):
         """Checking that valid form data will redirect to login"""
         # Simulate a POST request with valid registration data
         response = self.client.post(self.register_url, self.form_data)
         self.assertEqual(response.status_code, 302)
-        # Check if the response redirects to the login page
         expected_url = self.login_url
         self.assertRedirects(response, expected_url, fetch_redirect_response=False)
 
@@ -55,14 +58,8 @@ class RegistrationTest(TestCase):
         """Checking that valid form data will create user in database"""
         # Count the number of existing user accounts
         existing_user_count = User.objects.count()
-
-        # Simulate a POST request with valid registration data
         response = self.client.post(self.register_url, self.form_data, follow=True)
-
-        # Check if the response status code is 200 (success)
         self.assertEqual(response.status_code, 200)
-
-        # Check if a new user account is created
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count + 1)
 
@@ -70,15 +67,9 @@ class RegistrationTest(TestCase):
         """Checking that invalid form data will NOT create user in database"""
         # Count the number of existing user accounts
         existing_user_count = User.objects.count()
-
-        # Simulate a POST request with invalid registration data
         self.form_data["email"] = "invalid email"
         response = self.client.post(self.register_url, self.form_data, follow=True)
-
-        # Check if the response status code is 200 (success)
         self.assertEqual(response.status_code, 200)
-
-        # Check if the number of user accounts remains the same
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count)
 
@@ -89,66 +80,77 @@ class RegistrationTest(TestCase):
             username=self.form_data["username"], password="password123"
         )
         existing_user_count = User.objects.count()
-        # Simulate a POST request with the same registration data
         response = self.client.post(
             self.register_url, data=self.form_data, follow=False
         )
-
-        # Check if the response status code is 200 (success)
         self.assertEqual(response.status_code, 200)
-
-        # Check if the response contains an error message
         self.assertContains(response, "A user with that username already exists.")
-        # Check if no new user account is created
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count)
 
     def test_username_character_count_limit(self):
         # Modify the form_data to have a username with too many characters
-        self.form_data["username"] = "a" * 151  # Assuming the character limit is 150
-
-        # Submit the form and get the response
+        self.form_data["username"] = "a" * 151
         response = self.client.post(self.register_url, self.form_data)
-
-        # Check if the response status code is 200 (success)
         self.assertEqual(response.status_code, 200)
-
-        # Check if the expected error message is present in the response content
         expected_error_message = "Ensure this value has at most 150 characters"
         self.assertContains(response, expected_error_message)
 
     def test_zip_code_invalid_no_redirect(self):
         """Checking that submitting invalid zip_code will not redirect"""
         self.form_data["zip_code"] = generate_zip_code(is_valid=False)
-        # Simulate a POST request with invalid registration data
         response = self.client.post(self.register_url, self.form_data)
         self.assertEqual(response.status_code, 200)
-        # Check that the response does not redirect, i.e. equal the register url
         self.assertEqual(response.request["PATH_INFO"], self.register_url)
 
     def test_invalid_zip__no_account_created(self):
         """Checking that invalid zip_code will NOT create user in database"""
-
-        # Count the number of existing user accounts
         existing_user_count = User.objects.count()
-        print(f"Existing User Count: {existing_user_count}")
-
-        # Simulate a POST request with invalid registration data
         self.form_data["zip_code"] = generate_zip_code(is_valid=False)
         response = self.client.post(self.register_url, self.form_data, follow=True)
-
-        # Check if the response status code is 200 (success)
         self.assertEqual(response.status_code, 200)
 
-        # Check if the number of user accounts remains the same
         new_user_count = User.objects.count()
         self.assertEqual(new_user_count, existing_user_count)
 
     def test_zip_code_invalid_error_message(self):
-        """Checking that submitting invalid zip_code displays a validation error"""
         self.form_data["zip_code"] = generate_zip_code(is_valid=False)
-        # Simulate a POST request with invalid registration data
         response = self.client.post(self.register_url, self.form_data)
         self.assertEqual(response.status_code, 200)
-        # Assert that the response contains the validation error message
         self.assertContains(response, "Invalid zip code.")
+
+    def test_name_fields_not_empty(self):
+        response = response = self._set_up_name_test("", "")
+        self.assertFormError(response, "form", "first_name", "This field is required.")
+        self.assertFormError(response, "form", "last_name", "This field is required.")
+
+    def test_name_saved_in_database(self):
+        self._set_up_name_test("John", "Doe")
+        saved_user = User.objects.get(first_name="John", last_name="Doe")
+        self.assertEqual(saved_user.first_name, "John")
+        self.assertEqual(saved_user.last_name, "Doe")
+
+    def test_invalid_name_does_not_create_account(self):
+        invalid_name = "a" * 151
+        self._set_up_name_test(invalid_name, invalid_name, 200)
+        self.assertEqual(User.objects.count(), 0)
+
+    def test_invalid_name_displays_error_message(self):
+        invalid_name = "a" * 151
+        response = self._set_up_name_test(invalid_name, invalid_name, 200)
+        error_message = response.context["form"].errors
+        self.assertIn("first_name", error_message)
+        self.assertIn("last_name", error_message)
+        self.assertEqual(
+            error_message["first_name"],
+            ["Ensure this value has at most 30 characters (it has 151)."],
+        )
+        self.assertEqual(
+            error_message["last_name"],
+            ["Ensure this value has at most 30 characters (it has 151)."],
+        )
+
+    def test_invalid_name_does_not_redirect_to_login(self):
+        invalid_name = "a" * 151
+        response = self._set_up_name_test(invalid_name, invalid_name, 200)
+        self.assertTemplateUsed(response, "UserRegistration/register.html")
