@@ -24,7 +24,7 @@ You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` d
 SECRET_KEY=
 DB_USER=
 DB_PASSWORD=
-DB_NAME=s
+DB_NAME=
 DB_HOST=
 DB_PORT=
 ```
