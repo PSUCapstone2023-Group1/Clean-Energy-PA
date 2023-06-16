@@ -24,6 +24,8 @@ jobs:
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+          SMTP_MAIL_USER: ${{ vars.SMTP_MAIL_USER }}
+          SMTP_MAIL_PASSWORD: ${{ vars.SMTP_MAIL_PASSWORD}}
         ports:
           - 5432:5432
         options: >-
@@ -54,6 +56,8 @@ jobs:
           DB_HOST: ${{ vars.POSTGRES_HOST }}
           DB_NAME: ${{ vars.POSTGRES_DB }}
           DB_PORT: ${{ vars.POSTGRES_PORT }}
+          SMTP_USER: ${{ vars.SMTP_MAIL_USER}}
+          SMTP_PASSWORD: ${{ vars.SMTP_MAIL_PASSWORD }}
         run: |
           echo ***Executing Django Tests***
           cd src/Clean-Energy-PA-Site/
