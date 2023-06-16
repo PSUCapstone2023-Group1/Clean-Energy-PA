@@ -3,7 +3,8 @@ from django.urls import reverse
 from django.contrib import messages
 from .forms import RegisterForm
 from GreenEnergySearch.models import User_Preferences
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.safestring import mark_safe
 
@@ -13,10 +14,29 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 
+
 from .tokens import account_activation_token
 
 
 def activate(response, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(
+            response,
+            "Thank you for your email confirmation. Now you can login your account.",
+        )
+        return redirect("login")
+    else:
+        messages.error(response, "Activation link is invalid!")
     return redirect("login")
 
 
@@ -55,8 +75,8 @@ def register(response):
             user.first_name = form.cleaned_data["first_name"]
             user.last_name = form.cleaned_data["last_name"]
             user.zip_code = form.cleaned_data["zip_code"]
-            activateEmail(response, user, form.cleaned_data["email"])
             user.save()
+            activateEmail(response, user, form.cleaned_data["email"])
             user_preferences = User_Preferences(
                 user_id=user, zip_code=form.cleaned_data["zip_code"]
             )
@@ -68,7 +88,7 @@ def register(response):
     return render(response, "UserRegistration/register.html", {"form": form})
 
 
-def login(request):
+def user_login(request):
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -84,3 +104,10 @@ def login(request):
         form = AuthenticationForm()
 
     return render(request, "registration/login.html", {"form": form})
+
+
+@login_required
+def user_logout(response):
+    logout(response)
+    messages.info(response, "Logged out successfully!")
+    return redirect("home")

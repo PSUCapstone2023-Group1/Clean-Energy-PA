@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.shortcuts import resolve_url
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 
 from UserRegistration.utils import (
     generate_username,
@@ -46,6 +47,15 @@ class RegistrationTest(TestCase):
             self.assertEqual(response.status_code, expected_status_code)
         return response
 
+    def _assert_not_in_database(
+        self, response, existing_user_count, error_message=None
+    ):
+        self.assertEqual(response.status_code, 200)
+        if error_message is not None:
+            self.assertContains(response, error_message)
+        new_user_count = User.objects.count()
+        self.assertEqual(new_user_count, existing_user_count)
+
     def test_successful_registration_redirect_to_login(self):
         """Checking that valid form data will redirect to login"""
         # Simulate a POST request with valid registration data
@@ -69,9 +79,7 @@ class RegistrationTest(TestCase):
         existing_user_count = User.objects.count()
         self.form_data["email"] = "invalid email"
         response = self.client.post(self.register_url, self.form_data, follow=True)
-        self.assertEqual(response.status_code, 200)
-        new_user_count = User.objects.count()
-        self.assertEqual(new_user_count, existing_user_count)
+        self._assert_not_in_database(response, existing_user_count)
 
     def test_registration_fails_if_account_exists(self):
         """Testing that no user is created in DB if one already exists"""
@@ -83,10 +91,8 @@ class RegistrationTest(TestCase):
         response = self.client.post(
             self.register_url, data=self.form_data, follow=False
         )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "A user with that username already exists.")
-        new_user_count = User.objects.count()
-        self.assertEqual(new_user_count, existing_user_count)
+        error_message = "A user with that username already exists."
+        self._assert_not_in_database(response, existing_user_count, error_message)
 
     def test_username_character_count_limit(self):
         # Modify the form_data to have a username with too many characters
@@ -108,10 +114,7 @@ class RegistrationTest(TestCase):
         existing_user_count = User.objects.count()
         self.form_data["zip_code"] = generate_zip_code(is_valid=False)
         response = self.client.post(self.register_url, self.form_data, follow=True)
-        self.assertEqual(response.status_code, 200)
-
-        new_user_count = User.objects.count()
-        self.assertEqual(new_user_count, existing_user_count)
+        self._assert_not_in_database(response, existing_user_count)
 
     def test_zip_code_invalid_error_message(self):
         self.form_data["zip_code"] = generate_zip_code(is_valid=False)
