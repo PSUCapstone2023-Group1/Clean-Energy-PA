@@ -39,13 +39,13 @@ class TestZipSearch:
 
     def test_get_residential_from_zipcode_expected(self, requests_mock:requests_mock.Mocker): 
         requests_mock.get(self.endpoint, status_code=200, json=zipsearch_test_data.expected_example)
-        response:requests.Response = self.api.get_residential_from_zipcode(self.test_zipcode)
+        response:requests.Response = self.api.get_distributors_from_zipcode(self.test_zipcode)
         assert response.status_code == 200
         assert response.json != None
     
     def test_get_residential_from_zipcode_unexpected(self, requests_mock:requests_mock.Mocker): 
         requests_mock.get(self.endpoint, status_code=200, json=zipsearch_test_data.unexpected_example)
-        response:requests.Response = self.api.get_residential_from_zipcode(self.test_zipcode)
+        response:requests.Response = self.api.get_distributors_from_zipcode(self.test_zipcode)
         assert response.status_code == 200
         assert response.json != None
 

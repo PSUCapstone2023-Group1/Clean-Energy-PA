@@ -9,7 +9,7 @@ api = papowerswitch_api()
 
 print(api.get(api_settings.zip_seach_endpoint))
 
-residential = api.get_residential_from_zipcode(zip_code)
+residential = api.get_distributors_from_zipcode(zip_code)
 print('Residential Response:', residential.json())
 search_id = api.get_search_id(zip_code)
 peco_rate = api.get_peco_rate(zip_code)

@@ -1,5 +1,4 @@
 class zipsearch_response:
-    # TODO: make this more robust to invalid responses
     def __init__(self, zipsearch_json):
         self.id = str(zipsearch_json["id"])
         self.name = str(zipsearch_json["Name"])
@@ -11,7 +10,6 @@ class zipsearch_response:
         return self.id + ': ' + self.name
 
 class zipsearch_rate:
-    # TODO: make this more robust to invalid responses
     def __init__(self, zipsearch_rate_json):
         self.id = str(zipsearch_rate_json["id"])
         self.rate_schedule = str(zipsearch_rate_json["RateSchedule"])
