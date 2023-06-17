@@ -51,9 +51,21 @@ class distributor_collection:
     """list of distributors in the collection"""
     def __init__(self, distributors_json):
         self.collection = list(map(lambda x: distributor(x), distributors_json))
+        self.index = 0
 
     def __getitem__(self, index)->distributor:
         return self.collection[index]
     
     def __len__(self):
         return len(self.collection)
+    
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index < len(self.collection):
+            item = self.collection[self.index]
+            self.index += 1
+            return item
+        else:
+            raise StopIteration()
