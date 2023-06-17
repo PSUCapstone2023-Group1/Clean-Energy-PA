@@ -46,7 +46,7 @@ This endpoint requires a query be provided and the query string has two inputs
 
 Valid request example:
 
-```http
+```url
 www.papowerswitch.com/umbraco/Api/ShopApi/ZipSearch?zipcode=15025&servicetype=residential
 ```
 
@@ -129,7 +129,7 @@ This endpoint requires a query be provided and the query string has two inputs
 
 Valid request example:
 
-```http
+```url
 www.papowerswitch.com/umbraco/Api/ShopApi/Rates?id=27487&servicetype=residential&ratetype=RH+-+Residential+Heating+Service
 ```
 
