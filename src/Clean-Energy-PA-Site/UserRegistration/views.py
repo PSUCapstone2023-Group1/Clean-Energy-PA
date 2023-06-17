@@ -1,24 +1,36 @@
+# future
+
+# standard library
+
+# third-party
+
+# Django
 from django.shortcuts import render, redirect
-from django.urls import reverse
+
 from django.contrib import messages
-from .forms import RegisterForm
-from GreenEnergySearch.models import User_Preferences
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.utils.safestring import mark_safe
-
-from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
+
 from django.core.mail import EmailMessage
 
+from django.template.loader import render_to_string
 
+from django.urls import reverse
+
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.safestring import mark_safe
+
+# local Django
+from .forms import RegisterForm
+from GreenEnergySearch.models import User_Preferences
 from .tokens import account_activation_token
 
 
 def activate(response, uidb64, token):
+    """Handles the logic once user clicks activation link from email"""
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -41,6 +53,7 @@ def activate(response, uidb64, token):
 
 
 def activateEmail(response, user, to_email):
+    """Handles the logic for sending activation email to the user"""
     mail_subject = "Activate your user account."
     message = render_to_string(
         "UserRegistration/activate.html",
@@ -65,8 +78,8 @@ def activateEmail(response, user, to_email):
         )
 
 
-# Create your views here.
 def register(response):
+    """Logic for handling the user registration view"""
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
@@ -89,6 +102,7 @@ def register(response):
 
 
 def user_login(request):
+    """Logic for handling the user login view"""
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -108,6 +122,7 @@ def user_login(request):
 
 @login_required
 def user_logout(response):
+    """Logic for handling the user logout view"""
     logout(response)
     messages.info(response, "Logged out successfully!")
     return redirect("home")
