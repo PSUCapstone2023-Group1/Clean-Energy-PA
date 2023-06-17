@@ -105,7 +105,7 @@ class offer:
         if renewable_energy is not None:
             conditions.append(self.renewable_energy==renewable_energy)
         if lower_renewable_percentage is not None:
-            conditions.append(self.renewable_percentage>lower_renewable_percentage)
+            conditions.append(self.renewable_percentage>=lower_renewable_percentage)
         if price_structure is not None:
             conditions.append(self.price_structure==str(price_structure))
         if monthly_fee is not None:
@@ -117,7 +117,7 @@ class offer:
         if enrollment_fee is not None:
             conditions.append(self.enrollment_fee==enrollment_fee)
         if upper_rate is not None:
-            conditions.append(self.rate<upper_rate)
+            conditions.append(self.rate<=upper_rate)
 
         return len(conditions)==0 or all(conditions) # If no filter conditions were requested return true, otherwise verify that all filter conditions are true 
     
