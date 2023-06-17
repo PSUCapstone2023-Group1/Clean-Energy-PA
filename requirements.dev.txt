@@ -2,3 +2,4 @@ pytest
 pytest-cov
 requests-mock
 django-ebhealthcheck
+django-health-check
