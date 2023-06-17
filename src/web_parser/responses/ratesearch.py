@@ -107,7 +107,7 @@ class offer:
         if lower_renewable_percentage is not None:
             conditions.append(self.renewable_percentage>lower_renewable_percentage)
         if price_structure is not None:
-            conditions.append(self.price_structure==price_structure.value)
+            conditions.append(self.price_structure==str(price_structure))
         if monthly_fee is not None:
             conditions.append(self.monthly_fee==monthly_fee)
         if monthly_fee_amount is not None:
@@ -163,7 +163,7 @@ class offer_collection:
                 enrollment_fee:None|bool=None,
                 upper_rate:None|float=None):
         "Collection filter which returns a list of only the items where the filter conditions passed"
-        return [offer for offer in self.collection if offer.filter(name, 
+        return [offer for offer in self if offer.filter(name, 
                                                                 discount_available,
                                                                 net_metering, pa_wind,
                                                                 renewable_pa, solar, 
