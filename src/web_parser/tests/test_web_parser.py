@@ -91,7 +91,7 @@ class TestRatesearch:
 
     def test_get_options_expected(self, requests_mock:requests_mock.Mocker): 
         requests_mock.get(self.endpoint, status_code=200, json=ratesearch_test_data.expected_example)
-        options = self.api.get_options(self.test_searchid, 1)
+        options = self.api.get_offers(self.test_searchid, 1)
         # Filter worked for one of the options
         assert len(options)>0
         # Shows filter worked for second option
@@ -101,5 +101,5 @@ class TestRatesearch:
     def test_get_get_options_unexpected(self, requests_mock:requests_mock.Mocker): 
         requests_mock.get(self.endpoint, status_code=200, json=ratesearch_test_data.unexpected_example)
         with pytest.raises(ValueError):
-            self.api.get_options(self.test_searchid, 0.1)
+            self.api.get_offers(self.test_searchid, 0.1)
         

@@ -1,11 +1,14 @@
 import requests
 from api_core import api_core
-from responses.ratesearch import ratesearch_response
-from responses.zipsearch import zipsearch_response
+from responses.ratesearch import offer_collection
+from responses.zipsearch import distributor_collection
 
 class papowerswitch_api:
     failed_preface = "Request failed with status code:"
-    api_core = api_core()
+    api: api_core
+
+    def __init__(self):
+        self.api = api_core()
 
     def get_distributors(self, zip_code:str|int):
         """
@@ -15,22 +18,22 @@ class papowerswitch_api:
             zip_code (str|int): The zip code to search against
 
         Returns:
-            list[zipsearch_response]: A list of zipsearch_response objects
+            distributor_collection: A collection handler for the distributor object
 
         Exceptions:
             requests.exceptions.HTTPError: If not (200) OK response
-            ValueError: If the response json is not parsable into a list of zipsearch_responses
+            ValueError: If the response json is not parsable as expected
         """
-        response:requests.Response = api_core.get_zipsearch_endpoint(zip_code)
+        response:requests.Response = self.api.get_zipsearch_endpoint(zip_code)
         if response.status_code == 200:
-            data = list(map(lambda x: zipsearch_response(x), response.json())) #convert json to zipsearch_response objects
+            data = distributor_collection(response.json()) #convert json to a distributor collection
             return data
         else:
             print(self.failed_preface, response.status_code)
             response.raise_for_status()
             
 
-    def get_options(self, id:str|int, rate_type:str):
+    def get_offers(self, id:str|int, rate_type:str):
         """
         Make a get request to the rates endpoint and realize a (200) OK message into a list of ratesearch response objects
 
@@ -40,15 +43,15 @@ class papowerswitch_api:
             rate_type (str): The rate schedule selected
 
         Returns:
-            list[ratesearch_response]: The response object 
+            offer_collection: A collection handler for the offer object
 
         Exceptions:
             requests.exceptions.HTTPError: If not (200) OK response
-            ValueError: If the response json is not parsable into a list of ratesearch_responses
+            ValueError: If the response json is not parsable as expected
         """
-        response:requests.Response = api_core.get_rates_endpoint(id, rate_type)
+        response:requests.Response = self.api.get_rates_endpoint(id, rate_type)
         if response.status_code == 200:
-            data = list(map(lambda x: ratesearch_response(x), response.json())) #convert json to ratesearch_response objects
+            data = offer_collection(response.json()) #convert json to an offer collection
             return data
         else:
             print(self.failed_preface, response.status_code)
