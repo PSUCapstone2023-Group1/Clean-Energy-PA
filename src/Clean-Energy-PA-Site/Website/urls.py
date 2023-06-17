@@ -23,6 +23,5 @@ urlpatterns = [
     path("register/", v.register, name="register"),
     path("login/", v.login, name="login"),
     path("", include("GreenEnergySearch.urls")),
-    path("", include("django.contrib.auth.urls")),
-    path("health_check/", include('health_check.urls'))
+    path("", include("django.contrib.auth.urls"))
 ]
