@@ -9,7 +9,7 @@ expected_example = [
     },
     "Phone": "1-800-225-3813",
     "PriceStructure": "fixed",
-    "DiscountAvailable": False,
+    "DiscountAvailable": True,
     "IntroductoryPrice": False,
     "RenewableEnergy": False,
     "CancellationFee": "",

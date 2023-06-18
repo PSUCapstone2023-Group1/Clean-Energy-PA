@@ -1,55 +1,58 @@
 import requests
-import api_settings
-from responses.ratesearch import ratesearch_response
-from responses.zipsearch import zipsearch_response
+from api_core import api_core
+from responses.ratesearch import offer_collection
+from responses.zipsearch import distributor_collection
 
 class papowerswitch_api:
     failed_preface = "Request failed with status code:"
-    request_log_preface = "Retrieving from the following endpoint:"
+    api: api_core
 
-    def get(self, endpoint):
-        return requests.get(api_settings.base_url + endpoint)
-    
-    def get_residential_from_zipcode(self, zip_code:str|int):
-        service_type = "residential" #TODO: may want to pull this out as a parameter
-        endpoint = api_settings.zip_seach_endpoint + "?zipcode=" + str(zip_code)  + "&servicetype=" +service_type
-        return self.get(endpoint)
-    
-    def get_rates_from_id(self, id:str|int):
-        service_type = "residential"
-        rate_type = "R+-+Regular+Residential+Service"
-        endpoint = api_settings.rates_endpoint + "?id=" + str(id)  + "&servicetype=" +service_type + "&ratetype=" + rate_type
-        return self.get(endpoint)
-    
-    def get_search_id(self, zip_code:str|int):
-        response = self.get_residential_from_zipcode(zip_code)
+    def __init__(self):
+        self.api = api_core()
+
+    def get_distributors(self, zip_code:str|int):
+        """
+        Make a get request to the zipsearch endpoint and realize a (200) OK message into a list of zipsearch response objects
+
+        Parameters:
+            zip_code (str|int): The zip code to search against
+
+        Returns:
+            distributor_collection: A collection handler for the distributor object
+
+        Exceptions:
+            requests.exceptions.HTTPError: If not (200) OK response
+            ValueError: If the response json is not parsable as expected
+        """
+        response:requests.Response = self.api.get_zipsearch_endpoint(zip_code)
         if response.status_code == 200:
-            data = list(map(lambda x: zipsearch_response(x), response.json())) #convert json to zipsearch_response objects
-            return data[0].id
-        # Process the data
+            data = distributor_collection(response.json()) #convert json to a distributor collection
+            return data
         else:
             print(self.failed_preface, response.status_code)
-    
-    def get_peco_rate(self, zip_code:str|int):
-        response = self.get_residential_from_zipcode(zip_code)
+            response.raise_for_status()
+            
+
+    def get_offers(self, id:str|int, rate_type:str):
+        """
+        Make a get request to the rates endpoint and realize a (200) OK message into a list of ratesearch response objects
+
+        Parameters:
+            distributor_id (str|int): The api id of the selected distributor
+
+            rate_type (str): The rate schedule selected
+
+        Returns:
+            offer_collection: A collection handler for the offer object
+
+        Exceptions:
+            requests.exceptions.HTTPError: If not (200) OK response
+            ValueError: If the response json is not parsable as expected
+        """
+        response:requests.Response = self.api.get_rates_endpoint(id, rate_type)
         if response.status_code == 200:
-            data = list(map(lambda x: zipsearch_response(x), response.json())) #convert json to zipsearch_response objects
-            return data[0].rates[0].rate
-            # Process the data
+            data = offer_collection(response.json()) #convert json to an offer collection
+            return data
         else:
             print(self.failed_preface, response.status_code)
-
-    def get_options(self, id:str|int, peco_rate:float):
-        response = self.get_rates_from_id(id)
-        if response.status_code == 200:
-            data = list(map(lambda x: ratesearch_response(x), response.json())) #convert json to ratesearch_response objects
-            # Filter the JSON body by multiple attributes
-            filtered_data = [rate_obj for rate_obj in data if rate_obj.default_filter(peco_rate)] # need to dynamically get that PECO rate still
-
-            # Sort by lowest 
-            sorted_data = sorted(filtered_data, key=lambda rate_obj: rate_obj.rate)
-
-            return sorted_data
-
-        else:
-            print("Request failed with status code:", response.status_code)
+            response.raise_for_status()
