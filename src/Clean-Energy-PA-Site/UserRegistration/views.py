@@ -26,7 +26,6 @@ from django.utils.safestring import mark_safe
 # local Django
 from .forms import RegisterForm
 from GreenEnergySearch.models import User_Preferences
-from UserProfile.models import User_Profile
 from .tokens import account_activation_token
 
 
@@ -97,13 +96,11 @@ def register(response):
 
             # Update User_Preferences model
             user_preferences = User_Preferences(
-                user_id=user, zip_code=form.cleaned_data["zip_code"]
+                user_id=user,
+                zip_code=form.cleaned_data["zip_code"],
+                email_notifications=True,
             )
             user_preferences.save()
-
-            # Update User_Profile model with the default email notification selection
-            user_profile = User_Profile(user_id=user, email_notifications=False)
-            user_profile.save()
 
             return redirect(reverse("login"))
     else:

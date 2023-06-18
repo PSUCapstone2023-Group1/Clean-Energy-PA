@@ -16,6 +16,8 @@ class User_Preferences(models.Model):
     selected_offer_id = models.BigIntegerField(default=-1)
     # The price per kWh rate that the user saved
     selected_offer_rate = models.FloatField(default=-1)
+    # Users email notification preference
+    email_notifications = models.BooleanField(default=True)
 
     def __str__(self):
         return self.rate_schedule
