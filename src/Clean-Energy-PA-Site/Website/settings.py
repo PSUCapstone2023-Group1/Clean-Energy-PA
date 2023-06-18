@@ -22,10 +22,10 @@ environ.Env.read_env()
 
 def get_environ_vars():
     completed_process = subprocess.run(
-        ['/opt/elasticbeanstalk/bin/get-config', 'environment'],
+        ["/opt/elasticbeanstalk/bin/get-config", "environment"],
         stdout=subprocess.PIPE,
         text=True,
-        check=True
+        check=True,
     )
 
     return ast.literal_eval(completed_process.stdout)
@@ -44,8 +44,11 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1",
-                 "clean-energy-pa.us-east-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "clean-energy-pa.us-east-2.elasticbeanstalk.com",
+]
 
 # Application definition
 
@@ -60,6 +63,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserRegistration.apps.UserregistrationConfig",
+    "UserProfile.apps.UserprofileConfig",
 ]
 
 MIDDLEWARE = [
@@ -96,15 +100,15 @@ WSGI_APPLICATION = "Website.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # Add production flag
-if 'RDS_DB_NAME' in os.environ:
+if "RDS_DB_NAME" in os.environ:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.environ["RDS_DB_NAME"],
+            "USER": os.environ["RDS_USERNAME"],
+            "PASSWORD": os.environ["RDS_PASSWORD"],
+            "HOST": os.environ["RDS_HOSTNAME"],
+            "PORT": os.environ["RDS_PORT"],
         }
     }
 else:
@@ -118,6 +122,18 @@ else:
             "PORT": env("DB_PORT"),
         }
     }
+
+# Email Setttings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_FROM = env("SMTP_USER")
+EMAIL_HOST_USER = env("SMTP_USER")
+EMAIL_HOST_PASSWORD = env("SMTP_PASSWORD")
+
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+PASSWORD_RESET_TIMEOUT = 14400
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
