@@ -17,18 +17,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from UserRegistration.views import register, user_login, user_logout, activate
-from UserProfile.views import profile
+from UserProfile.views import profile, update_email_preferences
 from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("django.contrib.auth.urls")),
+    # GreenEnergySearch
+    path("", include("GreenEnergySearch.urls")),
+    # UserRegistration
     path("register/", register, name="register"),
     path("login/", user_login, name="login"),
     path("logout/", user_logout, name="logout"),
-    path("profile/", profile, name="profile"),
-    path("", include("GreenEnergySearch.urls")),
-    path("", include("django.contrib.auth.urls")),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
-    # path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    # UserProfile
+    path("profile/", profile, name="profile"),
+    path(
+        "update_email_preferences/",
+        update_email_preferences,
+        name="update_email_preferences",
+    ),
 ]
