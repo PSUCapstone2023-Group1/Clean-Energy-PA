@@ -14,6 +14,9 @@ class RegisterForm(UserCreationForm):
     last_name = forms.CharField(max_length=30)
     email = forms.EmailField()
     zip_code = forms.CharField(max_length=10)
+    email_notifications = forms.BooleanField(
+        required=False, initial=True, label="Receive Email Notifications"
+    )
 
     class Meta:
         model = User
@@ -25,6 +28,7 @@ class RegisterForm(UserCreationForm):
             "zip_code",
             "password1",
             "password2",
+            "email_notifications",
         ]
 
     def clean_zip_code(self):

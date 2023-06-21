@@ -98,7 +98,7 @@ def register(response):
             user_preferences = User_Preferences(
                 user_id=user,
                 zip_code=form.cleaned_data["zip_code"],
-                email_notifications=True,
+                email_notifications=form.cleaned_data["email_notifications"],
             )
             user_preferences.save()
 
