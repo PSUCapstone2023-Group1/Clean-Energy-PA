@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from GreenEnergySearch.models import User_Preferences
-from .forms import EmailNotificationForm
+from .forms import EmailNotificationPreferenceForm
 
 
 @login_required
@@ -11,7 +11,9 @@ def profile(request):
 
     user_profile = User_Preferences.objects.get(user_id=request.user)
     email_notifications = user_profile.email_notifications
-    form = EmailNotificationForm(initial={"email_notifications": email_notifications})
+    form = EmailNotificationPreferenceForm(
+        initial={"email_notifications": email_notifications}
+    )
     context = {"user": request.user, "zip_code": zip_code, "form": form}
     return render(request, "profile.html", context)
 
@@ -20,15 +22,14 @@ def profile(request):
 def update_email_preferences(request):
     user_profile = User_Preferences.objects.get(user_id=request.user)
     if request.method == "POST":
-        form = EmailNotificationForm(request.POST)
+        form = EmailNotificationPreferenceForm(request.POST)
         if form.is_valid():
             email_notifications = form.cleaned_data["email_notifications"]
             user_profile.email_notifications = email_notifications
             user_profile.save()
-            return redirect("profile")
     else:
         email_notifications = user_profile.email_notifications
-        form = EmailNotificationForm(
+        form = EmailNotificationPreferenceForm(
             initial={"email_notifications": email_notifications}
         )
 

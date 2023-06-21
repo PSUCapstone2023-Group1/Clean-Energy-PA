@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 from UserRegistration.views import register, user_login, user_logout, activate
 from UserProfile.views import profile, update_email_preferences
-from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [

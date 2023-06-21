@@ -1,7 +1,7 @@
 from django import forms
 
 
-class EmailNotificationForm(forms.Form):
+class EmailNotificationPreferenceForm(forms.Form):
     email_notifications = forms.BooleanField(
-        label="Enable Email Notifications", required=False
+        initial=True, label="Enable Email Notifications", required=False
     )
