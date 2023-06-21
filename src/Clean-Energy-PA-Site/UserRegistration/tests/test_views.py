@@ -197,7 +197,7 @@ class LoginViewTest(BaseTest):
 
 class LogoutViewTest(BaseTest):
     def test_access_logout(self):
-        """Test ID: Test validates the logout page is accessible"""
+        """Test ID : Test validates the logout page is accessible"""
         # TODO: Figure out why user_logout view isn't reporting as covered
         url = reverse("activate", kwargs={"uidb64": self.uid, "token": self.token})
         self.client.get(url)
