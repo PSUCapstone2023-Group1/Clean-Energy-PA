@@ -10,4 +10,5 @@ urlpatterns = [
         views.update_email_preferences,
         name="update_email_preferences",
     ),
+    path("delete_account/", views.delete_account, name="delete_account"),
 ]

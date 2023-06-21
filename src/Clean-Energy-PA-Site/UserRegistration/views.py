@@ -58,7 +58,7 @@ def activateEmail(response, user, to_email):
     message = render_to_string(
         "UserRegistration/activate.html",
         {
-            "user": user.username,
+            "user": user,
             "domain": get_current_site(response).domain,
             "uid": urlsafe_base64_encode(force_bytes(user.pk)),
             "token": account_activation_token.make_token(user),
@@ -86,6 +86,7 @@ def register(response):
             # Update default User model
             user = form.save(commit=False)
             user.is_active = False  # If user is NOT active they cannot log in
+            user.username = form.cleaned_data["username"]
             user.first_name = form.cleaned_data["first_name"]
             user.last_name = form.cleaned_data["last_name"]
             user.zip_code = form.cleaned_data["zip_code"]

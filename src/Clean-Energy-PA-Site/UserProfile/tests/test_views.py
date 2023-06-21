@@ -13,10 +13,11 @@ class BaseTest(TestCase):
         """Basic test setup, create a test user,
         set email notifications to True, log user in"""
         self.user = User.objects.create_user(
-            username="testuser", password="testpassword"
+            username="testuser", email="testuser@example.com", password="testpassword"
         )
         User_Preferences.objects.create(user_id=self.user, email_notifications=True)
         self.profile_url = reverse("profile")
+        self.account_deletion_url = reverse("delete_account")
         self.client.login(username="testuser", password="testpassword")
         self.update_email_preferences_url = reverse("update_email_preferences")
         return super().setUp()
@@ -74,3 +75,23 @@ class UpdateEmailPreferencesTest(BaseTest):
         update_email_preferences view is reachable"""
         response = self.client.get(self.update_email_preferences_url)
         self.assertEqual(response.status_code, 200)
+
+
+class DeleteAccountTest(BaseTest):
+    def test_account_deletion(self):
+        """Test ID: Testing that the account deletion view can be loaded
+        succesfully and the account_deletion html template is being rendered"""
+        response = self.client.get(self.profile_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profile.html")
+        self.assertTrue(User.objects.filter(username="testuser").exists())
+        # Simulate the user clicking "OK" on the confirmation popup
+        response = self.client.post("/delete_account/", follow=True)
+        self.assertRedirects(response, "/")
+        self.assertFalse(User.objects.filter(username="testuser").exists())
+
+    def test_non_post_method(self):
+        """Test ID: Testing non-POST method"""
+        response = self.client.get(self.account_deletion_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profile.html")
