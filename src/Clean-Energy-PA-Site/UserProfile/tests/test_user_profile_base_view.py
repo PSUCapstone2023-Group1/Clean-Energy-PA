@@ -16,6 +16,7 @@ class UserProfileBaseTest(BaseTest):
         self.profile_url = reverse("profile")
         self.account_deletion_url = reverse("delete_account")
         self.update_email_preferences_url = reverse("update_email_preferences")
+        self.password_reset_from_profile_url = reverse("password_reset_from_profile")
 
         # Get the email notifications
         User_Preferences.objects.create(user_id=self.user, email_notifications=True)

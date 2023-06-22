@@ -1,4 +1,5 @@
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
+from django.urls import reverse
 
 
 class UserProfileTest(UserProfileBaseTest):
@@ -42,6 +43,5 @@ class UserProfileTest(UserProfileBaseTest):
         response = self.client.post(
             self.update_email_preferences_url, {"email_notifications": False}
         )
-        updated_form = response.context["form"]
-        updated_checkbox = updated_form["email_notifications"]
-        self.assertFalse(updated_checkbox.value())
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("profile") + "?form=success")

@@ -9,6 +9,8 @@ from django.core.mail import EmailMessage
 from django.utils.safestring import mark_safe
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def sendDeleteConfirmationEmail(response, user, to_email):
@@ -56,6 +58,7 @@ def update_email_preferences(request):
             email_notifications = form.cleaned_data["email_notifications"]
             user_profile.email_notifications = email_notifications
             user_profile.save()
+            return HttpResponseRedirect(f"{reverse('profile')}?form=success")
     else:
         email_notifications = user_profile.email_notifications
         form = EmailNotificationPreferenceForm(
