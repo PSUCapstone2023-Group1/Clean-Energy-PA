@@ -56,7 +56,7 @@ def activateEmail(response, user, to_email):
     """Handles the logic for sending activation email to the user"""
     mail_subject = "Activate your user account."
     message = render_to_string(
-        "UserRegistration/activate.html",
+        "activate.html",
         {
             "user": user,
             "domain": get_current_site(response).domain,
@@ -106,7 +106,7 @@ def register(response):
             return redirect(reverse("login"))
     else:
         form = RegisterForm()
-    return render(response, "UserRegistration/register.html", {"form": form})
+    return render(response, "register.html", {"form": form})
 
 
 def user_login(request):

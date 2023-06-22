@@ -11,4 +11,9 @@ urlpatterns = [
         name="update_email_preferences",
     ),
     path("delete_account/", views.delete_account, name="delete_account"),
+    path(
+        "password_reset_from_profile/",
+        views.password_reset_from_profile,
+        name="password_reset_from_profile",
+    ),
 ]

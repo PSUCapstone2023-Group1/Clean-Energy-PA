@@ -7,13 +7,15 @@ from .forms import EmailNotificationPreferenceForm
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.utils.safestring import mark_safe
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 def sendDeleteConfirmationEmail(response, user, to_email):
     """Handles the logic for sending account deletion email to the user"""
     mail_subject = "Account Deletion: You're account has been deleted"
     message = render_to_string(
-        "UserProfile/account_deletion_confirmation.html",
+        "account_deletion_confirmation.html",
         {
             "user": user,
         },
@@ -80,3 +82,19 @@ def delete_account(request):
             return redirect("home")
     else:
         return render(request, "profile.html")
+
+
+@login_required
+def password_reset_from_profile(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Your password has been successfully updated.")
+            return redirect("profile")
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = PasswordChangeForm(user=request.user)
+    return render(request, "password_reset_from_profile.html", {"form": form})

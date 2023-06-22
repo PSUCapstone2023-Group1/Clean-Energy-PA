@@ -17,7 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from UserRegistration.views import register, user_login, user_logout, activate
-from UserProfile.views import profile, update_email_preferences, delete_account
+from UserProfile.views import (
+    profile,
+    update_email_preferences,
+    delete_account,
+    password_reset_from_profile,
+)
 
 
 urlpatterns = [
@@ -27,8 +32,8 @@ urlpatterns = [
     path("", include("GreenEnergySearch.urls")),
     # UserRegistration
     path("register/", register, name="register"),
-    path("login/", user_login, name="login"),
-    path("logout/", user_logout, name="logout"),
+    path("registration/login/", user_login, name="login"),
+    path("user_logout/", user_logout, name="user_logout"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
     # UserProfile
     path("profile/", profile, name="profile"),
@@ -38,4 +43,9 @@ urlpatterns = [
         name="update_email_preferences",
     ),
     path("delete_account/", delete_account, name="delete_account"),
+    path(
+        "password_reset_from_profile/",
+        password_reset_from_profile,
+        name="password_reset_from_profile",
+    ),
 ]

@@ -4,6 +4,8 @@
   User Profile
 {% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
   <div class="container">
     <div class="row justify-content-center">
@@ -63,7 +65,7 @@
             </div>
 
             <div class="mb-3 d-flex justify-content-between">
-              <a href="#" class="btn btn-primary">Update Password</a>
+              <a href="{% url 'password_reset_from_profile' %}" class="btn btn-primary">Update Password</a>
               <form method="POST" action="{% url 'delete_account' %}" id="delete-account-form">
                 {% comment %} See Script Tags at the bottom {% endcomment %}
                 {% csrf_token %}
@@ -77,8 +79,8 @@
     </div>
   </div>
 
-
   <script>
+
     function confirmDelete() {
       var confirmed = confirm("Are you sure you want to delete your account?");
       if (confirmed) {

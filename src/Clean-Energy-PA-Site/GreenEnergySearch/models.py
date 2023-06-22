@@ -20,4 +20,4 @@ class User_Preferences(models.Model):
     email_notifications = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.user_id
+        return str(self.user_id)
