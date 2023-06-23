@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserRegistration.apps.UserregistrationConfig",
-    "UserProfile.apps.UserprofileConfig,
+    "UserProfile.apps.UserprofileConfig",
     "health_check",
     "ebhealthcheck.apps.EBHealthCheckConfig"
 ]
