@@ -13,9 +13,8 @@ class UserProfileBaseTest(BaseTest):
         # setUp for UserProfileBaseTest
 
         # urls
-        self.profile_url = reverse("profile")
+        self.profile_url = reverse("edit_profile")
         self.account_deletion_url = reverse("delete_account")
-        self.update_email_preferences_url = reverse("update_email_preferences")
         self.password_reset_from_profile_url = reverse("password_reset_from_profile")
 
         # Get the email notifications

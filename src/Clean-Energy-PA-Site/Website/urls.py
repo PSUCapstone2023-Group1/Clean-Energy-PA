@@ -25,10 +25,11 @@ from UserRegistration.views import (
     # reset_password_from_login,
 )
 from UserProfile.views import (
-    profile,
-    update_email_preferences,
+    # profile,
+    # update_email_preferences,
     delete_account,
     password_reset_from_profile,
+    edit_profile,
 )
 from GreenEnergySearch.views import home
 
@@ -44,6 +45,7 @@ urlpatterns = [
     path("registration/login/", user_login, name="login"),
     path("user_logout/", user_logout, name="user_logout"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
+    # UserRegistration: Password Reset [Logged out]
     path(
         "reset_password/",
         auth_views.PasswordResetView.as_view(
@@ -73,12 +75,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     # UserProfile
-    path("profile/", profile, name="profile"),
-    path(
-        "update_email_preferences/",
-        update_email_preferences,
-        name="update_email_preferences",
-    ),
+    path("edit_profile/", edit_profile, name="edit_profile"),
     path("delete_account/", delete_account, name="delete_account"),
     path(
         "password_reset_from_profile/",

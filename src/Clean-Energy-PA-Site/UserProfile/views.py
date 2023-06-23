@@ -1,16 +1,23 @@
+# future
+
+# standard library
+
+# third-party
+
+# Django
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from GreenEnergySearch.models import User_Preferences
-from .forms import EmailNotificationPreferenceForm
-from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-from django.utils.safestring import mark_safe
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+
+# local Django
+from GreenEnergySearch.models import User_Preferences
+from .forms import UserProfileChangeForm
 
 
 def sendDeleteConfirmationEmail(response, user, to_email):
@@ -36,40 +43,6 @@ def sendDeleteConfirmationEmail(response, user, to_email):
 
 
 @login_required
-def profile(request):
-    user_preferences = User_Preferences.objects.get(user_id=request.user)
-    zip_code = user_preferences.zip_code
-
-    user_profile = User_Preferences.objects.get(user_id=request.user)
-    email_notifications = user_profile.email_notifications
-    form = EmailNotificationPreferenceForm(
-        initial={"email_notifications": email_notifications}
-    )
-    context = {"user": request.user, "zip_code": zip_code, "form": form}
-    return render(request, "profile.html", context)
-
-
-@login_required
-def update_email_preferences(request):
-    user_profile = User_Preferences.objects.get(user_id=request.user)
-    if request.method == "POST":
-        form = EmailNotificationPreferenceForm(request.POST)
-        if form.is_valid():
-            email_notifications = form.cleaned_data["email_notifications"]
-            user_profile.email_notifications = email_notifications
-            user_profile.save()
-            return HttpResponseRedirect(f"{reverse('profile')}?form=success")
-    else:
-        email_notifications = user_profile.email_notifications
-        form = EmailNotificationPreferenceForm(
-            initial={"email_notifications": email_notifications}
-        )
-
-    context = {"form": form}
-    return render(request, "profile.html", context)
-
-
-@login_required
 def delete_account(request):
     if request.method == "POST":
         user = request.user
@@ -84,7 +57,7 @@ def delete_account(request):
             logout(request)
             return redirect("home")
     else:
-        return render(request, "profile.html")
+        return redirect("edit_profile")
 
 
 @login_required
@@ -95,9 +68,51 @@ def password_reset_from_profile(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, "Your password has been successfully updated.")
-            return redirect("profile")
+            return redirect("edit_profile")
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = PasswordChangeForm(user=request.user)
     return render(request, "password_reset_from_profile.html", {"form": form})
+
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    try:
+        user_preferences = User_Preferences.objects.get(user_id=user)
+    except User_Preferences.DoesNotExist:
+        user_preferences = None
+
+    if request.method == "POST":
+        form = UserProfileChangeForm(
+            request.POST, instance=user, initial={"preferences": user_preferences}
+        )
+        if form.is_valid():
+            # Update the user model
+            user_instance = form.save(commit=False)
+            user_instance.first_name = form.cleaned_data["first_name"]
+            user_instance.last_name = form.cleaned_data["last_name"]
+            user_instance.save()
+
+            # Update the user_preferences
+            if user_preferences:
+                user_preferences.zip_code = form.cleaned_data["zip_code"]
+                user_preferences.email_notifications = form.cleaned_data[
+                    "email_notifications"
+                ]
+                user_preferences.save()
+            else:
+                user_preferences = User_Preferences(
+                    user_id=user,
+                    zip_code=form.cleaned_data["zip_code"],
+                    email_notifications=form.cleaned_data["email_notifications"],
+                )
+                user_preferences.save()
+    else:
+        form = UserProfileChangeForm(
+            instance=user, initial={"preferences": user_preferences}
+        )
+
+    context = {"user": request.user, "form": form}
+    return render(request, "edit_profile.html", context)

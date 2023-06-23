@@ -9,7 +9,7 @@ class DeleteAccountTest(UserProfileBaseTest):
         succesfully and the account_deletion html template is being rendered"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "profile.html")
+        self.assertTemplateUsed(response, "edit_profile.html")
         self.assertTrue(User.objects.filter(username="testuser").exists())
         # Simulate the user clicking "OK" on the confirmation popup
         response = self.client.post("/delete_account/", follow=True)
@@ -19,5 +19,4 @@ class DeleteAccountTest(UserProfileBaseTest):
     def test_non_post_method(self):
         """Test ID 50: Testing non-POST method"""
         response = self.client.get(self.account_deletion_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "profile.html")
+        self.assertEqual(response.status_code, 302)

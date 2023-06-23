@@ -5,21 +5,15 @@
 # third-party
 
 # Django
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import PasswordResetForm
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site
-
 from django.core.mail import EmailMessage
-
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-
 from django.urls import reverse
-
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.utils.safestring import mark_safe
@@ -86,14 +80,15 @@ def register(request):
         if form.is_valid():
             # Update default User model
             user = form.save(commit=False)
-
             email = request.POST.get("email")
             try:
+                # Look for a user matching that email
                 User = get_user_model()
                 user = User.objects.get(email=email)
                 messages.info(request, "An account with this email already exists!")
                 return render(request, "register.html", {"form": form})
             except User.DoesNotExist:
+                # If user with that email does not exist proceed
                 user.is_active = False  # If user is NOT active they cannot log in
                 user.username = form.cleaned_data["username"]
                 user.first_name = form.cleaned_data["first_name"]

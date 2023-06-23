@@ -1,5 +1,4 @@
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
-from django.urls import reverse
 
 
 class UserProfileTest(UserProfileBaseTest):
@@ -8,7 +7,7 @@ class UserProfileTest(UserProfileBaseTest):
         succesfully and the profile html template is being rendered"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "profile.html")
+        self.assertTemplateUsed(response, "edit_profile.html")
 
     def test_email_notification_preferences(self):
         """Test ID 56: Test verifies that the option for
@@ -40,8 +39,6 @@ class UserProfileTest(UserProfileBaseTest):
         form = response.context["form"]
         self.assertTrue(form.initial["email_notifications"])
         # Update the email notification preference to False
-        response = self.client.post(
-            self.update_email_preferences_url, {"email_notifications": False}
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("profile") + "?form=success")
+        response = self.client.post(self.profile_url, {"email_notifications": False})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "edit_profile.html")
