@@ -17,5 +17,5 @@ class LogoutViewTest(BaseTest):
         self._login_user()
         response = self.client.get(reverse("user_logout"))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("home"))
         self.assertFalse(response.wsgi_request.user.is_authenticated)

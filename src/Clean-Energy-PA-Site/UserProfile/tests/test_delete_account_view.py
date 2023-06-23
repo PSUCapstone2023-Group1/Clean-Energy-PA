@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.contrib.auth.models import User
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
 
@@ -12,7 +13,7 @@ class DeleteAccountTest(UserProfileBaseTest):
         self.assertTrue(User.objects.filter(username="testuser").exists())
         # Simulate the user clicking "OK" on the confirmation popup
         response = self.client.post("/delete_account/", follow=True)
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("home"))
         self.assertFalse(User.objects.filter(username="testuser").exists())
 
     def test_non_post_method(self):
