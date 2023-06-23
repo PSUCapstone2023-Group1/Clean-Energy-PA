@@ -44,12 +44,6 @@ urlpatterns = [
     path("registration/login/", user_login, name="login"),
     path("user_logout/", user_logout, name="user_logout"),
     path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
-    # path(
-    #     "reset_password_from_login/",
-    #     reset_password_from_login,
-    #     name="reset_password_from_login",
-    # ),
-    # Password reset URLs
     path(
         "reset_password/",
         auth_views.PasswordResetView.as_view(
@@ -74,7 +68,7 @@ urlpatterns = [
     path(
         "reset_password_complete/",
         auth_views.PasswordResetCompleteView.as_view(
-            template_name="registration/password_reset_done.html"
+            template_name="registration/password_reset_complete.html"
         ),
         name="password_reset_complete",
     ),

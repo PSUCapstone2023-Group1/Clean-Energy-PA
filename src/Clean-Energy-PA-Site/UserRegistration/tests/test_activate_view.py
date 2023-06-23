@@ -14,7 +14,7 @@ from UserRegistration.tests.test_base_view import BaseTest
 
 class ActivateViewTest(BaseTest):
     def test_activate_valid_token(self):
-        """Test ID: Valid token changes user.is_active to True"""
+        """Test ID 46: Valid token changes user.is_active to True"""
         url = reverse("activate", kwargs={"uidb64": self.uid, "token": self.token})
         response = self.client.get(url)
         self.assertRedirects(response, reverse("login"))

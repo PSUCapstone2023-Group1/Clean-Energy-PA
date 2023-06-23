@@ -143,26 +143,3 @@ def user_logout(request):
     logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect("home")
-
-
-# def reset_password_from_login(request):
-#     if request.method == "POST":
-#         form = PasswordResetForm(request.POST)
-#         if form.is_valid():
-#             form.save(request=request)
-#             email = request.POST.get("email")
-#             try:
-#                 User = get_user_model()
-#                 user = User.objects.get(email=email)
-#             except User.DoesNotExist:
-#                 pass
-#             messages.info(
-#                 request,
-#                 "If an account exists for this user an email will be sent to reset the password",
-#             )
-#             return redirect("login")  # Assuming you have a 'login' URL name
-
-#     else:
-#         form = PasswordResetForm()
-
-#     return render(request, "reset_password_from_login.html", {"form": form})

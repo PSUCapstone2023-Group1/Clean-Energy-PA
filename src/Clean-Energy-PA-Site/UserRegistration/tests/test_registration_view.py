@@ -25,7 +25,7 @@ class RegistrationViewTest(BaseTest):
 
     def test_registration_get_request(self):
         """
-        Test ID: Registration page can be rendered with GET request
+        Test ID 45: Registration page can be rendered with GET request
         """
         response = self.client.get(self.register_url)
         self.assertEqual(response.status_code, 200)
