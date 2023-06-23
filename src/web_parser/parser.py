@@ -1,22 +1,23 @@
 from papowerswitch_api import papowerswitch_api
-from responses.zipsearch import zipsearch_response
-import tests.zipsearch_test_data
-import api_settings
+from responses.ratesearch import price_structure
 
 zip_code = 19473
 
 api = papowerswitch_api()
 
-print(api.get(api_settings.zip_seach_endpoint))
+distributors = api.get_distributors(zip_code)
 
-residential = api.get_residential_from_zipcode(zip_code)
-print('Residential Response:', residential.json())
-search_id = api.get_search_id(zip_code)
-peco_rate = api.get_peco_rate(zip_code)
+selected_distributor = distributors[0]
+selected_rate = selected_distributor.rates[0]
 
-print('Search_Id:', search_id)
-print('Peco Rate:', peco_rate)
+print('Search_Id:', selected_distributor.id)
+print('Selected Distributor Rate:', selected_distributor.rates[0].rate)
 
-options = api.get_options(search_id, peco_rate)
-for option in options:
-    print(option.__str__())
+offers = api.get_offers(selected_distributor.id, selected_rate.rate_schedule)
+
+filtered_offers = offers.filter(price_structure=price_structure.fixed, upper_rate=1)
+
+print("Total Offers Count:", len(offers))
+print("Filtered Offers Count:", len(filtered_offers))
+for filtered_offers in filtered_offers:
+    print(filtered_offers.__str__())
