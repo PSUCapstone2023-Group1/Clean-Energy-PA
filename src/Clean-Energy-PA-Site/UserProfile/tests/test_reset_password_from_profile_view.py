@@ -4,6 +4,8 @@ from django.contrib.messages import get_messages
 
 class ResetPasswordFromProfileTest(UserProfileBaseTest):
     def test_reset_password_from_profile(self):
+        """Test ID 51: Testing that a user can reset their password from the profile page"""
+        # TODO: Flesh these test out a bit more, should try to log user in again
         password_reset_form_data = {
             "old_password": "testpass",
             "new_password1": "updatedpassword",
@@ -15,6 +17,8 @@ class ResetPasswordFromProfileTest(UserProfileBaseTest):
         self.assertEqual(response.status_code, 302)
 
     def test_incorrect_old_password_displays_message(self):
+        """Test ID 52: Testing that a user can reset their password from the profile page"""
+        # TODO: Flesh these test out a bit more, should try to log user in again
         password_reset_form_data = {
             "old_password": "incorrect_old_pass",
             "new_password1": "updatedpassword",
@@ -36,6 +40,6 @@ class ResetPasswordFromProfileTest(UserProfileBaseTest):
         )
 
     def test_method_other_than_post_to_password_reset_from_profile_success(self):
-        """Test ID: Testing that a method other than POST will be successful"""
+        """Test ID 53: Testing that a method other than POST will be successful"""
         response = self.client.get(self.password_reset_from_profile_url)
         self.assertEqual(response.status_code, 200)

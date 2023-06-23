@@ -25,7 +25,7 @@ class ActivateViewTest(BaseTest):
         self.assertTrue(self.user.is_active)
 
     def test_activate_invalid_token(self):
-        """Test ID: Invalid token does not change user.is_active (default=False)"""
+        """Test ID 47: Invalid token does not change user.is_active (default=False)"""
         # Change the token to an invalid one
         self.token = "invalid-token"
         url = reverse("activate", kwargs={"uidb64": self.uid, "token": self.token})
@@ -38,7 +38,7 @@ class ActivateViewTest(BaseTest):
         self.assertFalse(self.user.is_active)
 
     def test_activate_exception_path(self):
-        """Test ID: Test covers the exception path of activate view"""
+        """Test ID 48: Test covers the exception path of activate view"""
         url = reverse("activate", kwargs={"uidb64": "invalid", "token": "invalid"})
         self.client.get(url)
         self.assertRaises(Exception)
