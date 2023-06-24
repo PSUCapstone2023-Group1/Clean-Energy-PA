@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserRegistration.apps.UserregistrationConfig",
     "UserProfile.apps.UserprofileConfig",
+    "health_check",
+    "ebhealthcheck.apps.EBHealthCheckConfig"
 ]
 
 MIDDLEWARE = [

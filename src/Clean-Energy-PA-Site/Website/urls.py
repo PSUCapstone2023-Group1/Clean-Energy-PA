@@ -29,6 +29,6 @@ urlpatterns = [
     path("profile/", profile, name="profile"),
     path("", include("GreenEnergySearch.urls")),
     path("", include("django.contrib.auth.urls")),
-    path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
-    # path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("health_check/", include('health_check.urls')),
+    path("activate/<str:uidb64>/<str:token>/", activate, name="activate")
 ]
