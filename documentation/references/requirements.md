@@ -14,8 +14,8 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.1.4. The system registration shall collect the user's zip code.
 - 1.1.1.5. The system shall allow users to register for email reminders.
 - 1.1.1.6. The system shall allow users to reset their passwords.
-- 1.1.1.7 The system shall allow users to login to their account
-- 1.1.1.8 The system shall allow users to logout of their account
+- 1.1.1.7. The system shall allow users to login to their account.
+- 1.1.1.8. The system shall allow users to logout of their account.
 
 ### 1.1.2 User De-Registration
 
