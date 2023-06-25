@@ -37,5 +37,6 @@ class api_core:
             Response: The response object of the get request
         """
         rate_type_query = rate_type.replace(" ", "+") # Replace any spaces with a + character to use as a query parameter.
+        rate_type_query = rate_type_query.replace("%20", "+") # Replace any spaces with a + character to use as a query parameter.
         endpoint = api_settings.rates_endpoint + "?id=" + str(distributor_id)  + "&servicetype=" + service_type + "&ratetype=" + rate_type_query
         return self.get(endpoint)

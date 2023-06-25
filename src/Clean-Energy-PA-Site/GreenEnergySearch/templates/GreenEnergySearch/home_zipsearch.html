@@ -1,0 +1,30 @@
+<div>
+<a href="javascript:void(0);" onclick="history.back();">Go Back</a>
+<a href="/home">Home</a>
+{% if distributors|length != 1 %}
+    <h1>Select your distributor</h1>
+    <hr><hr>
+    <div>
+        {% for distributor in distributors %}
+            <button 
+                onclick="location.href = '/home/zipsearch/rate_type/?zipcode={{zipcode}}&distributor_id={{distributor.id}}';">
+                {{distributor.name}}
+            </button>
+        {% endfor %}
+    </div>
+{% else %}
+    {% with distributors.0 as distributor_sel %}
+        <h1>Distributor Selected: {{distributor_sel.name}}</h1>
+        <hr><hr>
+        <div>
+        <h2>Select your rate schedule</h2>
+        {% for rate in distributor_sel.rates %}
+            <button 
+                onclick="location.href = '/distributor/{{ distributor_sel.id }}/{{ rate.rate_schedule|urlencode }}';">
+                {{rate.rate_schedule}}
+            </button>
+        {% endfor %}
+        </div>
+    {% endwith %}
+{% endif %}
+</div>

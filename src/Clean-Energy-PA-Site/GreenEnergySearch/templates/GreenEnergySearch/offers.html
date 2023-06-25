@@ -1,0 +1,16 @@
+<div>
+<h1>Offers for selection</h1>
+<a href="javascript:void(0);" onclick="history.back();">Go Back</a>
+<a href="/home">Home</a>
+<hr/>
+<hr/>
+{% for offer in offers %}
+<h2>{{offer.name}}</h2>
+<p>${{offer.rate}} per kWh</p>
+<p>(insert selected distributor rate diff) less than (insert selected distributor name)</p>
+<p>(insert current contract diff) less than current contract</p>
+<p>Contract length: {{offer.term_length}}</p>
+<a href="{{offer.website}}">Select and Save</a>
+<hr/>
+{% endfor %}
+</div>

@@ -39,7 +39,6 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     # GreenEnergySearch
     path("", include("GreenEnergySearch.urls")),
-    path("home/", home, name="home"),
     # UserRegistration
     path("register/", register, name="register"),
     path("registration/login/", user_login, name="login"),
