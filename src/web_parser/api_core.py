@@ -1,5 +1,6 @@
 import requests
 import api_settings
+from typing import Union
 
 service_type = "residential" # Will always be residential for us, can be hardcoded
 
@@ -7,7 +8,7 @@ class api_core:
     def get(self, endpoint):
         return requests.get(api_settings.base_url + endpoint)
     
-    def get_zipsearch_endpoint(self, zip_code:str|int):
+    def get_zipsearch_endpoint(self, zip_code:Union[str,int]):
         """
         Make a get request to the zipsearch endpoint
         
@@ -22,7 +23,7 @@ class api_core:
         endpoint = api_settings.zip_seach_endpoint + "?zipcode=" + str(zip_code)  + "&servicetype=" + service_type
         return self.get(endpoint)
     
-    def get_rates_endpoint(self, distributor_id:str|int, rate_type:str):
+    def get_rates_endpoint(self, distributor_id:Union[str,int], rate_type:str):
         """
         Make a get request to the rates endpoint.
         

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Union
 
 class price_structure(Enum):
     """List of the possible price structure options"""
@@ -68,21 +69,21 @@ class offer:
         return self.id + ': ' + self.name
     
     def filter(self, #NOSONAR
-                name:None|str=None,
-                discount_available:None|bool=None,
-                net_metering:None|bool=None,
-                pa_wind:None|bool=None,
-                renewable_pa:None|bool=None,
-                solar:None|bool=None,
-                introductory_price:None|bool=None,
-                renewable_energy:None|bool=None,
-                lower_renewable_percentage:None|float=None,
-                price_structure:None|price_structure=None,
-                monthly_fee:None|bool=None,
-                monthly_fee_amount:None|str=None,
-                cancellation_fee:None|str=None,
-                enrollment_fee:None|bool=None,
-                upper_rate:None|float=None
+                name:Union[None,str]=None,
+                discount_available:Union[None,bool]=None,
+                net_metering:Union[None,bool]=None,
+                pa_wind:Union[None,bool]=None,
+                renewable_pa:Union[None,bool]=None,
+                solar:Union[None,bool]=None,
+                introductory_price:Union[None,bool]=None,
+                renewable_energy:Union[None,bool]=None,
+                lower_renewable_percentage:Union[None,float]=None,
+                price_structure:Union[None,price_structure]=None,
+                monthly_fee:Union[None,bool]=None,
+                monthly_fee_amount:Union[None,str]=None,
+                cancellation_fee:Union[None,str]=None,
+                enrollment_fee:Union[None,bool]=None,
+                upper_rate:Union[None,float]=None
                 ):
         """Checks if this offer meets the filter conditions"""
         conditions:list[bool] = [] #initialize the conditions list
@@ -147,21 +148,21 @@ class offer_collection:
             raise StopIteration()
 
     def filter(self, #NOSONAR
-                name:None|str=None,
-                discount_available:None|bool=None,
-                net_metering:None|bool=None,
-                pa_wind:None|bool=None,
-                renewable_pa:None|bool=None,
-                solar:None|bool=None,
-                introductory_price:None|bool=None,
-                renewable_energy:None|bool=None,
-                lower_renewable_percentage:None|float=None,
-                price_structure:None|price_structure=None,
-                monthly_fee:None|bool=None,
-                monthly_fee_amount:None|str=None,
-                cancellation_fee:None|str=None,
-                enrollment_fee:None|bool=None,
-                upper_rate:None|float=None):
+                name:Union[None,str]=None,
+                discount_available:Union[None,bool]=None,
+                net_metering:Union[None,bool]=None,
+                pa_wind:Union[None,bool]=None,
+                renewable_pa:Union[None,bool]=None,
+                solar:Union[None,bool]=None,
+                introductory_price:Union[None,bool]=None,
+                renewable_energy:Union[None,bool]=None,
+                lower_renewable_percentage:Union[None,float]=None,
+                price_structure:Union[None,price_structure]=None,
+                monthly_fee:Union[None,bool]=None,
+                monthly_fee_amount:Union[None,str]=None,
+                cancellation_fee:Union[None,str]=None,
+                enrollment_fee:Union[None,bool]=None,
+                upper_rate:Union[None,float]=None):
         "Collection filter which returns a list of only the items where the filter conditions passed"
         return [offer for offer in self if offer.filter(name, 
                                                                 discount_available,

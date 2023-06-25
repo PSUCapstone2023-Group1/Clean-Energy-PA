@@ -2,6 +2,7 @@ import requests
 from api_core import api_core
 from responses.ratesearch import offer_collection
 from responses.zipsearch import distributor_collection
+from typing import Union
 
 class papowerswitch_api:
     failed_preface = "Request failed with status code:"
@@ -10,7 +11,7 @@ class papowerswitch_api:
     def __init__(self):
         self.api = api_core()
 
-    def get_distributors(self, zip_code:str|int):
+    def get_distributors(self, zip_code:Union[str,int]):
         """
         Make a get request to the zipsearch endpoint and realize a (200) OK message into a list of zipsearch response objects
 
@@ -33,7 +34,7 @@ class papowerswitch_api:
             response.raise_for_status()
             
 
-    def get_offers(self, id:str|int, rate_type:str):
+    def get_offers(self, id:Union[str,int], rate_type:str):
         """
         Make a get request to the rates endpoint and realize a (200) OK message into a list of ratesearch response objects
 
