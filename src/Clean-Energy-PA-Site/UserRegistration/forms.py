@@ -1,9 +1,7 @@
 from django import forms
-from django.contrib.auth import login, authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
 from uszipcode import SearchEngine
 
 User = get_user_model()
@@ -14,6 +12,9 @@ class RegisterForm(UserCreationForm):
     last_name = forms.CharField(max_length=30)
     email = forms.EmailField()
     zip_code = forms.CharField(max_length=10)
+    email_notifications = forms.BooleanField(
+        required=False, initial=True, label="Receive Email Notifications"
+    )
 
     class Meta:
         model = User
@@ -25,6 +26,7 @@ class RegisterForm(UserCreationForm):
             "zip_code",
             "password1",
             "password2",
+            "email_notifications",
         ]
 
     def clean_zip_code(self):

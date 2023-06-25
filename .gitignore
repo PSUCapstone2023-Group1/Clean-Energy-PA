@@ -170,3 +170,6 @@ cython_debug/
 
 # Computer files
 .DS_Store
+
+# Selenium Test Driver
+chromedriver.exe

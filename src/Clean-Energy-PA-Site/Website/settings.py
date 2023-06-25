@@ -53,6 +53,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "UserRegistration.apps.UserregistrationConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -62,7 +63,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
-    "UserRegistration.apps.UserregistrationConfig",
     "UserProfile.apps.UserprofileConfig",
     "health_check",
     "ebhealthcheck.apps.EBHealthCheckConfig"
@@ -83,7 +83,7 @@ ROOT_URLCONF = "Website.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

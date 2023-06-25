@@ -1,0 +1,15 @@
+{% extends 'GreenEnergySearch/base.html' %}
+
+{% block title %}
+  Delete Account
+{% endblock %}
+
+{% block content %}
+  <body>
+    <h2>Are you sure you want to delete your account?</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="submit" value="Yes, delete my account" />
+    </form>
+  </body>
+{% endblock %}
