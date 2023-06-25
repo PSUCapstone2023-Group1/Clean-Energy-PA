@@ -123,7 +123,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("home")
+                return redirect(reverse("green_energy_search:home"))
             else:
                 form.add_error(None, "Invalid username or password")
     else:
