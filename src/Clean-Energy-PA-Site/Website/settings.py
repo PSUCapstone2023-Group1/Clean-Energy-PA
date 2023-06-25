@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserProfile.apps.UserprofileConfig",
+    "health_check",
+    "ebhealthcheck.apps.EBHealthCheckConfig"
 ]
 
 MIDDLEWARE = [

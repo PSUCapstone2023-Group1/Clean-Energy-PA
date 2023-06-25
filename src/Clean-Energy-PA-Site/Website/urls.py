@@ -33,7 +33,6 @@ from UserProfile.views import (
 )
 from GreenEnergySearch.views import home
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("django.contrib.auth.urls")),
@@ -82,4 +81,6 @@ urlpatterns = [
         password_reset_from_profile,
         name="password_reset_from_profile",
     ),
+    path("health_check/", include('health_check.urls')),
+    path("activate/<str:uidb64>/<str:token>/", activate, name="activate")
 ]
