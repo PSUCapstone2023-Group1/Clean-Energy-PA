@@ -8,6 +8,7 @@
 
 # local Django
 from UserRegistration.tests.test_base_view import BaseTest
+from unittest.mock import patch
 
 
 class LoginViewTest(BaseTest):

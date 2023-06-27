@@ -7,13 +7,13 @@ from django.urls import reverse
 
 class UserProfileTest(UserProfileBaseTest):
     def test_edit_first_name(self):
-        """Test ID: User should be able to modify their first name"""
+        """Test ID 62: User should be able to modify their first name"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
         # Retrieve the test user currently in the database
         first_name_in_database = User.objects.get(first_name=self.user.first_name)
         # Assert that the first_name is same as test user
-        initial_first_name = "John"
+        initial_first_name = response.context["form"]["first_name"].value()
         self.assertEqual(first_name_in_database.first_name, initial_first_name)
         # Send POST request to update first name
         response = self.client.post(reverse("edit_profile"), self.form_data)
@@ -33,13 +33,13 @@ class UserProfileTest(UserProfileBaseTest):
         self.assertEqual(first_name_in_response, self.form_data["first_name"])
 
     def test_edit_last_name(self):
-        """Test ID: User should be able to modify their last name"""
+        """Test ID 63: User should be able to modify their last name"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
         # Retrieve the test user currently in the database
         last_name_in_database = User.objects.get(last_name=self.user.last_name)
         # Assert that the last_name is same as test user
-        initial_last_name = "Doe"
+        initial_last_name = response.context["form"]["last_name"].value()
         self.assertEqual(last_name_in_database.last_name, initial_last_name)
         # Send POST request to update last name
         response = self.client.post(reverse("edit_profile"), self.form_data)
@@ -59,13 +59,15 @@ class UserProfileTest(UserProfileBaseTest):
         self.assertEqual(last_name_in_response, self.form_data["last_name"])
 
     def test_edit_email_notifications(self):
-        """Test ID: User should be able to modify their email notification preferences"""
+        """Test ID 64: User should be able to modify their email notification preferences"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
         # Retrieve the test users email notification preferences from db
         email_notificaitons_from_db = self.user_preferences.email_notifications
         # Assert that the email_notifications is same as test user
-        initial_email_notifications = True
+        initial_email_notifications = response.context["form"][
+            "email_notifications"
+        ].value()
         self.assertEqual(
             email_notificaitons_from_db,
             initial_email_notifications,
@@ -98,13 +100,13 @@ class UserProfileTest(UserProfileBaseTest):
         )
 
     def test_edit_zip_code(self):
-        """Test ID: User should be able to modify their zip_code"""
+        """Test ID 65: User should be able to modify their zip_code"""
         response = self.client.get(self.profile_url)
         self.assertEqual(response.status_code, 200)
         # Retrieve the test users zip code from db
         email_notificaitons_from_db = self.user_preferences.zip_code
         # Assert that the zip_code is same as test user
-        initial_zip_code = 15025
+        initial_zip_code = int(response.context["form"]["zip_code"].value())
         self.assertEqual(
             email_notificaitons_from_db,
             initial_zip_code,

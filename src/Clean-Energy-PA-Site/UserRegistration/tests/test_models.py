@@ -5,35 +5,15 @@
 # third-party
 
 # Django
-from django.test import TestCase
-from django.urls import reverse
+from django.contrib.messages import get_messages
 from django.contrib.auth.models import User
 
 # local Django
-from UserRegistration.utils import (
-    generate_username,
-    generate_email,
-    generate_password,
-    generate_name,
-    generate_zip_code,
-)
+from UserRegistration.tests.test_base_view import BaseTest
+from UserRegistration.utils import generate_zip_code
 
 
-class TestModels(TestCase):
-    def setUp(self):
-        self.register_url = reverse("register")
-        self.login_url = reverse("login")
-        password = generate_password()
-        self.form_data = {
-            "username": generate_username(),
-            "email": generate_email(),
-            "first_name": generate_name(),
-            "last_name": generate_name(),
-            "zip_code": generate_zip_code(is_valid=True),
-            "password1": password,
-            "password2": password,
-        }
-
+class RegistrationModelTest(BaseTest):
     def _set_up_name_test(self, first_name, last_name, expected_status_code=None):
         self.form_data["first_name"] = first_name
         self.form_data["last_name"] = last_name
@@ -98,14 +78,29 @@ class TestModels(TestCase):
         Test ID 36: Checking that first_name and last_name can be saved in the database
         """
         self._set_up_name_test("John", "Doe")
-        saved_user = User.objects.get(first_name="John", last_name="Doe")
+        saved_user = User.objects.get(email="test@example.com")
         self.assertEqual(saved_user.first_name, "John")
         self.assertEqual(saved_user.last_name, "Doe")
 
     def test_invalid_name_does_not_create_account(self):
         """
-        Test ID 37: Invalid name, exceeding 150 char cannot create an account
+        Test ID 37: Invalid name, exceeding 150 char
+        cannot create an account
         """
         invalid_name = "a" * 151
         self._set_up_name_test(invalid_name, invalid_name, 200)
-        self.assertEqual(User.objects.count(), 0)
+        # Setup adds a user to db so there should be 1 user in test db
+        self.assertEqual(User.objects.count(), 1)
+
+    def test_user_with_email_already_exists(self):
+        """
+        Test ID 66: If a user enters an email that matches
+        one already in the database they should not be
+        allowed to create another account
+        """
+        existing_user_count = User.objects.count()
+        self.form_data["email"] = "test@example.com"
+        response = self.client.post(self.register_url, self.form_data, follow=True)
+        # Setup adds a user to db so there should be 1 user in test db
+        self.assertEqual(existing_user_count, 1)
+        self.assertContains(response, "An account with this email already exists!")

@@ -125,7 +125,7 @@ def user_login(request):
                 login(request, user)
                 return redirect("home")
             else:
-                form.add_error(None, "Invalid username or password")
+                messages.error(request, "Invalid username or password")
     else:
         form = AuthenticationForm()
 
