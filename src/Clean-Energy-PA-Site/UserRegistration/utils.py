@@ -26,7 +26,7 @@ def generate_password(length=12):
 
 def generate_name(length=5):
     # Generate a random name with the given length
-    username = "".join(random.choices(string.ascii_lowercase + string.digits, k=length))
+    username = "".join(random.choices(string.ascii_lowercase, k=length))
     return username
 
 

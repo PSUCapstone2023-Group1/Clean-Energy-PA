@@ -42,6 +42,7 @@ class BaseTest(TestCase):
             "zip_code": generate_zip_code(is_valid=True),
             "password1": password,
             "password2": password,
+            "email_notifications": False,
         }
 
         # Create a new user
@@ -49,6 +50,8 @@ class BaseTest(TestCase):
             username="testuser",
             email="test@example.com",
             password="testpass",
+            first_name="John",
+            last_name="Doe",
             is_active=False,
         )
 
