@@ -101,6 +101,7 @@ class RegistrationModelTest(BaseTest):
         existing_user_count = User.objects.count()
         self.form_data["email"] = "test@example.com"
         response = self.client.post(self.register_url, self.form_data, follow=True)
+        new_user_count = User.objects.count()
         # Setup adds a user to db so there should be 1 user in test db
-        self.assertEqual(existing_user_count, 1)
+        self.assertEqual(existing_user_count, new_user_count)
         self.assertContains(response, "An account with this email already exists!")
