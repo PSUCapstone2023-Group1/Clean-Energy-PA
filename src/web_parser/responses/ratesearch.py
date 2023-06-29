@@ -108,7 +108,10 @@ class offer:
         if lower_renewable_percentage is not None:
             conditions.append(self.renewable_percentage>=lower_renewable_percentage)
         if price_structure is not None:
-            conditions.append(self.price_structure==str(price_structure))
+            if isinstance(price_structure, str):
+                conditions.append(self.price_structure==str(price_structure))
+            else:
+                conditions.append(self.price_structure==str(price_structure.value))
         if monthly_fee is not None:
             conditions.append(self.monthly_fee==monthly_fee)
         if monthly_fee_amount is not None:

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
@@ -14,8 +15,8 @@ def zip_search(request):
     if len(distributors)==1: # Only one option, redirect to offersearch endpoint
         if len(distributors[0].rates)>1:
             # There are more than 1 rate to select from, redirect to let the user choose
-            return redirect(reverse('green_energy_search:rate_type'), zipcode=zipcode, distributor_id=distributors[0].id)
-        return _handle_selected_distributor(distributors[0])
+            return redirect(reverse('green_energy_search:rate_type')+f"/?zipcode={zipcode}&distributor_id={distributors[0].id}")
+        return _handle_selected_distributor(zipcode, distributors[0])
     elif len(distributors)==0:
         return redirect(reverse('404'))
     else:
@@ -32,11 +33,11 @@ def zip_search_distributor_selected(request):
             if len(distributor.rates)>1:
                 return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":[distributor], "zipcode":zipcode})
             else:
-                return _handle_selected_distributor(distributor)
+                return _handle_selected_distributor(zipcode, distributor)
     # No matching distributor
     return redirect(reverse('404'))
     
-def _handle_selected_distributor(distributor):
+def _handle_selected_distributor(zipcode, distributor):
     if distributor!=None:
         num_rates = len(distributor.rates)
         if num_rates==0:
@@ -47,6 +48,7 @@ def _handle_selected_distributor(distributor):
             # Go straight to offer search
             return redirect(reverse('green_energy_search:offer_search',
                             kwargs={
+                                "zipcode":zipcode,
                                 "distributor_id":distributor.id,
                                 "rate_type":distributor.rates[0].rate_schedule
                                 }))
@@ -59,9 +61,15 @@ def offer_search(request, zipcode, distributor_id, rate_type):
     distributor = api.get_distributors(zipcode).find_distributor(distributor_id)
     if distributor is not None:
         offers = api.get_offers(distributor_id, rate_type)
+        distributor_rate = distributor.get_rateschedule_rate(rate_type)
+        def sorter(val):
+            return val.rate
         filtered_offers = offers.filter(renewable_energy=True,
-                                price_structure=price_structure.variable,
-                                upper_rate=distributor.get_rateschedule_rate(rate_type).rate + 0.05)
-        return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers})
+                                price_structure=price_structure.fixed,
+                                upper_rate=distributor_rate.rate + 0.05)
+        filtered_offers.sort(key=sorter)
+        return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
+                                                                    "distributor":distributor,
+                                                                    "distributor_rate":distributor_rate})
     else:
         return redirect('404')
