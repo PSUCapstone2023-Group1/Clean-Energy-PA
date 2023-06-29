@@ -43,6 +43,20 @@ class TestZipSearch:
             assert str(distributor) == str(zipsearch_test_data.expected_example[0]["id"]) + ": " + str(zipsearch_test_data.expected_example[0]["Name"])
             assert str(distributor.rates[0]) == str(zipsearch_test_data.expected_example[0]["Rates"][0]["id"])
 
+    def test_find_distributor_with_valid_id(self):
+        "Verify that the find method works as expected with an valid id (exists in test data)"
+        distributors = distributor_collection(zipsearch_test_data.expected_example)
+        # Provide id from test data 
+        match = distributors.find_distributor(zipsearch_test_data.expected_example[0]["id"])
+        assert match is not None
+    
+    def test_find_distributor_with_invalid_id(self):
+        "Verify that the find method works as expected with an invalid id (doesn't exist in test data)"
+        distributors = distributor_collection(zipsearch_test_data.expected_example)
+        # Provide wildly invalid id
+        match = distributors.find_distributor(-1)
+        assert match is None
+
 class TestRatesearch:
 
     @pytest.fixture(autouse=True)

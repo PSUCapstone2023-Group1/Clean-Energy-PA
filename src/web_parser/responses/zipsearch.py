@@ -1,3 +1,5 @@
+from typing import Union
+
 class distributor:
     "A dataclass used to define the structure of the zipsearch object"
     def __init__(self, zipsearch_json):
@@ -69,3 +71,9 @@ class distributor_collection:
             return item
         else:
             raise StopIteration()
+    
+    def find_distributor(self, id:Union[str, int])->Union[distributor,None]:
+        for distributor in self.collection:
+            if str(distributor.id) == str(id):
+                return distributor
+        return None
