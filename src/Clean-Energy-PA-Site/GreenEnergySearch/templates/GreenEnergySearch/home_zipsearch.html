@@ -20,7 +20,7 @@
         <h2>Select your rate schedule</h2>
         {% for rate in distributor_sel.rates %}
             <button 
-                onclick="location.href = '/distributor/{{ distributor_sel.id }}/{{ rate.rate_schedule|urlencode }}';">
+                onclick="location.href = '/distributor/{{zipcode}}/{{ distributor_sel.id }}/{{ rate.rate_schedule|urlencode }}';">
                 {{rate.rate_schedule}}
             </button>
         {% endfor %}

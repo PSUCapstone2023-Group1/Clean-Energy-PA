@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
+from web_parser.responses.ratesearch import price_structure
 
 # Create your views here.
 def home(request):
@@ -53,7 +54,14 @@ def _handle_selected_distributor(distributor):
         #If you've gotten here without a return something went wrong
         return redirect(reverse('404'))
 
-def offer_search(request, distributor_id, rate_type):
+def offer_search(request, zipcode, distributor_id, rate_type):
     api = papowerswitch_api()
-    offers = api.get_offers(distributor_id, rate_type)
-    return render(request, "GreenEnergySearch/offers.html", {"offers": offers})
+    distributor = api.get_distributors(zipcode).find_distributor(distributor_id)
+    if distributor is not None:
+        offers = api.get_offers(distributor_id, rate_type)
+        filtered_offers = offers.filter(renewable_energy=True,
+                                price_structure=price_structure.variable,
+                                upper_rate=distributor.get_rateschedule_rate(rate_type).rate + 0.05)
+        return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers})
+    else:
+        return redirect('404')

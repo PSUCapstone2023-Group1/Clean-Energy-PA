@@ -14,6 +14,6 @@ urlpatterns = [
 
      path("home/", views.home, name="home"),
      # Offer search
-     path("distributor/<distributor_id>/<rate_type>", 
+     path("distributor/<zipcode>/<distributor_id>/<rate_type>", 
           views.offer_search, name="offer_search")
 ]

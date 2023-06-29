@@ -4,6 +4,12 @@
 <a href="/home">Home</a>
 <hr/>
 <hr/>
+<h2>Note: These offers are currently filtered by:</h2>
+<ul>
+<li>Renewable Energy = True</li>
+<li>Price Structure = Fixed</li>
+<li>Rate <= Distributor Rate + $0.05</li>
+</ul>
 {% for offer in offers %}
 <h2>{{offer.name}}</h2>
 <p>${{offer.rate}} per kWh</p>

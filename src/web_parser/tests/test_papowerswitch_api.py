@@ -57,6 +57,20 @@ class TestZipSearch:
         match = distributors.find_distributor(-1)
         assert match is None
 
+    def test_get_rateschedule_rate_with_valid_rateschedule(self):
+        "Verify that the get method works as expected with an valid rate schedule (doesn't exist in test data)"
+        distributors = distributor_collection(zipsearch_test_data.expected_example)
+        # Provide rate schedule from test data 
+        match = distributors[0].get_rateschedule_rate(zipsearch_test_data.expected_example[0]["Rates"][0]["RateSchedule"])
+        assert match is not None
+    
+    def test_get_rateschedule_rate_with_invalid_rateschedule(self):
+        "Verify that the get method works as expected with an invalid rate schedule (doesn't exist in test data)"
+        distributors = distributor_collection(zipsearch_test_data.expected_example)
+        # Provide wildly rate schedule
+        match = distributors[0].get_rateschedule_rate("123")
+        assert match is None
+
 class TestRatesearch:
 
     @pytest.fixture(autouse=True)
