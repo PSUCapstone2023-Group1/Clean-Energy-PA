@@ -15,70 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
-from UserRegistration.views import (
-    register,
-    user_login,
-    user_logout,
-    activate,
-    # reset_password_from_login,
-)
-from UserProfile.views import (
-    # profile,
-    # update_email_preferences,
-    delete_account,
-    password_reset_from_profile,
-    edit_profile,
-)
-from GreenEnergySearch.views import home
+from . import views
 
+app_name = "base"
 
 urlpatterns = [
+    # Home
+    path("", views.home, name="base"),
+    path("home/", views.home, name="home"),
+    #Admin
     path("admin/", admin.site.urls),
+    #Auth
     path("", include("django.contrib.auth.urls")),
     # GreenEnergySearch
     path("", include("GreenEnergySearch.urls")),
     # UserRegistration
-    path("register/", register, name="register"),
-    path("registration/login/", user_login, name="login"),
-    path("user_logout/", user_logout, name="user_logout"),
-    path("activate/<str:uidb64>/<str:token>/", activate, name="activate"),
-    # UserRegistration: Password Reset [Logged out]
-    path(
-        "reset_password/",
-        auth_views.PasswordResetView.as_view(
-            template_name="registration/reset_password_from_login.html"
-        ),
-        name="reset_password",
-    ),
-    path(
-        "reset_password_sent/",
-        auth_views.PasswordResetDoneView.as_view(
-            template_name="registration/password_reset_sent.html"
-        ),
-        name="password_reset_done",
-    ),
-    path(
-        "reset/<uidb64>/<token>/",
-        auth_views.PasswordResetConfirmView.as_view(
-            template_name="registration/password_reset_confirm.html"
-        ),
-        name="password_reset_confirm",
-    ),
-    path(
-        "reset_password_complete/",
-        auth_views.PasswordResetCompleteView.as_view(
-            template_name="registration/password_reset_complete.html"
-        ),
-        name="password_reset_complete",
-    ),
+    path("", include("UserRegistration.urls")),
     # UserProfile
-    path("edit_profile/", edit_profile, name="edit_profile"),
-    path("delete_account/", delete_account, name="delete_account"),
-    path(
-        "password_reset_from_profile/",
-        password_reset_from_profile,
-        name="password_reset_from_profile",
-    ),
+    path("", include("UserProfile.urls")),
 ]

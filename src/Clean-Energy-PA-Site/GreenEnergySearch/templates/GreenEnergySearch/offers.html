@@ -1,9 +1,9 @@
+{% extends 'base/base.html' %}
 {% load custom_filters %}
 
+{% block content %}
 <div>
   <a href="javascript:void(0);" onclick="history.back();">Go Back</a>
-  <span>|</span>
-  <a href="/home">Home</a>
   <h1>Offers</h1>
   <h3>Selection:</h3>
   <ul>
@@ -39,3 +39,4 @@
   <hr />
   {% endfor %}
 </div>
+{% endblock content %}

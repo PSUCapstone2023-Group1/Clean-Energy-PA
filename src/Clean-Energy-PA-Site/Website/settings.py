@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserProfile.apps.UserprofileConfig",
+    "Website.apps.WebsiteConfig"
 ]
 
 MIDDLEWARE = [

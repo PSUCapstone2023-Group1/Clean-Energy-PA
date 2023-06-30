@@ -1,13 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
 from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
 
 # Create your views here.
-def home(request):
-    return render(request, "GreenEnergySearch/home.html", {})
-
 def zip_search(request):
     zipcode = request.GET.get('zipcode')
     # Get distributors from api using zipcode
@@ -18,7 +14,7 @@ def zip_search(request):
             return redirect(reverse('green_energy_search:rate_type')+f"/?zipcode={zipcode}&distributor_id={distributors[0].id}")
         return _handle_selected_distributor(zipcode, distributors[0])
     elif len(distributors)==0:
-        return redirect(reverse('404'))
+        return redirect(reverse('base:404'))
     else:
         return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":distributors, "zipcode":zipcode})
 
@@ -35,14 +31,14 @@ def zip_search_distributor_selected(request):
             else:
                 return _handle_selected_distributor(zipcode, distributor)
     # No matching distributor
-    return redirect(reverse('404'))
+    return redirect(reverse('base:404'))
     
 def _handle_selected_distributor(zipcode, distributor):
     if distributor!=None:
         num_rates = len(distributor.rates)
         if num_rates==0:
             # Rates shouldn't be 0, unexpected error
-            return redirect(reverse('404'))
+            return redirect(reverse('base:404'))
         elif num_rates==1:
             # There is only one rate option, there isn't anything the user can select.
             # Go straight to offer search
@@ -54,7 +50,7 @@ def _handle_selected_distributor(zipcode, distributor):
                                 }))
     else:
         #If you've gotten here without a return something went wrong
-        return redirect(reverse('404'))
+        return redirect(reverse('base:404'))
 
 def offer_search(request, zipcode, distributor_id, rate_type):
     api = papowerswitch_api()
@@ -72,4 +68,4 @@ def offer_search(request, zipcode, distributor_id, rate_type):
                                                                     "distributor":distributor,
                                                                     "distributor_rate":distributor_rate})
     else:
-        return redirect('404')
+        return redirect('base:404')
