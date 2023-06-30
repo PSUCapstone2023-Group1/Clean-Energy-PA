@@ -14,9 +14,9 @@ def zip_search(request):
             return redirect(reverse('green_energy_search:rate_type')+f"/?zipcode={zipcode}&distributor_id={distributors[0].id}")
         return _handle_selected_distributor(zipcode, distributors[0])
     elif len(distributors)==0:
-        return redirect(reverse('base:404'))
+        return redirect(reverse('notfound'))
     else:
-        return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":distributors, "zipcode":zipcode})
+        return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":distributors, "zipcode":zipcode, "show_modal":True})
 
 def zip_search_distributor_selected(request):
     zipcode = request.GET.get('zipcode')
@@ -27,18 +27,18 @@ def zip_search_distributor_selected(request):
     for distributor in distributors:
         if str(distributor.id) == distributor_id:
             if len(distributor.rates)>1:
-                return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":[distributor], "zipcode":zipcode})
+                return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":[distributor], "zipcode":zipcode, "show_modal":True})
             else:
                 return _handle_selected_distributor(zipcode, distributor)
     # No matching distributor
-    return redirect(reverse('base:404'))
+    return redirect(reverse('notfound'))
     
 def _handle_selected_distributor(zipcode, distributor):
     if distributor!=None:
         num_rates = len(distributor.rates)
         if num_rates==0:
             # Rates shouldn't be 0, unexpected error
-            return redirect(reverse('base:404'))
+            return redirect(reverse('notfound'))
         elif num_rates==1:
             # There is only one rate option, there isn't anything the user can select.
             # Go straight to offer search
@@ -50,7 +50,7 @@ def _handle_selected_distributor(zipcode, distributor):
                                 }))
     else:
         #If you've gotten here without a return something went wrong
-        return redirect(reverse('base:404'))
+        return redirect(reverse('notfound'))
 
 def offer_search(request, zipcode, distributor_id, rate_type):
     api = papowerswitch_api()
@@ -68,4 +68,4 @@ def offer_search(request, zipcode, distributor_id, rate_type):
                                                                     "distributor":distributor,
                                                                     "distributor_rate":distributor_rate})
     else:
-        return redirect('base:404')
+        return redirect(reverse('notfound'))

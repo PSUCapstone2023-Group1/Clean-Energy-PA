@@ -123,7 +123,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse("base:home"))
+                return redirect(reverse("home"))
             else:
                 form.add_error(None, "Invalid username or password")
     else:
@@ -137,4 +137,4 @@ def user_logout(request):
     """Logic for handling the user logout view"""
     logout(request)
     messages.info(request, "Logged out successfully!")
-    return redirect(reverse("base:home"))
+    return redirect(reverse("home"))

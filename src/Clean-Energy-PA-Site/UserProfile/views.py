@@ -56,7 +56,7 @@ def delete_account(request):
             user.delete()
             sendDeleteConfirmationEmail(request, username, to_email)
             logout(request)
-            return redirect(reverse("base:home"))
+            return redirect(reverse("home"))
     else:
         return redirect(reverse("user_profile:edit_profile"))
 

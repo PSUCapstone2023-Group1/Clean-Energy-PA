@@ -20,6 +20,7 @@
   <hr />
   <hr />
   {% for offer in offers %}
+  <div style="box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; width: 500px; padding:50px">
   <h2>{{offer.name}}</h2>
   <p>${{offer.rate}} per kWh</p>
   {% if distributor_rate.rate|subtract:offer.rate < 0 %}
@@ -36,7 +37,8 @@
   {% endif %}
   <p>Contract length: {{offer.term_length}}</p>
   <a href="{{offer.website}}">Select and Save</a>
-  <hr />
+</div>
+<hr />
   {% endfor %}
 </div>
 {% endblock content %}

@@ -22,16 +22,24 @@ app_name = "base"
 
 urlpatterns = [
     # Home
-    path("", views.home, name="base"),
+    path("", views.home, name="root"),
     path("home/", views.home, name="home"),
+
+    #404
+    path("404/", views.base404, name="notfound"),
+
     #Admin
     path("admin/", admin.site.urls),
+
     #Auth
     path("", include("django.contrib.auth.urls")),
+
     # GreenEnergySearch
     path("", include("GreenEnergySearch.urls")),
+
     # UserRegistration
     path("", include("UserRegistration.urls")),
+
     # UserProfile
     path("", include("UserProfile.urls")),
 ]

@@ -21,8 +21,8 @@ from UserRegistration.utils import (
 
 class TestModels(TestCase):
     def setUp(self):
-        self.register_url = reverse("register")
-        self.login_url = reverse("login")
+        self.register_url = reverse("UserRegistration:register")
+        self.login_url = reverse("UserRegistration:login")
         password = generate_password()
         self.form_data = {
             "username": generate_username(),
