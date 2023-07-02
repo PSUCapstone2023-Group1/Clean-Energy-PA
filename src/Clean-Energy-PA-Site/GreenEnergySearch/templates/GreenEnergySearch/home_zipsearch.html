@@ -7,11 +7,11 @@
 {% if distributors|length != 1 %}
     <h1>Select your distributor</h1>
     <hr><hr>
-    <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+    <div id="distributor-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
         {% for distributor in distributors %}
             <button 
                 style="width:70%"
-                onclick="location.href = '/home/zipsearch/rate_type/?zipcode={{zipcode}}&distributor_id={{distributor.id}}';">
+                onclick="location.href = '{% url 'green_energy_search:rate_type' %}/?zipcode={{zipcode}}&distributor_id={{distributor.id}}';">
                 {{distributor.name}}
             </button>
         {% endfor %}
@@ -21,11 +21,11 @@
         <h1>Distributor Selected: {{distributor_sel.name}}</h1>
         <hr><hr>
         <h2>Select your rate schedule</h2>
-        <div style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+        <div id="rate-schedule-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
         {% for rate in distributor_sel.rates %}
             <button 
                 style="width:70%"
-                onclick="location.href = '/distributor/{{zipcode}}/{{ distributor_sel.id }}/{{ rate.rate_schedule|urlencode }}';">
+                onclick="location.href = '{% url 'green_energy_search:offer_search' zipcode=zipcode distributor_id=distributor_sel.id rate_type=rate.rate_schedule %}';">
                 {{rate.rate_schedule}}
             </button>
         {% endfor %}

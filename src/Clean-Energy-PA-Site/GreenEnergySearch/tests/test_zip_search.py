@@ -1,3 +1,31 @@
-# from test_green_energy_base import GreenEnergySearchBaseTest
+from .test_green_energy_base import GreenEnergySearchBaseTest
+from ..views import build_zip_search_path
+from bs4 import BeautifulSoup
+from web_parser.tests import zipsearch_test_data
+from unittest import mock
+from web_parser.tests import zipsearch_test_data, ratesearch_test_data
+from web_parser.responses.ratesearch import offer_collection
+from web_parser.responses.zipsearch import distributor_collection
 
-# class test_zip_search(GreenEnergySearchBaseTest):
+class Zip_Search_View_Test(GreenEnergySearchBaseTest):
+    @mock.patch('web_parser.papowerswitch_api.papowerswitch_api')
+    def test_distributors_selection(self, mock_web_parser):
+        """Test ID 59: Test verifies that the distributors are shown"""
+
+        # Mock the distributors reponse
+        self.mock_web_parser.return_value.get_distributors.return_value = distributor_collection(zipsearch_test_data.multiple_expected_example)
+        # self.mock_distributors_response(zipsearch_test_data.multiple_expected_example)
+
+        # Create the zip_search url with a test zip code
+        url = build_zip_search_path("15025")
+
+        # Generate reponse
+        response = self.client.get(url)
+
+        # Parse the response content using BeautifulSoup
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Find the element you want to test
+        element = soup.find('div', id='distributor-container')
+
+        self.assertEqual(len(element.findChildren()), 2)
