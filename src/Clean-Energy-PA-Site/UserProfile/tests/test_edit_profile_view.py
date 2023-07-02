@@ -16,7 +16,7 @@ class UserProfileTest(UserProfileBaseTest):
         initial_first_name = response.context["form"]["first_name"].value()
         self.assertEqual(first_name_in_database.first_name, initial_first_name)
         # Send POST request to update first name
-        response = self.client.post(reverse("edit_profile"), self.form_data)
+        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -26,7 +26,7 @@ class UserProfileTest(UserProfileBaseTest):
         self.assertNotEqual(self.user.first_name, initial_first_name)
         # Assert that the first name has changed in the view
         # GET request to reload the page
-        response = self.client.get(reverse("edit_profile"))
+        response = self.client.get(reverse("user_profile:edit_profile"))
         # Value of the first name in the form from view
         first_name_in_response = response.context["form"]["first_name"].value()
         # Assert that the value on the page is equal to what was submitted in the form
@@ -42,7 +42,7 @@ class UserProfileTest(UserProfileBaseTest):
         initial_last_name = response.context["form"]["last_name"].value()
         self.assertEqual(last_name_in_database.last_name, initial_last_name)
         # Send POST request to update last name
-        response = self.client.post(reverse("edit_profile"), self.form_data)
+        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -52,7 +52,7 @@ class UserProfileTest(UserProfileBaseTest):
         self.assertNotEqual(self.user.last_name, initial_last_name)
         # Assert that the last name has changed in the view
         # GET request to reload the page
-        response = self.client.get(reverse("edit_profile"))
+        response = self.client.get(reverse("user_profile:edit_profile"))
         # Value of the last name in the form from view
         last_name_in_response = response.context["form"]["last_name"].value()
         # Assert that the value on the page is equal to what was submitted in the form
@@ -73,7 +73,7 @@ class UserProfileTest(UserProfileBaseTest):
             initial_email_notifications,
         )
         # Send POST request to update email_notifications name
-        response = self.client.post(reverse("edit_profile"), self.form_data)
+        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -88,7 +88,7 @@ class UserProfileTest(UserProfileBaseTest):
         )
         # Assert that the email_notifications name has changed in the view
         # GET request to reload the page
-        response = self.client.get(reverse("edit_profile"))
+        response = self.client.get(reverse("user_profile:edit_profile"))
         # Value of the email_notifications name in the form from view
         email_notifications_in_response = response.context["form"][
             "email_notifications"
@@ -112,7 +112,7 @@ class UserProfileTest(UserProfileBaseTest):
             initial_zip_code,
         )
         # Send POST request to update zip_code name
-        response = self.client.post(reverse("edit_profile"), self.form_data)
+        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -125,7 +125,7 @@ class UserProfileTest(UserProfileBaseTest):
         self.assertNotEqual(self.user_preferences.zip_code, initial_zip_code)
         # Assert that the zip_code name has changed in the view
         # GET request to reload the page
-        response = self.client.get(reverse("edit_profile"))
+        response = self.client.get(reverse("user_profile:edit_profile"))
         # Value of the zip_code name in the form from view
         zip_code_in_response = response.context["form"]["zip_code"].value()
         # Assert that the value on the page is equal to what was submitted in the form
