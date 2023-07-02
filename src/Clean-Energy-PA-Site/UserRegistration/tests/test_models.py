@@ -110,8 +110,8 @@ class TestModels(TestCase):
         """
         invalid_name = "a" * 151
         self._set_up_name_test(invalid_name, invalid_name, 200)
-        # Setup adds a user to db so there should be 1 user in test db
-        self.assertEqual(User.objects.count(), 1)
+        # Setup adds a user to db so there should be 0 users in test db since this is an invalid name test
+        self.assertEqual(User.objects.count(), 0)
 
     def test_user_with_email_already_exists(self):
         """
@@ -119,8 +119,11 @@ class TestModels(TestCase):
         one already in the database they should not be
         allowed to create another account
         """
-        existing_user_count = User.objects.count()
         self.form_data["email"] = "test@example.com"
+        # Add the user with the test email
+        self.client.post(self.register_url, self.form_data, follow=True)
+        existing_user_count = User.objects.count()
+        # Attempt to add the user again with the same email
         response = self.client.post(self.register_url, self.form_data, follow=True)
         new_user_count = User.objects.count()
         # Setup adds a user to db so there should be 1 user in test db
