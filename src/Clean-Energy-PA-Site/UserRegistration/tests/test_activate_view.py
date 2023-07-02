@@ -9,7 +9,7 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 # local Django
-from UserRegistration.tests.test_base_view import BaseTest
+from Website.tests.test_base import BaseTest
 
 
 class ActivateViewTest(BaseTest):

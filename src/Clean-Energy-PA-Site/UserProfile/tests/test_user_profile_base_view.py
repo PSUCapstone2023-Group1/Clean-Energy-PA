@@ -1,7 +1,7 @@
 from django.urls import reverse
 
 from GreenEnergySearch.models import User_Preferences
-from UserRegistration.tests.test_base_view import BaseTest
+from Website.tests.test_base import BaseTest
 
 
 # Create your tests here.

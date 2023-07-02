@@ -3,6 +3,15 @@ from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
 
+def build_zip_search_path(zipcode):
+     return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}"
+
+def build_rate_type_path(zipcode, distributor_id):
+     return reverse("green_energy_search:rate_type") + f"/?zipcode={zipcode}&distributor_id={distributor_id}"
+
+def build_offer_path(zipcode, distributor_id, rate_type):
+     return reverse("green_energy_search:offer_search", kwargs={"zipcode":zipcode, "distributor_id":distributor_id, "rate_type":rate_type})
+
 # Create your views here.
 def zip_search(request):
     zipcode = request.GET.get('zipcode')
@@ -11,7 +20,7 @@ def zip_search(request):
     if len(distributors)==1: # Only one option, redirect to offersearch endpoint
         if len(distributors[0].rates)>1:
             # There are more than 1 rate to select from, redirect to let the user choose
-            return redirect(reverse('green_energy_search:rate_type')+f"/?zipcode={zipcode}&distributor_id={distributors[0].id}")
+            return redirect(build_rate_type_path(zipcode,distributors[0].id))
         return _handle_selected_distributor(zipcode, distributors[0])
     elif len(distributors)==0:
         return redirect(reverse('notfound'))
@@ -42,12 +51,7 @@ def _handle_selected_distributor(zipcode, distributor):
         elif num_rates==1:
             # There is only one rate option, there isn't anything the user can select.
             # Go straight to offer search
-            return redirect(reverse('green_energy_search:offer_search',
-                            kwargs={
-                                "zipcode":zipcode,
-                                "distributor_id":distributor.id,
-                                "rate_type":distributor.rates[0].rate_schedule
-                                }))
+            return redirect(build_offer_path(zipcode,distributor.id,distributor.rates[0].rate_schedule))
     else:
         #If you've gotten here without a return something went wrong
         return redirect(reverse('notfound'))
