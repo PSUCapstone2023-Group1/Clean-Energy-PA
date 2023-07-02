@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-06-01T01:28:07.156Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="jqzsGyD_sEL3Ow2ils1f" version="21.2.8" type="device" pages="5">
+<mxfile host="Electron" modified="2023-06-21T00:59:19.861Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.5.0 Chrome/112.0.5615.204 Electron/24.5.1 Safari/537.36" etag="HP9_nVBL3v6mqXoCeH1d" version="21.5.0" type="device" pages="6">
   <diagram name="Landing Page" id="G5gbXoaZbaZ6ohgpXtbu">
-    <mxGraphModel dx="1013" dy="673" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1114" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,8 +31,70 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="cobLo2WWUylWDpU3vQ0S" name="SIgn Up">
+  <diagram id="KVLNrhpuHi7Pq6tpJZ6S" name="Utility Provider Modal">
     <mxGraphModel dx="1114" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2bZqA-a666yDy0cQKKfS-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#0d0d0d;" vertex="1" parent="1">
+          <mxGeometry x="11" y="70" width="830" height="580" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-2" value="Enter your Zip Code" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="351" y="300" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-3" value="Search Cheaper Green Energy" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="371" y="340" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-4" value="&lt;font style=&quot;font-size: 32px;&quot;&gt;Clean Energy PA&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="126" y="150" width="640" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-5" value="Did you know that PA state law allows you to switch energy suppliers from PECO?&lt;br&gt;&lt;br&gt;And - you can actually switch to 100% renewable energy&amp;nbsp;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;cheaper&lt;/b&gt;&amp;nbsp;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;than the default PECO rate?&lt;/b&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="311" y="220" width="270" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-6" value="Clean Energy PA is an open-source application made by graduate students at Penn State.&lt;br&gt;&lt;br&gt;The service is free, and aims to help make it easier to sign up and track for suppliers -- finding an initial green rate at below PECO&#39;s price, keeping track of your contract lengts and alerting you when cheaper ones are available, or when you&#39;re is about to expire.&lt;br&gt;&lt;br&gt;It&#39;s 100% free, the code is open-source, and all data is kept private." style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="228.5" y="470" width="435" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-7" value="Login" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="751" y="80" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-8" value="Sign Up" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=hatch;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="661" y="80" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-9" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="166" y="220" width="560" height="295" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-10" value="&lt;font style=&quot;font-size: 32px;&quot;&gt;Choose Utility Provider&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="126" y="230" width="640" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-11" value="Your zip code is served by more than one utility provider. Can you choose which?" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="228.5" y="290" width="435" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-12" value="&lt;font style=&quot;font-size: 28px;&quot;&gt;Option 1&lt;br&gt;Option 2&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="136" y="340" width="640" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-13" value="Login to Save this preference for future searches and reminders" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="238.5" y="420" width="435" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-14" value="Save Selection" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="345" y="450" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2bZqA-a666yDy0cQKKfS-15" value="Search without Saving" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="450" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PgjUHIe1LC18A9ue1hxk-1" value="Only show this modal and options if there&#39;s more than one" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.25;" vertex="1" parent="1">
+          <mxGeometry x="545.5" y="313.5" width="118" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="PgjUHIe1LC18A9ue1hxk-2" value="This option moves directly to the &#39;Results&#39; page" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0;" vertex="1" parent="1">
+          <mxGeometry x="633" y="387" width="118" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="PgjUHIe1LC18A9ue1hxk-3" value="This option brings you to the login page and saves the preference if not logged in, and if logged in, moves to search while saving" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="320" width="98" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="cobLo2WWUylWDpU3vQ0S" name="SIgn Up">
+    <mxGraphModel dx="1013" dy="673" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -66,6 +128,15 @@
         <mxCell id="_-HdyOLthVO_U-IoXRDH-1" value="By signing up, Clean Energy PA will persist your choices and alert you only when you have a lower rate, or your contract term is about to end." style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="300" y="580" width="270" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="pI5dmmvKZWstELasSX4H-2" value="Enable Email Notifications" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="339" y="490" width="176" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1F8PNAB_7wj-d05bzKuv-1" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="325" y="495" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="1F8PNAB_7wj-d05bzKuv-3" value="X" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="325" y="495" width="20" height="20" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -80,14 +151,20 @@
         <mxCell id="q0_j2i85gH30eTLd9Mds-3" value="&lt;font style=&quot;font-size: 32px;&quot;&gt;Login&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="100" y="150" width="640" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x385-i7jVfiwOXRyHoRR-1" value="E-mail Address" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="x385-i7jVfiwOXRyHoRR-1" value="E-mail Address" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="325" y="230" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x385-i7jVfiwOXRyHoRR-2" value="Password" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="x385-i7jVfiwOXRyHoRR-2" value="Password" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="325" y="280" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="x385-i7jVfiwOXRyHoRR-3" value="Log In" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="x385-i7jVfiwOXRyHoRR-3" value="Log In" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="360" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="nanbTwQx_5ESwre0yXlX-1" value="&lt;h1 class=&quot;a-size-large a-spacing-none&quot;&gt;&lt;span id=&quot;productTitle&quot; class=&quot;a-size-large product-title-word-break&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Reset Password&lt;/font&gt;&lt;/span&gt;&lt;/h1&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="360" width="100" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gdvSbZj5Dm3Hav5e4DjE-1" value="If Reset is chosen, a prompt will open asking for an email." style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.03;" vertex="1" parent="1">
+          <mxGeometry x="500" y="317" width="120" height="86" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -157,37 +234,37 @@
         <mxCell id="TzAduP9OPI5Wu0lnWVxA-1" value="If logged in, save the choice and go to the supplier website for sign-up" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.03;" parent="1" vertex="1">
           <mxGeometry x="706" y="164" width="120" height="86" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-1" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-1" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="254" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-2" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than PECO&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-2" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than PECO&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="347" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-3" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;{Rate} per kWH&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-3" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;{Rate} per kWH&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="320" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-4" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Contract Length: X&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-4" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Contract Length: X&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="400" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-5" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-5" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="374" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-6" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than PECO&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-6" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than PECO&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="487" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-7" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;{Rate} per kWH&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-7" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;{Rate} per kWH&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="460" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-8" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Contract Length: X&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-8" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Contract Length: X&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="540" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-9" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-9" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;X Less than Current Contract&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="514" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-10" value="If not logged in, direct to login page" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.2;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-10" value="If not logged in, direct to login page" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.2;" parent="1" vertex="1">
           <mxGeometry x="686" y="280" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="_509WN5lErQ_0kBMIjUo-11" value="Only show if logged in and a contract already is in place" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.25;" vertex="1" parent="1">
+        <mxCell id="_509WN5lErQ_0kBMIjUo-11" value="Only show if logged in and a contract already is in place" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.25;" parent="1" vertex="1">
           <mxGeometry x="490" y="434" width="118" height="83" as="geometry" />
         </mxCell>
       </root>
@@ -213,8 +290,23 @@
         <mxCell id="4WouT0pvqESOqxNWjNyX-26" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Welcome, {First Name}&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="380" y="80" width="640" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="4WouT0pvqESOqxNWjNyX-27" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;First Name: {First Name}&lt;br&gt;Last Name: {Last Name}&lt;br&gt;Email: {Email Address}&lt;br&gt;Current Supplier : {Current Supplier Name}&lt;br&gt;Current Rate: {Current Supplier Rate}&lt;br&gt;Time Left on Contract: {Current Supplier Contract End Date}&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="4WouT0pvqESOqxNWjNyX-27" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;First Name: {First Name}&lt;br&gt;Last Name: {Last Name}&lt;br&gt;Email: {Email Address}&lt;br&gt;Utility Provider: {Utility Provider}&lt;br&gt;Current Supplier : {Current Supplier Name}&lt;br&gt;Current Rate: {Current Supplier Rate}&lt;br&gt;Time Left on Contract: {Current Supplier Contract End Date}&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="100" y="270" width="640" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LtZ4VZYNHqqTi6AkeaPI-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="321" y="390" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="LtZ4VZYNHqqTi6AkeaPI-5" value="X" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="321" y="390" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="LtZ4VZYNHqqTi6AkeaPI-9" value="Email Notifications Enabled" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="338" y="385" width="176" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LtZ4VZYNHqqTi6AkeaPI-11" value="Reset Password" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="360" y="430" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="klvNwvV3B74dwcY9wOWY-1" value="If Reset is chosen, a prompt will open asking for an email." style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;position2=0.03;" parent="1" vertex="1">
+          <mxGeometry x="514" y="374" width="120" height="86" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

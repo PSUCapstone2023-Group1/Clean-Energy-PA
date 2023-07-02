@@ -65,6 +65,8 @@ INSTALLED_APPS = [
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserProfile.apps.UserprofileConfig",
     "Website.apps.WebsiteConfig"
+    "health_check",
+    "ebhealthcheck.apps.EBHealthCheckConfig"
 ]
 
 MIDDLEWARE = [
@@ -82,7 +84,7 @@ ROOT_URLCONF = "Website.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

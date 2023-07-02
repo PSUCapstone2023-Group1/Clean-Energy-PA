@@ -13,6 +13,9 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.1.3. The system registration shall collect the user’s email address.
 - 1.1.1.4. The system registration shall collect the user's zip code.
 - 1.1.1.5. The system shall allow users to register for email reminders.
+- 1.1.1.6. The system shall allow users to reset their passwords.
+- 1.1.1.7. The system shall allow users to login to their account.
+- 1.1.1.8. The system shall allow users to logout of their account.
 
 ### 1.1.2 User De-Registration
 
@@ -25,7 +28,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.3.1. The system shall display providers with Fixed Price.
 - 1.1.3.2. The system shall display providers with no cancellation fees.
 - 1.1.3.3. The system shall display providers with 100% renewable energy.
-- 1.1.3.4. The system shall display providers with options that are cheaper or within 5 cents of the current PECO rate.
+- 1.1.3.4. The system shall display providers with options that are cheaper or within 5 cents of the user's distributor's current rate.
 - 1.1.3.5. The system shall display the contract length of each energy supplier.
 - 1.1.3.6. The optimal green option display shall allow the user to search for offers within their zip code.
 - 1.1.3.7. The system shall display a message to the user if the zip code entered on the search page is not a valid PA zip code.
@@ -52,10 +55,11 @@ The functional requirements section outlines all of the essential requirements f
 
 ### 1.1.7 Web Parsing
 
-- 1.1.7.1. The system shall be capable of pulling data based on zip code.
-- 1.1.7.2. The system shall be capable of pulling data based on monthly usage.
-- 1.1.7.3. The system shall be capable of pulling data based on the “Fixed Price” selection.
-- 1.1.7.4. The system shall be capable of pulling data based on “100% renewable energy”.
+- 1.1.7.1. The web parser shall be capable of retrieving the distributors for a given zip code.
+- 1.1.7.2. The web parser shall be capable of filtering offers based on monthly usage.
+- 1.1.7.3. The web parser shall be capable of filtering offers based on "price structure" (e.g. "fixed").
+- 1.1.7.4. The web parser shall be capable of filtering offers based on renewable energy percentage.
+- 1.1.7.5. The web parser shall raise an HTTP Error if it does not receive a 200 response
 
 ### 1.1.8 User Profile
 

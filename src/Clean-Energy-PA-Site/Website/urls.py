@@ -42,4 +42,7 @@ urlpatterns = [
 
     # UserProfile
     path("", include("UserProfile.urls")),
+    
+    # health check
+    path("health_check/", include('health_check.urls'))
 ]
