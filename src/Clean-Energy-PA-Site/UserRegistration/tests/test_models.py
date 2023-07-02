@@ -5,15 +5,36 @@
 # third-party
 
 # Django
-from django.contrib.messages import get_messages
+from django.test import TestCase
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 # local Django
-from UserRegistration.tests.test_base_view import BaseTest
 from UserRegistration.utils import generate_zip_code
 
+from UserRegistration.utils import (
+    generate_username,
+    generate_email,
+    generate_password,
+    generate_name,
+    generate_zip_code,
+)
 
-class RegistrationModelTest(BaseTest):
+class TestModels(TestCase):
+    def setUp(self):
+        self.register_url = reverse("UserRegistration:register")
+        self.login_url = reverse("UserRegistration:login")
+        password = generate_password()
+        self.form_data = {
+            "username": generate_username(),
+            "email": generate_email(),
+            "first_name": generate_name(),
+            "last_name": generate_name(),
+            "zip_code": generate_zip_code(is_valid=True),
+            "password1": password,
+            "password2": password,
+        }
+
     def _set_up_name_test(self, first_name, last_name, expected_status_code=None):
         self.form_data["first_name"] = first_name
         self.form_data["last_name"] = last_name

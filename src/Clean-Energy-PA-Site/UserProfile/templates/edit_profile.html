@@ -1,4 +1,4 @@
-{% extends 'GreenEnergySearch/base.html' %}
+{% extends 'base/base.html' %}
 
 {% block title %}
   Edit User Profile
@@ -15,7 +15,7 @@
             <h5 class="card-title">User Profile for: {{ user.username }}</h5>
           </div>
         <div class="card-body">
-          <form method="POST" action="{% url 'edit_profile' %}">
+          <form method="POST" action="{% url 'user_profile:edit_profile' %}">
             {% csrf_token %}
             <div class="mb-6">
               {{ form.first_name|as_crispy_field }}
@@ -53,9 +53,9 @@
             </div>
             <div class="mb-3 d-flex justify-content-between">
               <button type="submit" class="btn btn-success">Save Changes</button>
-              <a href="{% url 'password_reset_from_profile' %}" class="btn btn-primary">Update Password</a>
+              <a href="{% url 'user_profile:password_reset_from_profile' %}" class="btn btn-primary">Update Password</a>
               
-              <form method="POST" action="{% url 'delete_account' %}" id="delete-account-form">
+              <form method="POST" action="{% url 'user_profile:delete_account' %}" id="delete-account-form">
                 {% csrf_token %}
                 <input type="hidden" name="delete-account-post" value="true">
                 <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete Account</button>
@@ -76,7 +76,7 @@
       // Create a form and submit it
       var form = document.createElement("form");
       form.method = "POST";
-      form.action = "{% url 'delete_account' %}";
+      form.action = "{% url 'user_profile:delete_account' %}";
       var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
       var csrfInput = document.createElement("input");
       csrfInput.type = "hidden";

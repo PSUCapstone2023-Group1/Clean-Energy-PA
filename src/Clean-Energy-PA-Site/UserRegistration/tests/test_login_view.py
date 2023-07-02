@@ -7,7 +7,7 @@
 # Django
 
 # local Django
-from UserRegistration.tests.test_base_view import BaseTest
+from Website.tests.test_base import BaseTest
 from unittest.mock import patch
 
 
