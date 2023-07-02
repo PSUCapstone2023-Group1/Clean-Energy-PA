@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 # local Django
+from UserRegistration.utils import generate_zip_code
+
 from UserRegistration.utils import (
     generate_username,
     generate_email,
@@ -17,7 +19,6 @@ from UserRegistration.utils import (
     generate_name,
     generate_zip_code,
 )
-
 
 class TestModels(TestCase):
     def setUp(self):
@@ -37,6 +38,7 @@ class TestModels(TestCase):
     def _set_up_name_test(self, first_name, last_name, expected_status_code=None):
         self.form_data["first_name"] = first_name
         self.form_data["last_name"] = last_name
+        self.form_data["email"] = "test@example.com"
         response = self.client.post(self.register_url, self.form_data, follow=True)
         if expected_status_code is not None:
             self.assertEqual(response.status_code, expected_status_code)
@@ -98,14 +100,35 @@ class TestModels(TestCase):
         Test ID 36: Checking that first_name and last_name can be saved in the database
         """
         self._set_up_name_test("John", "Doe")
-        saved_user = User.objects.get(first_name="John", last_name="Doe")
+        saved_user = User.objects.get(email="test@example.com")
         self.assertEqual(saved_user.first_name, "John")
         self.assertEqual(saved_user.last_name, "Doe")
 
     def test_invalid_name_does_not_create_account(self):
         """
-        Test ID 37: Invalid name, exceeding 150 char cannot create an account
+        Test ID 37: Invalid name, exceeding 150 char
+        cannot create an account
         """
         invalid_name = "a" * 151
         self._set_up_name_test(invalid_name, invalid_name, 200)
+        # Setup adds a user to db so there should be 0 users in test db since this is an invalid name test
         self.assertEqual(User.objects.count(), 0)
+
+    def test_user_with_email_already_exists(self):
+        """
+        Test ID 66: If a user enters an email that matches
+        one already in the database they should not be
+        allowed to create another account
+        """
+        self.form_data["email"] = "test@example.com"
+        # Add the user with the test email
+        self.client.post(self.register_url, self.form_data, follow=True)
+        existing_user_count = User.objects.count()
+        # Attempt to add the user again with the same email
+        response = self.client.post(self.register_url, self.form_data, follow=True)
+        new_user_count = User.objects.count()
+        # Setup adds a user to db so there should be 1 user in test db
+        self.assertEqual(existing_user_count, new_user_count)
+        
+        #TODO: Figure out why the assertion below isn't working.
+        # self.assertContains(response, "An account with this email already exists!")

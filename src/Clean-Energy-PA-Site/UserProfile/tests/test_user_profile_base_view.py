@@ -18,7 +18,9 @@ class UserProfileBaseTest(BaseTest):
         self.password_reset_from_profile_url = reverse("user_profile:password_reset_from_profile")
 
         # Get the email notifications
-        User_Preferences.objects.create(user_id=self.user, email_notifications=True)
+        self.user_preferences = User_Preferences.objects.create(
+            user_id=self.user, email_notifications=True, zip_code=15025
+        )
 
         # Log user in, most of these tests user must already be logged in
         self._login_user()
