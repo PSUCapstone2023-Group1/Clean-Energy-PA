@@ -15,7 +15,9 @@ print('Selected Distributor Rate:', selected_distributor.rates[0].rate)
 
 offers = api.get_offers(selected_distributor.id, selected_rate.rate_schedule)
 
-filtered_offers = offers.filter(price_structure=price_structure.fixed, upper_rate=1)
+filtered_offers = offers.filter(renewable_energy=True,
+                                price_structure=price_structure.fixed,
+                                upper_rate=selected_distributor.get_rateschedule_rate(selected_distributor.rates[0].rate_schedule).rate + 0.05)
 
 print("Total Offers Count:", len(offers))
 print("Filtered Offers Count:", len(filtered_offers))

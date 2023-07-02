@@ -13,6 +13,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 # local Django
@@ -55,9 +56,9 @@ def delete_account(request):
             user.delete()
             sendDeleteConfirmationEmail(request, username, to_email)
             logout(request)
-            return redirect("home")
+            return redirect(reverse("home"))
     else:
-        return redirect("edit_profile")
+        return redirect(reverse("user_profile:edit_profile"))
 
 
 @login_required
@@ -68,7 +69,7 @@ def password_reset_from_profile(request):
             user = form.save()
             update_session_auth_hash(request, user)
             messages.success(request, "Your password has been successfully updated.")
-            return redirect("edit_profile")
+            return redirect(reverse("user_profile:edit_profile"))
         else:
             messages.error(request, "Please correct the errors below.")
     else:

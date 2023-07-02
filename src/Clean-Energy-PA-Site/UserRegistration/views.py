@@ -41,10 +41,10 @@ def activate(request, uidb64, token):
             request,
             "Thank you for your email confirmation. Now you can login your account.",
         )
-        return redirect("login")
+        return redirect(reverse("UserRegistration:login"))
     else:
         messages.error(request, "Activation link is invalid!")
-    return redirect("login")
+    return redirect(reverse("UserRegistration:login"))
 
 
 def activateEmail(request, user, to_email):
@@ -107,7 +107,7 @@ def register(request):
                 )
                 user_preferences.save()
 
-                return redirect(reverse("login"))
+                return redirect(reverse("UserRegistration:login"))
     else:
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
@@ -123,7 +123,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("home")
+                return redirect(reverse("home"))
             else:
                 form.add_error(None, "Invalid username or password")
     else:
@@ -137,4 +137,4 @@ def user_logout(request):
     """Logic for handling the user logout view"""
     logout(request)
     messages.info(request, "Logged out successfully!")
-    return redirect("home")
+    return redirect(reverse("home"))

@@ -1,19 +1,4 @@
-class distributor:
-    "A dataclass used to define the structure of the zipsearch object"
-    def __init__(self, zipsearch_json):
-        self.id = str(zipsearch_json["id"])
-        """The distributor's ID"""
-        self.name = str(zipsearch_json["Name"])
-        """The name of the distributor"""
-        self.phone = str(zipsearch_json["Phone"])
-        """The distributor's phone number"""
-        self.website = str(zipsearch_json["Website"])
-        """The distributor's website url"""
-        self.rates = list(map(lambda x: distributor_rate(x), zipsearch_json["Rates"]))
-        """List of rate types for this distributor"""
-    
-    def __str__(self):
-        return self.id + ': ' + self.name
+from typing import Union
 
 class distributor_rate:
     "A dataclass used to define the structure of the zipsearch's rate object"
@@ -35,6 +20,32 @@ class distributor_rate:
 
     def __str__(self):
         return self.id
+
+class distributor:
+    "A dataclass used to define the structure of the zipsearch object"
+    def __init__(self, zipsearch_json):
+        self.id = str(zipsearch_json["id"])
+        """The distributor's ID"""
+        self.name = str(zipsearch_json["Name"])
+        """The name of the distributor"""
+        self.phone = str(zipsearch_json["Phone"])
+        """The distributor's phone number"""
+        self.website = str(zipsearch_json["Website"])
+        """The distributor's website url"""
+        self.rates = list(map(lambda x: distributor_rate(x), zipsearch_json["Rates"]))
+        """List of rate types for this distributor"""
+    
+    def __str__(self):
+        return self.id + ': ' + self.name
+
+    def get_rateschedule_rate(self, rate_schedule:str) -> Union[distributor_rate, None]:
+        """Get the rate of the input rate schedule"""
+        rate_type_query = rate_schedule.replace("+", " ") # Replace any spaces with a + character to use as a query parameter.
+        rate_type_query = rate_type_query.replace("%20", " ") # Replace any spaces with a + character to use as a query parameter.
+        for rate in self.rates:
+            if rate.rate_schedule == rate_type_query:
+                return rate
+        return None
     
 class distributor_past_rate:
     "A dataclass used to define the structure of the past_rate object"    
@@ -69,3 +80,10 @@ class distributor_collection:
             return item
         else:
             raise StopIteration()
+    
+    def find_distributor(self, id:Union[str, int])->Union[distributor,None]:
+        """Find the distributor which matches the input id"""
+        for distributor in self.collection:
+            if str(distributor.id) == str(id):
+                return distributor
+        return None

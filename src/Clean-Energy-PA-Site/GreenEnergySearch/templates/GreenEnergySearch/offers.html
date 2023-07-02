@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %} {% load custom_filters %} {% block content %}
+<div>
+  <h1>Offers</h1>
+  <a href="javascript:void(0);" onclick="history.back();">Go Back</a>
+  <h3>Selection:</h3>
+  <ul>
+    <li>Distributor: {{distributor.name}}</li>
+    <li>Rate Schedule: {{distributor_rate.rate_schedule}}</li>
+  </ul>
+  <hr />
+  <h5>Note: These offers are currently filtered by:</h5>
+  <ul>
+    <li>Renewable Energy = True</li>
+    <li>Price Structure = Fixed</li>
+    <li>Rate <= Distributor Rate + $0.05</li>
+  </ul>
+  <hr />
+  <hr />
+  <div id="offer-container" style="display: flex; flex-direction:column; justify-content: center; align-items:center">
+    {% for offer in offers %}
+    <div
+      style="
+        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        width: 600px;
+        padding: 50px;
+      "
+    >
+      <h2>{{offer.name}}</h2>
+      <hr>
+      <p>{{offer.rate|format_rate:7}} per kWh</p>
+      <p 
+      {% with offer_rate as distributor_rate.rate|subtract:offer.rate %}
+      style={% if offer_rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
+      {% endwith %}
+        {{distributor_rate.rate|subtract:offer.rate|format_rate_diff:8}}
+        {{distributor.name}}
+      </p>
+      {% if user.is_authenticated%}
+      <p>(insert current contract diff) less than current contract</p>
+      {%else%}
+      <p><a href="{% url "UserRegistration:login" %}">login</a> to see the difference from your currently saved contract</p>
+      {% endif %}
+      <p>Contract length: {{offer.term_length|format_contract_length}}</p>
+      <div style="display: flex; justify-content: center;">
+        <button onclick="location.href = '{{offer.website}}';">Select and Save</button>
+      </div>
+    </div>
+    <hr />
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

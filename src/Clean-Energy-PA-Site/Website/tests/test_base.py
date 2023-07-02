@@ -28,9 +28,9 @@ class BaseTest(TestCase):
 
     def setUp(self):
         # UserRegistration Urls
-        self.register_url = reverse("register")
-        self.login_url = reverse("login")
-        self.logout_url = reverse("user_logout")
+        self.register_url = reverse("UserRegistration:register")
+        self.login_url = reverse("UserRegistration:login")
+        self.logout_url = reverse("UserRegistration:user_logout")
 
         # Dummy Form Data
         password = generate_password()
@@ -61,7 +61,7 @@ class BaseTest(TestCase):
     def _login_user(self):
         # Make sure user is active
         form_data = {"username": "testuser", "password": "testpass"}
-        url = reverse("activate", kwargs={"uidb64": self.uid, "token": self.token})
+        url = reverse("UserRegistration:activate", kwargs={"uidb64": self.uid, "token": self.token})
         self.client.get(url)
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_active)

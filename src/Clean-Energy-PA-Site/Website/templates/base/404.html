@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>404 - Not Found</h1>
+<h2>Sorry! Looks like your request wasn't found 🙁</h2>
+<a href="javascript:void(0);" onclick="history.back();">Go Back</a>
+{% if reason is not None %}
+<p>{{reason}}</p>
+{% endif %}
+{% endblock content %}
