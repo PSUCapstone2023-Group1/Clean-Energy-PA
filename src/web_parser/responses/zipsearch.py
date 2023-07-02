@@ -40,8 +40,10 @@ class distributor:
 
     def get_rateschedule_rate(self, rate_schedule:str) -> Union[distributor_rate, None]:
         """Get the rate of the input rate schedule"""
+        rate_type_query = rate_schedule.replace("+", " ") # Replace any spaces with a + character to use as a query parameter.
+        rate_type_query = rate_type_query.replace("%20", " ") # Replace any spaces with a + character to use as a query parameter.
         for rate in self.rates:
-            if rate.rate_schedule == rate_schedule:
+            if rate.rate_schedule == rate_type_query:
                 return rate
         return None
     
