@@ -61,7 +61,7 @@ class Zip_Search_View_Test(GreenEnergySearchBaseTest):
         # self.mock_distributors_response(zipsearch_test_data.multiple_expected_example)
 
         # Create the zip_search url with a test zip code
-        url = build_offer_path("15025", "27487", "RH%20-%20Residential%20Heating%20Service")
+        url = build_offer_path("15025", "27487", "RS%20-%20Regular%20Residential%20Service")
 
         # Generate reponse
         response = self.client.get(url)

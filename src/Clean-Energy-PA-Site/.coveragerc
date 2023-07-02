@@ -3,4 +3,6 @@ omit=
     */venv/*
     */tests/*
     */migrations/*
-    */__init__.py/*
+    *__init__.py*
+    manage.py
+    *settings.py*

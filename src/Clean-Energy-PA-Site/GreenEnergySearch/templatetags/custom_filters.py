@@ -7,10 +7,6 @@ def subtract(value, arg):
     return value - arg
 
 @register.filter
-def string(value):
-    return str(value)
-
-@register.filter
 def format_rate(value, length):
     return f"${str(abs(value)).ljust(length, '0')[:length]}"
 
