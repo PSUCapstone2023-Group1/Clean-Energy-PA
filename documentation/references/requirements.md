@@ -39,6 +39,10 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.4.1. The system shall allow users to select a provider.
 - 1.1.4.2. The system shall save the selected decision in the application database.
 - 1.1.4.3. The system shall redirect users to the provider’s website for sign-up in a new tab.
+- 1.1.4.4. Upon user selection of an offer, the system shall cache the offer in the database for the user as a "possible selection"
+- 1.1.4.5. Upon login, page refresh, or request of a new page from the server, if the user has has any "possible selections" cached, the system shall prompt the user to choose if they signed up for any of the possible selection.
+- 1.1.4.6. The possible selections prompt shall allow the user to easily select a "No" or "Skip" option
+- 1.1.4.7. Once the user has completed interacting with the possible selection prompt (either selects or chooses no), the possible selections shall be deleted from the cache.
 
 ### 1.1.5 Automated Email Scheduling
 
