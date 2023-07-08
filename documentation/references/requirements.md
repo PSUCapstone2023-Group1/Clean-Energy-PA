@@ -28,7 +28,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.3.1. The system shall display providers with Fixed Price.
 - 1.1.3.2. The system shall display providers with no cancellation fees.
 - 1.1.3.3. The system shall display providers with 100% renewable energy.
-- 1.1.3.4. The system shall display providers with options that are cheaper or within $.05 cents per kWh of the user's distributor's current rate.
+- 1.1.3.4. The system shall display providers with options that are cheaper or within .05 cents per kWh of the user's distributor's current rate.
 - 1.1.3.5. The system shall display the contract length of each energy supplier.
 - 1.1.3.6. The optimal green option display shall allow the user to search for offers within their zip code.
 - 1.1.3.7. The system shall display a message to the user if the zip code entered on the search page is not a valid PA zip code.
