@@ -34,7 +34,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.3.7. The system shall display a message to the user if the zip code entered on the search page is not a valid PA zip code.
 - 1.1.3.8. The system shall display the offer results to the user when the zip code entered is valid and there is a distributor and rate schedule selected.
 - 1.1.3.9. The system shall have the user select their distributor for the zip code entered, if there is only a single distributor for their zip code auto-select the distributor and proceed.
-- 1.1.3.10. The system shall have the user select their rate schedule for the distrbituro selected, if there is only a single rate schedule for the distributor auto-select the rate schedule.
+- 1.1.3.10. The system shall have the user select their rate schedule for the distributor selected, if there is only a single rate schedule for the distributor auto-select the rate schedule.
 - 1.1.3.11. If the user is logged in, the system shall persist the zip-code, distributor selected, and rate schedule selected.
 - 1.1.3.12. If the user is logged in and they do not have a zip code, distributor, and rate schedule selected prompt them to select each upon search request.
 - 1.1.3.13. If the user is logged in and they do have a zip code, distributor, and rate schedule selected the system shall prompt the user if they'd like to reselect search options.
