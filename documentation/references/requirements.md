@@ -58,6 +58,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.5.4. The system shall schedule a follow-up email two days before the contract ends.
 - 1.1.5.5. The system shall generate a follow-up email to include alternative green supplier choices, the best and cheapest of that day and time, and provide a link to the application to sign up for the next deal.
 - 1.1.5.6. The system shall generate a follow-up email upon registration.
+- 1.1.5.7 The system shall email a follow-up when a cheaper contract is avaliable within the users zip code.
 
 ### 1.1.6 Notifications for New Contracts
 
