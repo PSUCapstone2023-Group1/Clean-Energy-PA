@@ -32,7 +32,13 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.3.5. The system shall display the contract length of each energy supplier.
 - 1.1.3.6. The optimal green option display shall allow the user to search for offers within their zip code.
 - 1.1.3.7. The system shall display a message to the user if the zip code entered on the search page is not a valid PA zip code.
-- 1.1.3.8. The system shall display the offer results to the user when the zip code entered is valid.
+- 1.1.3.8. The system shall display the offer results to the user when the zip code entered is valid and there is a distributor and rate schedule selected.
+- 1.1.3.9. The system shall have the user select their distributor for the zip code entered, if there is only a single distributor for their zip code auto-select the distributor and proceed.
+- 1.1.3.10. The system shall have the user select their rate schedule for the distrbituro selected, if there is only a single rate schedule for the distributor auto-select the rate schedule.
+- 1.1.3.11. If the user is logged in, the system shall persist the zip-code, distributor selected, and rate schedule selected.
+- 1.1.3.12. If the user is logged in and they do not have a zip code, distributor, and rate schedule selected prompt them to select each upon search request.
+- 1.1.3.13. If the user is logged in and they do have a zip code, distributor, and rate schedule selected the system shall prompt the user if they'd like to reselect search options.
+- 1.1.3.14. If the user declines the prompt to reselect search options, the system shall use the persisted search options to get the offer results.
 
 ### 1.1.4 Provider Selection & Decision Retention
 
@@ -69,6 +75,8 @@ The functional requirements section outlines all of the essential requirements f
 
 - 1.1.8.1. The system shall have a page that displays the user profile.
 - 1.1.8.2. The system shall only display a profile settings link when the user is logged on and authenticated.
+- 1.1.8.3. The system shall display the user's persisted search options (zip code, distributor, and rate schedule)
+- 1.1.8.4. The system shall allow the user to reselect their search options from the user profile. If they choose to reselect, the system shall use the same prompts as the primary search routine to maintain a similar feel.
 
 ### 1.1.9 Offer Results
 
