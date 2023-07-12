@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import environ
 import os
 import subprocess
@@ -62,11 +63,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crispy_forms",
     "crispy_bootstrap5",
+    "EmailScheduler.apps.EmailschedulerConfig",
     "GreenEnergySearch.apps.GreenEnergySearchConfig",
     "UserProfile.apps.UserprofileConfig",
     "Website.apps.WebsiteConfig",
     "health_check",
-    "ebhealthcheck.apps.EBHealthCheckConfig"
+    "ebhealthcheck.apps.EBHealthCheckConfig",
 ]
 
 MIDDLEWARE = [

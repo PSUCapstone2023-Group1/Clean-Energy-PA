@@ -6,3 +6,4 @@ beautifulsoup4
 django-ebhealthcheck
 django-health-check
 selenium
+apscheduler
