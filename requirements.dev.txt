@@ -1,5 +1,6 @@
 pytest
 pytest-cov
+pytest-mock
 requests-mock
 beautifulsoup4
 django-ebhealthcheck
