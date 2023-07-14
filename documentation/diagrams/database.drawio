@@ -731,13 +731,13 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="oZFmfb2m743iyEAtkk1g-4" value="email" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="oZFmfb2m743iyEAtkk1g-1">
-                    <mxGeometry x="-40" y="102" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-62" y="120" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="oZFmfb2m743iyEAtkk1g-5" style="html=1;endArrow=none;endFill=0;" edge="1" parent="oZFmfb2m743iyEAtkk1g-1" source="oZFmfb2m743iyEAtkk1g-6" target="oZFmfb2m743iyEAtkk1g-2">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="oZFmfb2m743iyEAtkk1g-6" value="Id" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="oZFmfb2m743iyEAtkk1g-1">
-                    <mxGeometry x="60" y="38" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="108" y="27" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="oZFmfb2m743iyEAtkk1g-7" value="zip_code" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="oZFmfb2m743iyEAtkk1g-1">
                     <mxGeometry x="636" y="67" width="100" height="40" as="geometry"/>
@@ -864,6 +864,12 @@
                         <mxPoint x="802" y="358.52513966480456" as="sourcePoint"/>
                         <mxPoint x="722.7983854095851" y="331.0921781865602" as="targetPoint"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="fcN5fxitc9wkgDTpqp5n-1" style="edgeStyle=none;html=1;startArrow=none;startFill=0;endArrow=none;endFill=0;" edge="1" parent="oZFmfb2m743iyEAtkk1g-1" source="fcN5fxitc9wkgDTpqp5n-0" target="oZFmfb2m743iyEAtkk1g-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fcN5fxitc9wkgDTpqp5n-0" value="username" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="oZFmfb2m743iyEAtkk1g-1">
+                    <mxGeometry x="-9" y="59" width="100" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
