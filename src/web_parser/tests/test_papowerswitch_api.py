@@ -8,6 +8,7 @@ import requests
 import pytest
 from responses.ratesearch import offer_collection
 from responses.zipsearch import distributor_collection
+from responses.ratesearch import price_structure
 
 class TestZipSearch:
 
@@ -114,6 +115,35 @@ class TestRatesearch:
                     renewable_energy=data["RenewableEnergy"],
                     lower_renewable_percentage=0, # Set to the minimum
                     price_structure=data["PriceStructure"],
+                    monthly_fee=data["MonthlyFee"],
+                    monthly_fee_amount=data["MonthlyFeeAmount"],
+                    cancellation_fee=data["CancellationFee"],
+                    enrollment_fee=data["EnrollmentFee"],
+                    upper_rate=1 # Use a large rate
+                    )
+        assert len(filtered_offers)==1
+        assert str(filtered_offers[0].id) == str(data["id"])
+        assert str(filtered_offers[0]) == str(data["id"]) + ": " + str(data["Name"])
+
+    def test_filter_offers_enum_case(self):
+        "Verify that the filter works as expected with the enum case"
+        data = ratesearch_test_data.expected_example[1]
+        offers = offer_collection(ratesearch_test_data.expected_example)
+        # Get price structure as an enum from test data
+        ps = price_structure.fixed
+        for _ps in price_structure:
+            if _ps.name == data["PriceStructure"]:
+                ps = _ps
+        filtered_offers = offers.filter(name=data["Name"],
+                    renewable_pa= data["RenewablePA"],
+                    solar=data["Solar"],
+                    introductory_price=data["IntroductoryPrice"],
+                    discount_available=data["DiscountAvailable"],
+                    net_metering=data["NetMetering"],
+                    pa_wind=data["PAWind"],
+                    renewable_energy=data["RenewableEnergy"],
+                    lower_renewable_percentage=0, # Set to the minimum
+                    price_structure=ps,
                     monthly_fee=data["MonthlyFee"],
                     monthly_fee_amount=data["MonthlyFeeAmount"],
                     cancellation_fee=data["CancellationFee"],

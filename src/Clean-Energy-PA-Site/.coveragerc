@@ -6,3 +6,4 @@ omit=
     *__init__.py*
     manage.py
     *settings.py*
+    */src/web_parser/*
