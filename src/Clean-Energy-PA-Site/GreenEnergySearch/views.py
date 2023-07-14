@@ -10,7 +10,9 @@ def build_rate_type_path(zipcode, distributor_id):
      return reverse("green_energy_search:rate_type") + f"/?zipcode={zipcode}&distributor_id={distributor_id}"
 
 def build_offer_path(zipcode, distributor_id, rate_type):
-     return reverse("green_energy_search:offer_search", kwargs={"zipcode":zipcode, "distributor_id":distributor_id, "rate_type":rate_type})
+    rate_type_query = rate_type.replace(" ", "+") # Replace any spaces with a + character to use as a query parameter.
+    rate_type_query = rate_type_query.replace("%20", "+") # Replace any spaces with a + character to use as a query parameter.
+    return reverse("green_energy_search:offer_search", kwargs={"zipcode":zipcode, "distributor_id":distributor_id, "rate_type":rate_type_query})
 
 # Create your views here.
 def zip_search(request):

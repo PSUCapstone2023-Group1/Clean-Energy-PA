@@ -11,7 +11,7 @@ class papowerswitch_api:
     def __init__(self):
         self.api = api_core()
 
-    def get_distributors(self, zip_code:Union[str,int]):
+    def get_distributors(self, zip_code:Union[str,int])->distributor_collection:
         """
         Make a get request to the zipsearch endpoint and realize a (200) OK message into a list of zipsearch response objects
 
@@ -32,9 +32,8 @@ class papowerswitch_api:
         else:
             print(self.failed_preface, response.status_code)
             response.raise_for_status()
-            
 
-    def get_offers(self, id:Union[str,int], rate_type:str):
+    def get_offers(self, id:Union[str,int], rate_type:str)->offer_collection:
         """
         Make a get request to the rates endpoint and realize a (200) OK message into a list of ratesearch response objects
 
