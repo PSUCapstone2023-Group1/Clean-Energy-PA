@@ -17,10 +17,5 @@ class UserProfileBaseTest(BaseTest):
         self.account_deletion_url = reverse("user_profile:delete_account")
         self.password_reset_from_profile_url = reverse("user_profile:password_reset_from_profile")
 
-        # Get the email notifications
-        self.user_preferences = User_Preferences.objects.create(
-            user_id=self.user, email_notifications=True, zip_code=15025
-        )
-
         # Log user in, most of these tests user must already be logged in
         self._login_user()

@@ -1,7 +1,5 @@
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
 from django.contrib.auth.models import User
-from GreenEnergySearch.models import User_Preferences
-from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 
