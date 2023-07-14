@@ -10,6 +10,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from GreenEnergySearch.models import User_Preferences
+from web_parser.tests import ratesearch_test_data
 
 # local Django
 from UserRegistration.utils import (
@@ -53,6 +55,17 @@ class BaseTest(TestCase):
             first_name="John",
             last_name="Doe",
             is_active=False,
+        )
+
+        # Create a user preference base
+        self.user_preferences = User_Preferences.objects.create(
+            user_id=self.user,
+            zip_code=15025,
+            distributor_id=27498,
+            rate_schedule="R - Regular Residential Service",
+            selected_offer=ratesearch_test_data.expected_example[0],
+            possible_selections= [ratesearch_test_data.expected_example[0], ratesearch_test_data.expected_example[0]],
+            email_notifications=True
         )
 
         # Tokens used for email auth
