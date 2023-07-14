@@ -14,7 +14,7 @@ class User_Preferences(models.Model):
     # The rate schedule that the user saved
     rate_schedule = models.CharField(max_length=80, default="default")
     # Offer id from the api
-    selected_offer = models.JSONField(default={})
+    selected_offer = models.JSONField(default=dict)
     # Users email notification preference
     email_notifications = models.BooleanField(default=True)
 
