@@ -10,6 +10,8 @@ class price_structure(Enum):
 class offer:
     "A dataclass used to define the structure of the ratesearch's offer object"
     def __init__(self, rate_json):
+        self.raw_json = rate_json
+        """The raw json provided from the api"""
         self.id = str(rate_json["id"])
         """ID of this rate offer"""
         self.website = str(rate_json["Website"])
