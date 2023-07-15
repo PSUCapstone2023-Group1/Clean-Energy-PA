@@ -7,3 +7,4 @@ django-ebhealthcheck
 django-health-check
 selenium
 apscheduler
+pandas
