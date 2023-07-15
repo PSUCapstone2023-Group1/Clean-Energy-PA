@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lower Energy Rates Found!</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      
+      h1 {
+        color: #333;
+      }
+      
+      p {
+        margin-bottom: 10px;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      
+      th,
+      td {
+        border: 1px solid #333;
+        padding: 8px;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      
+      .signature {
+        margin-top: 20px;
+        border-top: 1px solid #333;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello {{ first_name }},</h1>
+    <p>We found some rates that are lower than your current rate:</p>
+    <h4>Existing Rate: {{ rate }} per kWh</h4>
+    <p>Here are some lower energy rates:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Lower Distributor Name</th>
+          <th>Lower Offer Name</th>
+          <th>Lower Rate kWh</th>
+          <th>Shop rates</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for _, row in lower_rate_offers.iterrows %}
+          <tr>
+            <td>{{ row.lower_distributor_name }}</td>
+            <td>{{ row.lower_offer_name }}</td>
+            <td>{{ row.lower_rate }}</td>
+            <td>
+              <a href="{{ domain }}{{ row.lower_rate_path }}">Shop rates</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="signature">
+      <p>Best regards,</p>
+      <p>Your pals at Clean Energy PA</p>
+    </div>
+  </body>
+</html>

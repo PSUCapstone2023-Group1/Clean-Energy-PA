@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from GreenEnergySearch.models import User_Preferences
+from GreenEnergySearch.views import build_offer_path
+from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 import pandas as pd
 
@@ -8,6 +10,7 @@ api = papowerswitch_api()
 
 class Price_Watch_Dog:
     def __init__(self):
+        self.subscribers_df = pd.DataFrame()
         self.mailing_list_df = pd.DataFrame()
 
     def remove_rows_with_zero(self, df, col):
@@ -77,6 +80,11 @@ class Price_Watch_Dog:
                         "lower_distributor_name": distributor.name,
                         "lower_offer_name": offer.name,
                         "lower_rate": rate,
+                        "lower_rate_path": build_offer_path(
+                            row["zip_code"],
+                            distributor.id,
+                            row["rate_schedule"],
+                        ),
                     }
                 )
         # Create the mailing_list DataFrame
@@ -100,8 +108,11 @@ class Price_Watch_Dog:
         mailing_df = self.compare_rates(mailing_df, "lower_rate", "selected_offer_rate")
         return mailing_df
 
-    def update_mailing_list_df(self):
+    def update_lower_rate_mailing_list_df(self):
         subscribers_df = self.get_all_subscribers()
+        # Update PriceWatch subscribers_df attribute
+        self.subscribers_df = subscribers_df
+
         mailing_df = pd.DataFrame()  # Create an empty DataFrame
 
         # For each subscriber, append lower rates/offers

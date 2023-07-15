@@ -6,7 +6,10 @@ class EmailschedulerConfig(AppConfig):
     name = "EmailScheduler"
 
     def ready(self) -> None:
-        from price_watch import price_updater
+        from EmailScheduler.price_watch import price_updater
+        from EmailScheduler.send_email_batch import email_batch_updater
 
-        price_updater.start()
+        # Uncomment to run jobs
+        # price_updater.start()
+        # email_batch_updater.start()
         return super().ready()
