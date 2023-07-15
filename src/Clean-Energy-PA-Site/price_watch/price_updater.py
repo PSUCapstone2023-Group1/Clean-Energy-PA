@@ -7,5 +7,7 @@ def start():
     pass  # passing to avoid running in production while testing
     # scheduler = BackgroundScheduler()
     # Price_Watch_Dog_Instance = price_watchdog.Price_Watch_Dog()
-    # scheduler.add_job(Price_Watch_Dog_Instance.check_user_rates, "interval", seconds=5)
+    # scheduler.add_job(
+    #     Price_Watch_Dog_Instance.update_mailing_list_df, "interval", seconds=5
+    # )
     # scheduler.start()

@@ -7,6 +7,9 @@ api = papowerswitch_api()
 
 
 class Price_Watch_Dog:
+    def __init__(self):
+        self.mailing_list_df = pd.DataFrame()
+
     def remove_rows_with_zero(self, df, col):
         """Keep rates that are not zero"""
         df = df[df[col] != 0]
@@ -15,6 +18,15 @@ class Price_Watch_Dog:
     def compare_rates(self, df, rate, lower_rate_threshold):
         """Keep rates that are lower than threshold"""
         df = df[df[rate] < df[lower_rate_threshold]]
+        return df
+
+    def row_series_to_multiple_row_df(self, row, row_count):
+        """Converts a row Series to a DataFrame
+        with repeated # row_count rows"""
+        df = row.to_frame()  # row Series to DataFrame
+        df = df.transpose()
+        # Repeat rows to match specified row_count
+        df = pd.concat([df] * row_count, ignore_index=True)
         return df
 
     def get_all_subscribers(self):
@@ -60,12 +72,6 @@ class Price_Watch_Dog:
                 # Build out the mailing list that will be converted to dataframe
                 data.append(
                     {
-                        # Subscriber data (user data from db w/ email_notification=True)
-                        "email": row["email"],
-                        "zip_code": row["zip_code"],
-                        "rate_schedule": row["rate_schedule"],
-                        "existing_distributor_id": row["distributor_id"],
-                        "existing_offer_rate": row["selected_offer_rate"],
                         # Returned from the Rate Search, lower rate data
                         "lower_distributor_id": distributor.id,
                         "lower_distributor_name": distributor.name,
@@ -74,29 +80,34 @@ class Price_Watch_Dog:
                     }
                 )
         # Create the mailing_list DataFrame
-        lower_rate_mailing_list_df = pd.DataFrame(data)
+        mailing_df = pd.DataFrame(data)
 
         # If Rate Search returns a rate of 0 remove row
-        lower_rate_mailing_list_df = self.remove_rows_with_zero(
-            lower_rate_mailing_list_df, "lower_rate"
-        )
+        mailing_df = self.remove_rows_with_zero(mailing_df, "lower_rate")
 
         # Remove any duplicates
-        lower_rate_mailing_list_df = lower_rate_mailing_list_df.drop_duplicates()
+        mailing_df = mailing_df.drop_duplicates()
+
+        # Repeat subscriber DataFrame to match the number of lower offers/rates
+        repeated_subscriber_row_df = self.row_series_to_multiple_row_df(
+            row, len(mailing_df)
+        )
+
+        # Concatenating repeated_subscriber_row_df and mailing_df by row
+        mailing_df = pd.concat([repeated_subscriber_row_df, mailing_df], axis=1)
 
         # Compare rates and only keep rates that are lower than users existing (threshold)
-        lower_rate_mailing_list_df = self.compare_rates(
-            lower_rate_mailing_list_df, "lower_rate", "existing_offer_rate"
-        )
-        return lower_rate_mailing_list_df
+        mailing_df = self.compare_rates(mailing_df, "lower_rate", "selected_offer_rate")
+        return mailing_df
 
-    def check_user_rates(self):
+    def update_mailing_list_df(self):
         subscribers_df = self.get_all_subscribers()
-        lower_rate_mailing_list_df = pd.DataFrame()  # Create an empty DataFrame
+        mailing_df = pd.DataFrame()  # Create an empty DataFrame
 
         # For each subscriber, append lower rates/offers
         for index, row in subscribers_df.iterrows():
             lower_rates_df = self.build_lower_rate_mailing_list_df(row)
-            lower_rate_mailing_list_df = pd.concat(
-                [lower_rate_mailing_list_df, lower_rates_df], ignore_index=True
-            )
+            mailing_df = pd.concat([mailing_df, lower_rates_df], ignore_index=True)
+
+        # Update PriceWatch mailing_list_df attribute
+        self.mailing_list_df = mailing_df
