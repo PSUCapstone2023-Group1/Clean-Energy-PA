@@ -52,11 +52,12 @@ class BaseTest(TestCase):
         self.user = User.objects.create_user(
             username="testuser",
             email="test@example.com",
-            password="testpass",
             first_name="John",
             last_name="Doe",
             is_active=False,
         )
+        self.user.set_password("testpass")
+        self.user.save()
 
         # Create a user preference base
         self.user_preferences = User_Preferences.objects.create(

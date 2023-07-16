@@ -3,7 +3,7 @@ from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
 from django.http.request import HttpRequest
-from django.http.response import HttpResponseForbidden, HttpResponse
+from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
 from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
 import json
@@ -87,8 +87,7 @@ def possible_selections(request:HttpRequest):
         return HttpResponseForbidden("Not authenticated")
     if request.method == "GET":
         user_pref = User_Preferences.objects.get(user_id=request.user)
-        user_pref.possible_selections
-        return HttpResponse(json.dumps(user_pref.possible_selections), content_type="application/json", status=200)
+        return JsonResponse(user_pref.possible_selections)
     elif request.method == "POST":
         # Add offer as a possible selection
         user_pref = User_Preferences.objects.get(user_id=request.user)
