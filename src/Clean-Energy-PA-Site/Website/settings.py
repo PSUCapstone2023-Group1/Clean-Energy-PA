@@ -47,7 +47,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "clean-energy-pa.us-east-2.elasticbeanstalk.com",
+    "cleanenergypa.us-east-2.elasticbeanstalk.com",
 ]
 
 # Application definition
