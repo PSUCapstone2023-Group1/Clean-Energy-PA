@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class UserProfileChangeForm(UserChangeForm):
     # The users zip code
-    zip_code = forms.CharField(max_length=10)
+    zip_code = forms.CharField(max_length=10, required=False)
     # # Supplier
     # # TODO: Build this out
     # supplier = forms.CharField(max_length=80)
