@@ -16,11 +16,13 @@ class Price_Watch_Dog:
     def remove_rows_with_zero(self, df, col):
         """Keep rates that are not zero"""
         df = df[df[col] != 0]
+        df.reset_index(drop=True, inplace=True)
         return df
 
     def compare_rates(self, df, rate, lower_rate_threshold):
         """Keep rates that are lower than threshold"""
         df = df[df[rate] < df[lower_rate_threshold]]
+        df.reset_index(drop=True, inplace=True)
         return df
 
     def row_series_to_multiple_row_df(self, row, row_count):
@@ -30,6 +32,7 @@ class Price_Watch_Dog:
         df = df.transpose()
         # Repeat rows to match specified row_count
         df = pd.concat([df] * row_count, ignore_index=True)
+        # df.reset_index(drop=True, inplace=True)
         return df
 
     def get_all_subscribers(self):
@@ -87,6 +90,7 @@ class Price_Watch_Dog:
                         ),
                     }
                 )
+
         # Create the mailing_list DataFrame
         mailing_df = pd.DataFrame(data)
 
