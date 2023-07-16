@@ -130,7 +130,12 @@
         </div>
       </div>
     </div>
-
+    <div id="modal" class="my-modal" {% if show_modal %}style="display:block;"{% endif %}>
+      <div class="my-modal-content">
+    {% block modal %}
+    {% endblock modal %}
+      </div>
+    </div>
 
     {% comment %}Start BOOTSTRAP{% endcomment %}
     {% comment %}Documentation at https://getbootstrap.com/docs/5.3/getting-started/introduction/{% endcomment %}
