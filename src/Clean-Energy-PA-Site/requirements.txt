@@ -1,0 +1,11 @@
+Django
+django-environ
+psycopg2
+django-crispy-forms
+crispy-bootstrap5
+uszipcode
+six
+beautifulsoup4
+django-ebhealthcheck
+django-health-check
+selenium
