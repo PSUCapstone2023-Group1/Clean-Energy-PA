@@ -5,7 +5,7 @@ from web_parser.responses.ratesearch import price_structure
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseForbidden, HttpResponse
 from web_parser.responses.ratesearch import offer
-from .models import User_Preferences
+from GreenEnergySearch.models import User_Preferences
 import json
 
 def build_zip_search_path(zipcode):

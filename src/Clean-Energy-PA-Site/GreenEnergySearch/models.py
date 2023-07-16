@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from web_parser.responses.ratesearch import offer
-from web_parser.responses.ratesearch import offer_collection
+
+from web_parser.responses.ratesearch import offer, offer_collection
+
 from datetime import datetime
 import json 
 
@@ -23,7 +24,9 @@ class possible_selections_obj:
 
     def dump(self):
         return {"last_updated":str(self.last_updated), "offers":[json.loads(o.raw_json) for o in self.offers]}
-
+    
+    def __len__(self):
+        return len(self.offers)
 
 # Create your models here.
 class User_Preferences(models.Model):
@@ -41,7 +44,7 @@ class User_Preferences(models.Model):
     """The possible selections that the user has chosen"""
     email_notifications = models.BooleanField(default=True)
     """Users email notification preference"""
-
+    
     def __str__(self):
         return str(self.user_id)
     
@@ -50,13 +53,11 @@ class User_Preferences(models.Model):
     
     def get_possible_selections(self)->possible_selections_obj:
         output = possible_selections_obj()
-        print(self.possible_selections)
         output.build(self.possible_selections)
         return output
 
     def add_possible_selection(self, offer:offer):
         curr = self.get_possible_selections()
-        print(curr.offers.collection)
         curr.add_offer(offer)
         curr.last_updated = datetime.now()
         self.possible_selections = curr.dump()

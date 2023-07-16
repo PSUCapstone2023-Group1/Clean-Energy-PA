@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from GreenEnergySearch.models import User_Preferences
 from web_parser.tests import ratesearch_test_data
+from datetime import datetime
 
 # local Django
 from UserRegistration.utils import (
@@ -64,7 +65,9 @@ class BaseTest(TestCase):
             distributor_id=27498,
             rate_schedule="R - Regular Residential Service",
             selected_offer=ratesearch_test_data.expected_example[0],
-            possible_selections= [ratesearch_test_data.expected_example[0], ratesearch_test_data.expected_example[0]],
+            possible_selections= {"last_updated":str(datetime.now()),
+                                "offers":[ratesearch_test_data.expected_example[0],
+                                            ratesearch_test_data.expected_example[0]]},
             email_notifications=True
         )
 

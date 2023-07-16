@@ -1,5 +1,5 @@
 from .test_green_energy_base import GreenEnergySearchBaseTest
-from ..views import build_zip_search_path, build_rate_type_path, build_offer_path
+from GreenEnergySearch.views import build_zip_search_path, build_rate_type_path, build_offer_path
 from bs4 import BeautifulSoup
 from unittest import mock
 from web_parser.tests import zipsearch_test_data, ratesearch_test_data
