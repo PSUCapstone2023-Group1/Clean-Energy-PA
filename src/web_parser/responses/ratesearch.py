@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Union
+import json
 
 class price_structure(Enum):
     """List of the possible price structure options"""
@@ -10,7 +11,7 @@ class price_structure(Enum):
 class offer:
     "A dataclass used to define the structure of the ratesearch's offer object"
     def __init__(self, rate_json):
-        self.raw_json = rate_json
+        self.raw_json = json.dumps(rate_json)
         """The raw json provided from the api"""
         self.id = str(rate_json["id"])
         """ID of this rate offer"""
