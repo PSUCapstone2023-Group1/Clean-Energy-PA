@@ -40,8 +40,8 @@ class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
         self.assertTrue(self.user.is_active)
         
         response = self.client.post(self.possible_selections_url, json.dumps(ratesearch_test_data.expected_example[0]), content_type='application/json')
-        self.user_preferences.refresh_from_db()
         self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
         self.assertEqual(len(self.user_preferences.get_possible_selections()), orig_sel_count+1)
 
     def test_post_possible_selections_no_auth(self):
@@ -59,3 +59,18 @@ class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
 
         response = self.client.post(self.possible_selections_url, json.dumps(ratesearch_test_data.expected_example[0]), content_type='application/json')
         self.assertEqual(response.status_code, 403)
+    
+    def test_post_possible_selections(self):
+        """Test the post endpoint for possible selections"""
+
+        #Login the user
+        self.client.force_login(self.user)
+        self.user.is_active=True
+        self.user.save()
+        self.assertTrue(self.user.is_authenticated)
+        self.assertTrue(self.user.is_active)
+        
+        response = self.client.delete(self.possible_selections_url)
+        self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
+        self.assertEqual(len(self.user_preferences.get_possible_selections()), 0)

@@ -85,12 +85,14 @@ def possible_selections(request:HttpRequest):
     """Manage the possible selections endpoint"""
     if not request.user.is_authenticated:
         return HttpResponseForbidden("Not authenticated")
+    user_pref = User_Preferences.objects.get(user_id=request.user)
+    if request.method == "DELETE":
+        user_pref.clear_possible_selections()
+        return HttpResponse("Possible Selections Cleared")
     if request.method == "GET":
-        user_pref = User_Preferences.objects.get(user_id=request.user)
         return JsonResponse(user_pref.possible_selections)
     elif request.method == "POST":
         # Add offer as a possible selection
-        user_pref = User_Preferences.objects.get(user_id=request.user)
         user_pref.add_possible_selection(offer(json.loads(request.body)))
         user_pref.save()
         return HttpResponse("Offer added!")

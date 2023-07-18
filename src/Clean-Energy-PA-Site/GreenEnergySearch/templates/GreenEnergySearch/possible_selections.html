@@ -1,0 +1,44 @@
+{% extends 'base/home.html' %}
+
+{% block modal %}
+<a class="close" href="/home">&times;</a>
+<div>
+    <h1>Possible Selections</h1>
+    <h2>It looks like you may have made a selection on a provider, but we're not sure! Did you sign-up for any of these??</h2>
+    <hr><hr>
+    <div id="selections-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+        {% for offer in possible_selections %}
+            <button 
+                class = 'btn btn-success wide-btn'
+                onclick="handleOption_click({{offer}}, '{{redirect}}')">
+                {{offer.name}}
+            </button>
+        {% endfor %}
+    </div>
+
+    <button 
+        class = 'btn btn-danger wide-btn'
+        onclick="handleCancel_click('{{redirect}}')">
+        No, I did not select any of these items
+    </button>
+</div>
+<script>
+function handleOption_click(offer, redirect){
+
+    //TODO: Update selected offer for user
+
+    //TODO: Clear possible selections from user
+
+    //Redirect
+    location.href = redirect;
+}
+
+function handleCancel_click(redirect){
+
+    //TODO: Clear possible selections from user
+
+    //Redirect
+    location.href = redirect;
+}
+</script>
+{% endblock modal %}
