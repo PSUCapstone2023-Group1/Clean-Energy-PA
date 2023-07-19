@@ -9,12 +9,14 @@ from EmailScheduler.price_watch.price_watchdog_instance import Price_Watch_Dog_I
 
 class Email_Batch:
     def __init__(self):
+        self.send_email_return = 0
         pass
 
     def send_lower_rate_emails(self):
         # Get Subscribers and Mailing list
         subscribers_df = Price_Watch_Dog_Instance.subscribers_df
         mailing_list_df = Price_Watch_Dog_Instance.mailing_list_df
+
         # Iterate over each row in the Subscribers DataFrame
         for _, row in subscribers_df.iterrows():
             email = str(row["email"])
@@ -62,6 +64,6 @@ class Email_Batch:
             recipient_list = [email]
 
             # Send the email using Django's send_mail function
-            send_mail(
+            self.send_email_return = send_mail(
                 subject, "", from_email, recipient_list, html_message=html_content
             )

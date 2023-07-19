@@ -64,8 +64,11 @@ class BaseTest(TestCase):
             distributor_id=27498,
             rate_schedule="R - Regular Residential Service",
             selected_offer=ratesearch_test_data.expected_example[0],
-            possible_selections= [ratesearch_test_data.expected_example[0], ratesearch_test_data.expected_example[0]],
-            email_notifications=True
+            possible_selections=[
+                ratesearch_test_data.expected_example[0],
+                ratesearch_test_data.expected_example[0],
+            ],
+            email_notifications=True,
         )
 
         # Tokens used for email auth
@@ -77,7 +80,10 @@ class BaseTest(TestCase):
     def _login_user(self):
         # Make sure user is active
         form_data = {"username": "testuser", "password": "testpass"}
-        url = reverse("UserRegistration:activate", kwargs={"uidb64": self.uid, "token": self.token})
+        url = reverse(
+            "UserRegistration:activate",
+            kwargs={"uidb64": self.uid, "token": self.token},
+        )
         self.client.get(url)
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_active)

@@ -126,3 +126,4 @@ class Price_Watch_Dog:
 
         # Update PriceWatch mailing_list_df attribute
         self.mailing_list_df = mailing_df
+        return mailing_df
