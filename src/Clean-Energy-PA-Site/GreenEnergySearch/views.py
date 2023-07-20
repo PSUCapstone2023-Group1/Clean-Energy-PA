@@ -7,6 +7,7 @@ from django.http.response import HttpResponseForbidden, HttpResponse, JsonRespon
 from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
 import json
+from datetime import datetime
 
 def build_zip_search_path(zipcode):
      return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}"
@@ -111,3 +112,28 @@ def current_selection(request:HttpRequest):
         user_pref.selected_offer = json.loads(request.body)
         user_pref.save()
         return HttpResponse("Offer selected!")
+
+
+class PossibleSelectionsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # One-time configuration and initialization.
+
+    def __call__(self, request:HttpRequest):
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
+        response = self.get_response(request)
+        prompt_path = reverse("green_energy_search:possible_selections")
+        if request.path != prompt_path and request.user.is_authenticated:
+            user_pref = User_Preferences.objects.get(user_id=request.user)
+            poss_sel = user_pref.get_possible_selections()
+            if len(poss_sel)>0:
+                time_del = datetime.now() - poss_sel.last_updated
+                if time_del.days<180: # less than 6 months
+                    return redirect(prompt_path, {possible_selections: poss_sel.offers, redirect: request.path})
+                else:
+                    user_pref.clear_possible_selections()
+        # Code to be executed for each request/response after
+        # the view is called.
+
+        return response

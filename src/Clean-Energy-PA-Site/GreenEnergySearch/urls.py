@@ -16,5 +16,5 @@ urlpatterns = [
           views.offer_search, name="offer_search"),
 
      path("user/preferences/possible_selections", views.possible_selections, name="possible_selections"),
-     path("user/preferences/current_selection", views.current_selection, name="current_selection")
+     path("user/preferences/current_selection", views.current_selection, name="current_selection"), 
 ]
