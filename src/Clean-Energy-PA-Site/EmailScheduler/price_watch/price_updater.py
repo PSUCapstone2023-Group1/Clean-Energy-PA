@@ -5,9 +5,10 @@ from EmailScheduler.price_watch.price_watchdog_instance import Price_Watch_Dog_I
 
 def start():
     scheduler = BackgroundScheduler()
+    # Checks for rates every 5 days
     scheduler.add_job(
         Price_Watch_Dog_Instance.update_lower_rate_mailing_list_df,
         "interval",
-        seconds=5,
+        days=5,
     )
     scheduler.start()

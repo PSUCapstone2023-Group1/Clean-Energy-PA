@@ -5,6 +5,7 @@ from EmailScheduler.price_watch.price_watchdog_instance import (
 from GreenEnergySearch.views import build_offer_path
 from unittest.mock import patch
 import pandas as pd
+import EmailScheduler.tests.data_for_test as data_for_test
 
 
 class PriceWatchDogTestCase(BaseTest):
@@ -13,48 +14,19 @@ class PriceWatchDogTestCase(BaseTest):
         super().setUp()
 
         # Create a sample row Series
-        input_row = {
-            "email": "test@example.com",
-            "zip_code": 15025,
-            "rate_schedule": "RA - Residential Add - on Heat Pump Service",
-            "distributor_id": 27487,
-            "selected_offer_rate": 0.09,
-        }
+        self.test_series = data_for_test.test_series
 
-        self.test_series = pd.Series(input_row)
-
-        self.subscriber_data_list = {
-            "email": ["test@example.com"],
-            "zip_code": ["15025"],
-            "rate_schedule": ["R - Regular Residential Service"],
-            "distributor_id": [27498],
-            "selected_offer_rate": [0.0839],
-        }
-        self.subscriber_df = pd.DataFrame(self.subscriber_data_list).astype(object)
-
-        t_email = "test@example.com"
-        rate_type = "R - Regular Residential Service"
-        dist_name = "PECO Energy"
-        offer_path = build_offer_path(
-            "15025", "27498", "R - Regular Residential Service"
+        # Sample Subscriber DF
+        self.subscriber_df = pd.DataFrame(data_for_test.subscriber_data_list).astype(
+            object
         )
-        self.lower_rates_data_list = {
-            "email": [t_email, t_email, t_email],
-            "zip_code": ["15025", "15025", "15025"],
-            "rate_schedule": [rate_type, rate_type, rate_type],
-            "distributor_id": [27498, 27498, 27498],
-            "lower_distributor_id": [27498, 27498, 27498],
-            "lower_distributor_name": [dist_name, dist_name, dist_name],
-            "lower_offer_name": [
-                "Achieve Energy Solutions LLC DBA EnergyPricing.com",
-                "AEP Energy",
-                "AP Gas & Electric (PA)",
-            ],
-            "lower_rate": [0.0709, 0.0755, 0.0755],
-            "lower_rate_path": [offer_path, offer_path, offer_path],
-        }
 
-        self.lower_rates_df = pd.DataFrame(self.lower_rates_data_list).astype(object)
+        # Sample Lower Rates DF (mailing list)
+        self.lower_rates_df = pd.DataFrame(data_for_test.lower_rates_data_list).astype(
+            object
+        )
+
+        self.expected_data = data_for_test.expected_data
 
         self.price_watch_dog_instance = Price_Watch_Dog_Instance
 
@@ -141,22 +113,7 @@ class PriceWatchDogTestCase(BaseTest):
         # Call the build_lower_rate_mailing_list_df function
         result = self.price_watch_dog_instance.build_lower_rate_mailing_list_df(row)
 
-        expected_data = {
-            "email": ["test@example.com"],
-            "zip_code": [15025],
-            "rate_schedule": ["RA - Residential Add - on Heat Pump Service"],
-            "distributor_id": [27487],
-            "selected_offer_rate": [0.09],
-            "lower_distributor_id": ["27487"],
-            "lower_distributor_name": ["Duquesne Light"],
-            "lower_offer_name": ["American Power & Gas of Pennsylvania LLC"],
-            "lower_rate": [0.0899],
-            "lower_rate_path": [
-                build_offer_path(
-                    "15025", 27487, "RA - Residential Add - on Heat Pump Service"
-                ),
-            ],
-        }
+        expected_data = self.expected_data
         expected_result = pd.DataFrame(expected_data).astype(object)
         expected_result["lower_rate"] = expected_result["lower_rate"].astype(float)
         pd.testing.assert_frame_equal(result, expected_result)

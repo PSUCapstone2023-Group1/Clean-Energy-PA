@@ -54,7 +54,7 @@ class Email_Batch:
                     "first_name": first_name,
                     "rate": rate,
                     "lower_rate_offers": lower_rate_offers_df,
-                    "domain": "http://127.0.0.1:8000",  # TODO: Figure out how to make this agnostic
+                    "domain": settings.CURRENT_DOMAIN,
                 },
             )
 
