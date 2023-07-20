@@ -96,4 +96,18 @@ def possible_selections(request:HttpRequest):
         user_pref.add_possible_selection(offer(json.loads(request.body)))
         user_pref.save()
         return HttpResponse("Offer added!")
-
+    
+def current_selection(request:HttpRequest):
+    """Manage the current selections endpoint"""
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Not authenticated")
+    user_pref = User_Preferences.objects.get(user_id=request.user)
+    if request.method == "DELETE":
+        user_pref.selected_offer = dict
+        user_pref.save()
+    if request.method == "GET":
+        return JsonResponse(user_pref.selected_offer)
+    elif request.method == "PUT":
+        user_pref.selected_offer = json.loads(request.body)
+        user_pref.save()
+        return HttpResponse("Offer selected!")

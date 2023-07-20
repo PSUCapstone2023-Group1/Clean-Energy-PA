@@ -1,4 +1,4 @@
-{% extends 'base/home.html' %}
+{% extends 'base/base.html' %}
 
 {% block modal %}
 <a class="close" href="/home">&times;</a>
@@ -14,31 +14,60 @@
                 {{offer.name}}
             </button>
         {% endfor %}
+        <button 
+            class = 'btn btn-danger wide-btn'
+            onclick="handleCancel_click('{{redirect}}')">
+            No, I did not select any of these items
+        </button>
     </div>
-
-    <button 
-        class = 'btn btn-danger wide-btn'
-        onclick="handleCancel_click('{{redirect}}')">
-        No, I did not select any of these items
-    </button>
 </div>
 <script>
-function handleOption_click(offer, redirect){
-
+function handleOption_click(offer_json, redirect){
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
     //TODO: Update selected offer for user
-
-    //TODO: Clear possible selections from user
-
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Set the content type for JSON data
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(offer_json)
+        };
+        fetch("{% url 'green_energy_search:current_selection' %}", requestOptions)
+            .then((response)=>{
+                if (!response.ok) {
+                console.log('Unable to save the offer');
+                }
+                clear_selections()
+            });
+    {% endif %}
     //Redirect
     location.href = redirect;
 }
 
 function handleCancel_click(redirect){
-
-    //TODO: Clear possible selections from user
-
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+    clear_selections()
+    {% endif %}
     //Redirect
     location.href = redirect;
+}
+
+function clear_selections(){
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        };
+        fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
+            .then((response)=>{
+                if (!response.ok) {
+                    console.log('Unable to clear the possible_selections');
+                }
+        });
+    {% endif %}
 }
 </script>
 {% endblock modal %}

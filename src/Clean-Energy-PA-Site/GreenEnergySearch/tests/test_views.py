@@ -60,7 +60,7 @@ class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
         response = self.client.post(self.possible_selections_url, json.dumps(ratesearch_test_data.expected_example[0]), content_type='application/json')
         self.assertEqual(response.status_code, 403)
     
-    def test_post_possible_selections(self):
+    def test_delete_possible_selections(self):
         """Test the post endpoint for possible selections"""
 
         #Login the user
