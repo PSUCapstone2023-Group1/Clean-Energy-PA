@@ -46,7 +46,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 # Domain Setting
-CURRENT_DOMAIN = env("CURRENT_ACTIVE_DOMAIN")
+CURRENT_DOMAIN = env("CURRENT_DOMAIN")
 
 ALLOWED_HOSTS = [
     "localhost",
