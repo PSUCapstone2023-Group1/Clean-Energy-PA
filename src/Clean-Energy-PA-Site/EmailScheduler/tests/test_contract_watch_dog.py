@@ -4,12 +4,10 @@ from EmailScheduler.contract_watch.contract_watchdog_instance import (
 )
 import pandas as pd
 import EmailScheduler.tests.data_for_test as data_for_test
-from datetime import datetime, timedelta
-from GreenEnergySearch.models import User_Preferences
-from django.contrib.auth.models import User
+from datetime import datetime
 
 
-class PriceWatchDogTestCase(BaseTest):
+class ContractWatchDogTestCase(BaseTest):
     def setUp(self):
         # BaseTest setUp
         super().setUp()
@@ -32,7 +30,7 @@ class PriceWatchDogTestCase(BaseTest):
 
         self.contract_watch_dog_instance = Contract_Watch_Dog_Instance
 
-    def test_get_all_subscribers(self):
+    def test_get_susbscribers_contract_end_date(self):
         # Call the get_all_subscribers function
         test_subscribers_df = (
             self.contract_watch_dog_instance.get_susbscribers_contract_end_date()

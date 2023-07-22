@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% if days_left <= 0 %}
-      <title>"Contract has Ended!"</title>
-    {% else %}
-      <title>"Contract Ending in {{ days_left }} Days!"</title>
-    {% endif %}
+    <title>"Contract Ending in {{ days_left }} Days!"</title>
 
     <style>
       body {
@@ -47,12 +43,8 @@
   <body>
     <h1>Hello {{ first_name }},</h1>
 
-    {% if days_left <= 0 %}
-      <p>Your contract is up, time to renew!</p>
-    {% else %}
-      <p>Your contract is ending soon</p>
-      <p>{{ days_left }} days left to sign up for a new contract!</p>
-    {% endif %}
+    <p>Your contract is ending soon</p>
+    <p>{{ days_left }} days left to sign up for a new contract!</p>
 
     <h4>Existing Rate: {{ rate }} per kWh</h4>
     <p>Contract End Date: {{ contract_end_date }}</p>

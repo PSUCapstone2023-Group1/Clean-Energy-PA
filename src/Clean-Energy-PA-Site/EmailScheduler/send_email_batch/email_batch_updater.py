@@ -13,11 +13,18 @@ def start():
         trigger="interval",
         days=7,
     )
-    scheduler.add_job(
-        Email_Batch_Instance.send_contract_expiration_emails,
-        id="send_contract_expiration_emails",
-        trigger="interval",
-        days=1,
-    )
+
+    # TODO: Last_Updated (which is used for contract_updater)
+    # does not represent term_end_date
+    # Need to add another attribute to user_pref for contract_end
+    # And a means for user to update
+    # contract_updater.start()
+
+    # scheduler.add_job(
+    #     Email_Batch_Instance.send_contract_expiration_emails,
+    #     id="send_contract_expiration_emails",
+    #     trigger="interval",
+    #     days=1,
+    # )
 
     scheduler.start()

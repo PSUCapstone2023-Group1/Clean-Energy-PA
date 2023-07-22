@@ -27,6 +27,9 @@ class Contract_Watch_Dog:
 
                 # Get the current end date and convert to usable format
                 user_offer = user_preferences.get_selected_offer()
+                # TODO: Last_Updated does not represent term_end_date
+                # Need to add another attribute to user_pref for contract_end
+                # And a means for user to update
                 contract_end_date = self.convert_date_string_format(
                     user_offer.last_updated
                 )

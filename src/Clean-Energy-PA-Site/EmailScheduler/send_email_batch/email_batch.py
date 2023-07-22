@@ -25,6 +25,17 @@ class Email_Batch:
         selected_offer = user_preferences.get_selected_offer()
         return selected_offer.rate, user_preferences
 
+    def limit_results_output(self, df, sort_col, group_col, head_num):
+        # Sort dataframe
+        df = df.sort_values(by=sort_col, ascending=True)
+        # Group dataframe
+        df = df.groupby(group_col).apply(
+            lambda group: group.drop_duplicates().head(head_num)
+        )
+        # Reset the index
+        df.reset_index(drop=True, inplace=True)
+        return df
+
     def send_lower_rate_emails(self):
         # Get Subscribers and Mailing list
         subscribers_df = Price_Watch_Dog_Instance.subscribers_df
@@ -42,18 +53,13 @@ class Email_Batch:
             if len(lower_rate_offers_df) == 0:
                 continue
 
-            # Sort by rate
-            lower_rate_offers_df = lower_rate_offers_df.sort_values(
-                by="lower_rate", ascending=True
+            # Limit the output
+            lower_rate_offers_df = self.limit_results_output(
+                lower_rate_offers_df,  # Sort ascending on rate
+                "lower_rate",  # Groupby distributor
+                "lower_distributor_name",
+                3,  # Top 3 from each distributor
             )
-
-            # Take the first 3 of each distributor
-            lower_rate_offers_df = lower_rate_offers_df.groupby(
-                "lower_distributor_name"
-            ).apply(lambda group: group.drop_duplicates().head(3))
-
-            # Reset the index to remove the groupby index
-            lower_rate_offers_df.reset_index(drop=True, inplace=True)
 
             # Get First Name and User
             first_name, user = self.get_first_name(email)
@@ -93,18 +99,13 @@ class Email_Batch:
                 lower_contract_options_df["email"] == email
             ]
 
-            # Sort by rate
-            lower_contract_offers_df = lower_contract_offers_df.sort_values(
-                by="lower_rate", ascending=True
+            # Limit the output,
+            lower_contract_offers_df = self.limit_results_output(
+                lower_contract_offers_df,
+                "lower_rate",  # Sort ascending on rate
+                "lower_distributor_name",  # Groupby distributor
+                3,  # Top 3 from each distributor
             )
-
-            # Take the first 3 of each distributor
-            lower_contract_offers_df = lower_contract_offers_df.groupby(
-                "lower_distributor_name"
-            ).apply(lambda group: group.drop_duplicates().head(3))
-
-            # Reset the index to remove the groupby index
-            lower_contract_offers_df.reset_index(drop=True, inplace=True)
 
             contract_end_date = row["contract_end_date"]
             days_left = row["days_left"]
@@ -129,14 +130,11 @@ class Email_Batch:
             )
 
             # Compose your email content and subject
-            if days_left > 0:
-                subject = f"Contract Ending in {days_left} Days!"
-            else:
-                subject = f"Contract Has Ended!"
+            subject = f"Contract Ending in {days_left} Days!"
 
             from_email = settings.EMAIL_HOST_USER
             recipient_list = [email]
-            if days_left <= 30:
+            if days_left == 30 or days_left == 14 or days_left == 2:
                 self.send_contract_end_email_return = send_mail(
                     subject, "", from_email, recipient_list, html_message=html_content
                 )
