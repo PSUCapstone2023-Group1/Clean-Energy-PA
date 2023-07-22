@@ -64,6 +64,9 @@ class User_Preferences(models.Model):
         output.build(self.possible_selections)
         return output
 
+    def has_selected_offer(self)->bool:
+        return len(self.selected_offer)>0
+
     def add_possible_selection(self, offer:offer):
         curr = self.get_possible_selections()
         if curr.add_offer(offer):
