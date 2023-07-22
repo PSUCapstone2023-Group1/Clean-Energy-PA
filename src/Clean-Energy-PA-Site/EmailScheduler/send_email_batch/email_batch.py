@@ -21,21 +21,19 @@ class Email_Batch:
         for _, row in subscribers_df.iterrows():
             email = str(row["email"])
             lower_rate_offers_df = pd.DataFrame()
-            try:
-                # Slice the DataFrame based on the email column
-                lower_rate_offers_df = mailing_list_df[
-                    mailing_list_df["email"] == email
-                ]
 
-                # Drop distributors to not overwhelm the user
-                # Only keep the first distributor even if there are more offers
-                # The link redirects them to all offers
-                lower_rate_offers_df = lower_rate_offers_df.drop_duplicates(
-                    subset="lower_distributor_name", keep="first"
-                )
-            except:
-                # TODO: Handle exception
-                pass
+            # Slice the DataFrame based on the email column
+            lower_rate_offers_df = mailing_list_df[mailing_list_df["email"] == email]
+
+            # If the DataFrame is empty skip this email
+            if len(lower_rate_offers_df) == 0:
+                continue
+            # Drop distributors to not overwhelm the user
+            # Only keep the first distributor even if there are more offers
+            # The link redirects them to all offers
+            lower_rate_offers_df = lower_rate_offers_df.drop_duplicates(
+                subset="lower_distributor_name", keep="first"
+            )
 
             # Get the user by email
             user = User.objects.get(email=email)

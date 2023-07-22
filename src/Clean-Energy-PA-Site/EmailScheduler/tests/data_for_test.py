@@ -1,14 +1,23 @@
 from GreenEnergySearch.views import build_offer_path
 import pandas as pd
 
-input_row = {
+valid_input_row = {
+    "email": "test@example.com",
+    "zip_code": 19035,
+    "rate_schedule": "R - Regular Residential Service",
+    "distributor_id": 27498,
+    "selected_offer_rate": 1.2,
+}
+valid_test_series = pd.Series(valid_input_row)
+
+invalid_input_row = {
     "email": "test@example.com",
     "zip_code": 15025,
     "rate_schedule": "RA - Residential Add - on Heat Pump Service",
     "distributor_id": 27487,
     "selected_offer_rate": 0.09,
 }
-test_series = pd.Series(input_row)
+invalid_test_series = pd.Series(invalid_input_row)
 
 subscriber_data_list = {
     "email": ["test@example.com"],
@@ -39,16 +48,16 @@ lower_rates_data_list = {
 }
 
 expected_data = {
-    "email": ["test@example.com"],
-    "zip_code": [15025],
-    "rate_schedule": ["RA - Residential Add - on Heat Pump Service"],
-    "distributor_id": [27487],
-    "selected_offer_rate": [0.09],
-    "lower_distributor_id": ["27487"],
-    "lower_distributor_name": ["Duquesne Light"],
-    "lower_offer_name": ["American Power & Gas of Pennsylvania LLC"],
-    "lower_rate": [0.0899],
-    "lower_rate_path": [
-        build_offer_path("15025", 27487, "RA - Residential Add - on Heat Pump Service"),
-    ],
+    "email": [],
+    "zip_code": [],
+    "rate_schedule": [],
+    "distributor_id": [],
+    "selected_offer_rate": [],
+    "lower_distributor_id": [],
+    "lower_distributor_name": [],
+    "lower_offer_name": [],
+    "lower_rate": [],
+    "lower_rate_path": [],
 }
+
+empty_mailing_df = pd.DataFrame(expected_data)

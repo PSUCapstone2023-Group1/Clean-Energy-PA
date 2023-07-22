@@ -24,25 +24,20 @@ urlpatterns = [
     # Home
     path("", views.home, name="root"),
     path("home/", views.home, name="home"),
-
-    #404
+    # 404
     path("404/", views.base404, name="notfound"),
-
-    #Admin
+    # Admin
     path("admin/", admin.site.urls),
-
-    #Auth
+    # Auth
     path("", include("django.contrib.auth.urls")),
-
+    # EmailScheduler
+    path("", include("EmailScheduler.urls")),
     # GreenEnergySearch
     path("", include("GreenEnergySearch.urls")),
-
     # UserRegistration
     path("", include("UserRegistration.urls")),
-
     # UserProfile
     path("", include("UserProfile.urls")),
-    
     # health check
-    path("health_check/", include('health_check.urls'))
+    path("health_check/", include("health_check.urls")),
 ]

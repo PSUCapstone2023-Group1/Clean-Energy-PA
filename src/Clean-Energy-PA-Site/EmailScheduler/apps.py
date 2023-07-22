@@ -10,6 +10,6 @@ class EmailschedulerConfig(AppConfig):
         from EmailScheduler.send_email_batch import email_batch_updater
 
         # Uncomment to run jobs
-        price_updater.start()
-        email_batch_updater.start()
+        # price_updater.start()
+        # email_batch_updater.start()
         return super().ready()

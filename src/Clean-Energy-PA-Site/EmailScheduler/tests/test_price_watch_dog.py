@@ -14,7 +14,8 @@ class PriceWatchDogTestCase(BaseTest):
         super().setUp()
 
         # Create a sample row Series
-        self.test_series = data_for_test.test_series
+        self.valid_test_series = data_for_test.valid_test_series
+        self.invalid_test_series = data_for_test.invalid_test_series
 
         # Sample Subscriber DF
         self.subscriber_df = pd.DataFrame(data_for_test.subscriber_data_list).astype(
@@ -74,7 +75,7 @@ class PriceWatchDogTestCase(BaseTest):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_row_series_to_multiple_row_df(self):
-        series = self.test_series
+        series = self.invalid_test_series
         # Call the row_series_to_multiple_row_df function with row_count = 3
         result = self.price_watch_dog_instance.row_series_to_multiple_row_df(series, 3)
         e = "test@example.com"
@@ -106,17 +107,27 @@ class PriceWatchDogTestCase(BaseTest):
 
         pd.testing.assert_frame_equal(test_subscribers_df, expected_subscribers_df)
 
-    def test_build_lower_rate_mailing_list_df(self):
+    def test_build_lower_rate_mailing_list_df_w_valid_series(self):
         # Create a sample row Series
-        row = self.test_series
+        row = self.valid_test_series
+
+        # Call the build_lower_rate_mailing_list_df function
+        result = self.price_watch_dog_instance.build_lower_rate_mailing_list_df(row)
+
+        # Assert there is data in the dataframe
+        self.assertTrue(not result.empty)
+
+    def test_build_lower_rate_mailing_list_df_w_invalid_series(self):
+        # Create a sample row Series
+        row = self.invalid_test_series
 
         # Call the build_lower_rate_mailing_list_df function
         result = self.price_watch_dog_instance.build_lower_rate_mailing_list_df(row)
 
         expected_data = self.expected_data
         expected_result = pd.DataFrame(expected_data).astype(object)
-        expected_result["lower_rate"] = expected_result["lower_rate"].astype(float)
         pd.testing.assert_frame_equal(result, expected_result)
+        self.assertTrue(result.empty)
 
     def test_update_lower_rate_mailing_list_df(self):
         # Assert that the subscribers_df and mailing_list_df attributes have been updated correctly

@@ -103,13 +103,7 @@ def edit_profile(request):
                     "email_notifications"
                 ]
                 user_preferences.save()
-            else:
-                user_preferences = User_Preferences(
-                    user_id=user,
-                    zip_code=form.cleaned_data["zip_code"],
-                    email_notifications=form.cleaned_data["email_notifications"],
-                )
-                user_preferences.save()
+
     else:
         form = UserProfileChangeForm(
             instance=user, initial={"preferences": user_preferences}
