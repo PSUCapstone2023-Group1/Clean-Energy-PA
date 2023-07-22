@@ -1,23 +1,35 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %} {% load custom_filters %}
 
 {% block modal %}
-<a class="close" href="/home">&times;</a>
+<a class="close" onclick="handleCancel_click('{{redirect}}')">&times;</a>
 <div>
-    <h1>Possible Selections</h1>
-    <h2>It looks like you may have made a selection on a provider, but we're not sure! Did you sign-up for any of these??</h2>
+    <h1>Possible Contracts</h1>
+    <h4>It looks like you may have made a selection on a provider, but we're not sure! Did you sign-up for any of these?</h4>
     <hr><hr>
     <div id="selections-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
         {% for offer in possible_selections %}
-            <button 
-                class = 'btn btn-success wide-btn'
-                onclick="handleOption_click({{offer.raw_json}}, '{{redirect}}')">
-                {{offer.name}}
-            </button>
+        <div class = "paper" style = "width:400px; padding:10px">
+            <h5>{{offer.name}}</h5>
+            <p>
+                {{offer.rate|format_rate:7}} per kWh
+                <br>
+                Contract length: {{offer.term_length|format_contract_length}}
+            </p>
+            <hr>
+            <div style="display: flex; justify-content: center;">
+                <button 
+                    class = 'btn btn-success'
+                    onclick="handleOption_click({{offer.raw_json}}, '{{redirect}}')">
+                    Yes, I signed up for this offer.
+                </button>
+            </div>
+        </div>
         {% endfor %}
         <button 
-            class = 'btn btn-danger wide-btn'
-            onclick="handleCancel_click('{{redirect}}')">
-            No, I did not select any of these items
+            class = 'btn btn-danger'
+            onclick="handleCancel_click('{{redirect}}')"
+            style="margin-top:10px">
+            No, I did sign up for any of these offers
         </button>
     </div>
 </div>
@@ -38,19 +50,27 @@ function handleOption_click(offer_json, redirect){
                 if (!response.ok) {
                 console.log('Unable to save the offer');
                 }
-                clear_selections()
-            });
+                clear_selections()?.then(()=>{
+                    //Redirect
+                    location.href = redirect;
+                });
+            })
+    {% else %}
+        //Redirect
+        location.href = redirect;
     {% endif %}
-    //Redirect
-    location.href = redirect;
 }
 
 function handleCancel_click(redirect){
     {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
-    clear_selections()
+    clear_selections()?.then(()=>{
+        //Redirect
+        location.href = redirect;
+    });
+    {% else %}
+        //Redirect
+        location.href = redirect;
     {% endif %}
-    //Redirect
-    location.href = redirect;
 }
 
 function clear_selections(){
@@ -61,7 +81,7 @@ function clear_selections(){
                 'X-CSRFToken': '{{ csrf_token }}'
             }
         };
-        fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
+        return fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
             .then((response)=>{
                 if (!response.ok) {
                     console.log('Unable to clear the possible_selections');

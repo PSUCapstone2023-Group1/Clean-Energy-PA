@@ -19,12 +19,7 @@
   <div id="offer-container" style="display: flex; flex-direction:column; justify-content: center; align-items:center">
     {% for offer in offers %}
     <div
-      style="
-        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        width: 600px;
-        padding: 50px;
-      "
+      class = "paper" style = "width:600px; padding:50px"
     >
       <h2>{{offer.name}}</h2>
       <hr>
@@ -43,7 +38,7 @@
       {% endif %}
       <p>Contract length: {{offer.term_length|format_contract_length}}</p>
       <div style="display: flex; justify-content: center;">
-        <button class="btn btn-success" onclick="post_possible_selection({{offer.raw_json}}, '{{offer.website}}')">View</button>
+        <button class="btn btn-success" onclick="post_possible_selection({{offer.raw_json}}, {% if offer.signup_link %}'{{offer.signup_link}}'{% else %}'{{offer.website}}'{% endif %})">View</button>
       </div>
     </div>
     <hr />
