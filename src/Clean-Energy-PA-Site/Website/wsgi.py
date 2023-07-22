@@ -13,7 +13,7 @@ from django.core.wsgi import get_wsgi_application
 
 
 path = os.path.dirname(os.path.abspath(__file__))
-web_parser_path = os.path.abspath(os.path.join(path, "..", "web_parser")) 
+web_parser_path = os.path.abspath(os.path.join(path, "...", "web_parser")) 
 
 print("VLAD DEBUGGING!!!")
 print("Vlad Debuggin", path)
