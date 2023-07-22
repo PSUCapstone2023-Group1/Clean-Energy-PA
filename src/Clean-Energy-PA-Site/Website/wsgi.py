@@ -21,7 +21,7 @@ if path not in sys.path:
     sys.path.append("..")
     sys.path.append("../web_parser")
     sys.path.append("../web_parser/tests")
-
+    print("Vlad Testing post webparser append", path)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Website.settings")
 
