@@ -16,12 +16,12 @@ path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 print("VLAD DEBUGGING!!!")
 print("Vlad Debuggin", path)
 if path not in sys.path:     
-    print("Vlad Debuggin inside condition", path)
+    print("Vlad Debuggin inside condition", sys.path)
     sys.path.append(path)  
     sys.path.append("..")
     sys.path.append("../web_parser")
     sys.path.append("../web_parser/tests")
-    print("Vlad Testing post webparser append", path)
+    print("Vlad Testing post webparser append", sys.path)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Website.settings")
 
