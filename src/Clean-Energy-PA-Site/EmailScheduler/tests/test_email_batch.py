@@ -3,6 +3,7 @@ from EmailScheduler.price_watch.price_watchdog_instance import Price_Watch_Dog_I
 from ..send_email_batch import email_batch
 from unittest.mock import patch
 import pandas as pd
+from datetime import datetime, timedelta
 
 
 class EmailBatchTestCase(PriceWatchDogTestCase):
@@ -12,7 +13,7 @@ class EmailBatchTestCase(PriceWatchDogTestCase):
     def test_send_lower_rate_emails(self):
         email_batch_instance = email_batch.Email_Batch()
         email_batch_instance.send_lower_rate_emails()
-        self.assertTrue(email_batch_instance.send_email_return)
+        self.assertTrue(email_batch_instance.send_lower_rate_email_return)
 
     @patch("django.core.mail.send_mail")
     def test_send_lower_rate_emails_empty_dataframe(self, mock_send_mail):

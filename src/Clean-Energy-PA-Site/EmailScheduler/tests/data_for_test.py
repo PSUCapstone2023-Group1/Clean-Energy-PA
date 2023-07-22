@@ -61,3 +61,17 @@ expected_data = {
 }
 
 empty_mailing_df = pd.DataFrame(expected_data)
+
+
+expected_subscribed_users_end_dates = {
+    "email": ["test@example.com"],
+    "zip_code": ["15025"],
+    "distributor_id": [27498],
+    "rate_schedule": [rate_type],
+    "contract_end_date": ["June 03, 2023"],
+    "selected_offer_rate": [0.0839],
+}
+
+expected_subscribed_users_end_dates_df = pd.DataFrame(
+    expected_subscribed_users_end_dates
+)

@@ -13,5 +13,11 @@ def start():
         trigger="interval",
         days=7,
     )
+    scheduler.add_job(
+        Email_Batch_Instance.send_contract_expiration_emails,
+        id="send_contract_expiration_emails",
+        trigger="interval",
+        days=1,
+    )
 
     scheduler.start()

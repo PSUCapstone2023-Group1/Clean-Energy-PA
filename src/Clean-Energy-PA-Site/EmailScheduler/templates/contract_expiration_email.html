@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Lower Energy Rates Found!</title>
+    {% if days_left <= 0 %}
+      <title>"Contract has Ended!"</title>
+    {% else %}
+      <title>"Contract Ending in {{ days_left }} Days!"</title>
+    {% endif %}
+
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -41,8 +46,17 @@
   </head>
   <body>
     <h1>Hello {{ first_name }},</h1>
-    <p>We found some rates that are lower than your current rate:</p>
+
+    {% if days_left <= 0 %}
+      <p>Your contract is up, time to renew!</p>
+    {% else %}
+      <p>Your contract is ending soon</p>
+      <p>{{ days_left }} days left to sign up for a new contract!</p>
+    {% endif %}
+
     <h4>Existing Rate: {{ rate }} per kWh</h4>
+    <p>Contract End Date: {{ contract_end_date }}</p>
+
     <p>Here are some lower energy rates:</p>
     <table>
       <thead>
@@ -54,7 +68,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for _, row in lower_rate_offers.iterrows %}
+        {% for _, row in lower_contract_offers.iterrows %}
           <tr>
             <td>{{ row.lower_distributor_name }}</td>
             <td>{{ row.lower_offer_name }}</td>
