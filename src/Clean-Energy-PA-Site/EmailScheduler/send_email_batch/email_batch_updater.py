@@ -11,7 +11,7 @@ def start():
         Email_Batch_Instance.send_lower_rate_emails,
         id="send_lower_rate_emails",
         trigger="interval",
-        minutes=1,
+        days=7,
     )
 
     scheduler.start()
