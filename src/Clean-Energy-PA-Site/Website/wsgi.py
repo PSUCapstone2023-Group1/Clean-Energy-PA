@@ -13,11 +13,16 @@ from django.core.wsgi import get_wsgi_application
 
 
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) 
+web_parser_path = os.path.abspath(os.path.join(path, ".", "web_parser")) 
+
 print("VLAD DEBUGGING!!!")
 print("Vlad Debuggin", path)
+print("Vlad Debuggin website_path", web_parser_path)
+
 if path not in sys.path:     
     print("Vlad Debuggin inside condition", sys.path)
-    sys.path.append(path)  
+    sys.path.append(path) 
+    sys.path.append(web_parser_path) 
     sys.path.append("..")
     sys.path.append("../web_parser")
     sys.path.append("../web_parser/tests")
