@@ -10,7 +10,7 @@
         {% for offer in possible_selections %}
             <button 
                 class = 'btn btn-success wide-btn'
-                onclick="handleOption_click({{offer}}, '{{redirect}}')">
+                onclick="handleOption_click({{offer.raw_json}}, '{{redirect}}')">
                 {{offer.name}}
             </button>
         {% endfor %}
