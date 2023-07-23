@@ -5,8 +5,11 @@ django-crispy-forms
 crispy-bootstrap5
 uszipcode
 six
+python-dateutil
 beautifulsoup4
 django-ebhealthcheck
 django-health-check
 selenium
 gunicorn
+apscheduler
+pandas

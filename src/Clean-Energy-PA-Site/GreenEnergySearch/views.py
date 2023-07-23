@@ -7,6 +7,8 @@ from django.http.response import HttpResponseForbidden, HttpResponse, JsonRespon
 from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
 import json
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 
 def build_zip_search_path(zipcode):
      return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}"
@@ -85,13 +87,63 @@ def possible_selections(request:HttpRequest):
     """Manage the possible selections endpoint"""
     if not request.user.is_authenticated:
         return HttpResponseForbidden("Not authenticated")
+    user_pref = User_Preferences.objects.get(user_id=request.user)
+    if request.method == "DELETE":
+        user_pref.clear_possible_selections()
+        return HttpResponse("Possible Selections Cleared")
     if request.method == "GET":
-        user_pref = User_Preferences.objects.get(user_id=request.user)
         return JsonResponse(user_pref.possible_selections)
     elif request.method == "POST":
         # Add offer as a possible selection
-        user_pref = User_Preferences.objects.get(user_id=request.user)
-        user_pref.add_possible_selection(offer(json.loads(request.body)))
+        if user_pref.add_possible_selection(offer(json.loads(request.body))):
+            return HttpResponse("Offer added!")
+        else:
+            return HttpResponse("Offer already stored.")
+    
+def current_selection(request:HttpRequest):
+    """Manage the current selections endpoint"""
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Not authenticated")
+    user_pref = User_Preferences.objects.get(user_id=request.user)
+    if request.method == "DELETE":
+        user_pref.selected_offer = {}
         user_pref.save()
-        return HttpResponse("Offer added!")
+        return HttpResponse("Current selection successfully deleted.")
+    if request.method == "GET":
+        return JsonResponse(user_pref.selected_offer)
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        _offer = offer(data)
+        user_pref.selected_offer = data
+        today = datetime.today()
+        user_pref.selected_offer_selected_date = today
+        end = today + relativedelta(months=int(_offer.term_length))
+        user_pref.selected_offer_expected_end = end
+        user_pref.save()
+        return HttpResponse("Offer selected!")
 
+
+class PossibleSelectionsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # One-time configuration and initialization.
+
+    def __call__(self, request:HttpRequest):
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
+        response = self.get_response(request)
+        if request.user.is_authenticated and "user/preferences/possible_selections" not in request.path:
+            user_pref = User_Preferences.objects.get(user_id=request.user)
+            poss_sel = user_pref.get_possible_selections()
+            if len(poss_sel)>0:
+                time_del = datetime.now() - poss_sel.last_updated
+                if time_del.days<180: # less than 6 months
+                    return render(request, "GreenEnergySearch/possible_selections.html", {"possible_selections": poss_sel.offers,
+                                                                                            "redirect": request.path,
+                                                                                            "show_modal":True})
+                else:
+                    user_pref.clear_possible_selections()
+        # Code to be executed for each request/response after
+        # the view is called.
+
+        return response

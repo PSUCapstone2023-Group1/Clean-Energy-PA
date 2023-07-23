@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %} {% load custom_filters %}
+
+{% block modal %}
+<a class="close" onclick="handleCancel_click('{{redirect}}')">&times;</a>
+<div>
+    <h1>Possible Contracts</h1>
+    <h4>It looks like you may have made a selection on a provider, but we're not sure! Did you sign-up for any of these?</h4>
+    <hr><hr>
+    <div id="selections-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+        {% for offer in possible_selections %}
+        <div class = "paper" style = "width:400px; padding:10px">
+            <h5>{{offer.name}}</h5>
+            <p>
+                {{offer.rate|format_rate:7}} per kWh
+                <br>
+                Contract length: {{offer.term_length|format_contract_length}}
+            </p>
+            <hr>
+            <div style="display: flex; justify-content: center;">
+                <button 
+                    class = 'btn btn-success'
+                    onclick="handleOption_click({{offer.raw_json}}, '{{redirect}}')">
+                    Yes, I signed up for this offer.
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        <button 
+            class = 'btn btn-danger'
+            onclick="handleCancel_click('{{redirect}}')"
+            style="margin-top:10px">
+            No, I did sign up for any of these offers
+        </button>
+    </div>
+</div>
+<script>
+function handleOption_click(offer_json, redirect){
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+    //TODO: Update selected offer for user
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Set the content type for JSON data
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(offer_json)
+        };
+        fetch("{% url 'green_energy_search:current_selection' %}", requestOptions)
+            .then((response)=>{
+                if (!response.ok) {
+                console.log('Unable to save the offer');
+                }
+                clear_selections()?.then(()=>{
+                    //Redirect
+                    location.href = redirect;
+                });
+            })
+    {% else %}
+        //Redirect
+        location.href = redirect;
+    {% endif %}
+}
+
+function handleCancel_click(redirect){
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+    clear_selections()?.then(()=>{
+        //Redirect
+        location.href = redirect;
+    });
+    {% else %}
+        //Redirect
+        location.href = redirect;
+    {% endif %}
+}
+
+function clear_selections(){
+    {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        };
+        return fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
+            .then((response)=>{
+                if (!response.ok) {
+                    console.log('Unable to clear the possible_selections');
+                }
+        });
+    {% endif %}
+}
+</script>
+{% endblock modal %}

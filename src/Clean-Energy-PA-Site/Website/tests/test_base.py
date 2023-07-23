@@ -66,9 +66,6 @@ class BaseTest(TestCase):
             distributor_id=27498,
             rate_schedule="R - Regular Residential Service",
             selected_offer=ratesearch_test_data.expected_example[0],
-            possible_selections= {"last_updated":str(datetime.now()),
-                                "offers":[ratesearch_test_data.expected_example[0],
-                                            ratesearch_test_data.expected_example[0]]},
             email_notifications=True
         )
 

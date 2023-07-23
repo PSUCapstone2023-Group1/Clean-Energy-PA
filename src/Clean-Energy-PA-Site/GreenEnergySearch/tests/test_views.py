@@ -3,6 +3,7 @@ from web_parser.tests import ratesearch_test_data
 from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
 import json
+import copy
 
 class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
 
@@ -39,9 +40,13 @@ class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
         self.assertTrue(self.user.is_authenticated)
         self.assertTrue(self.user.is_active)
         
-        response = self.client.post(self.possible_selections_url, json.dumps(ratesearch_test_data.expected_example[0]), content_type='application/json')
-        self.user_preferences.refresh_from_db()
+        #Create a "unique test entry to post"
+        new_entry = copy.deepcopy(ratesearch_test_data.expected_example[0])
+        new_entry["id"]=3
+
+        response = self.client.post(self.possible_selections_url, json.dumps(new_entry), content_type='application/json')
         self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
         self.assertEqual(len(self.user_preferences.get_possible_selections()), orig_sel_count+1)
 
     def test_post_possible_selections_no_auth(self):
@@ -59,3 +64,53 @@ class TestViews_Possible_Selections(GreenEnergySearchBaseTest):
 
         response = self.client.post(self.possible_selections_url, json.dumps(ratesearch_test_data.expected_example[0]), content_type='application/json')
         self.assertEqual(response.status_code, 403)
+    
+    def test_delete_possible_selections(self):
+        """Test the post endpoint for possible selections"""
+
+        #Login the user
+        self.client.force_login(self.user)
+        self.user.is_active=True
+        self.user.save()
+        self.assertTrue(self.user.is_authenticated)
+        self.assertTrue(self.user.is_active)
+        
+        response = self.client.delete(self.possible_selections_url)
+        self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
+        self.assertEqual(len(self.user_preferences.get_possible_selections()), 0)
+
+    def test_delete_current_selection(self):
+        """Test the post endpoint for possible selections"""
+
+        #Login the user
+        self.client.force_login(self.user)
+        self.user.is_active=True
+        self.user.save()
+        self.assertTrue(self.user.is_authenticated)
+        self.assertTrue(self.user.is_active)
+        
+        response = self.client.delete(self.current_selection_url)
+        self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
+        self.assertFalse(self.user_preferences.has_selected_offer())
+    
+    def test_put_current_selection(self):
+        """Test the post endpoint for possible selections"""
+
+        #Login the user
+        self.client.force_login(self.user)
+        self.user.is_active=True
+        self.user.save()
+        self.assertTrue(self.user.is_authenticated)
+        self.assertTrue(self.user.is_active)
+        
+        #Create a "unique test entry to post"
+        new_entry = copy.deepcopy(ratesearch_test_data.expected_example[0])
+        new_id = 3
+        new_entry["id"]=new_id
+
+        response = self.client.put(self.current_selection_url, json.dumps(new_entry), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.user_preferences.refresh_from_db()
+        self.assertEqual(str(self.user_preferences.get_selected_offer().id), str(new_id))

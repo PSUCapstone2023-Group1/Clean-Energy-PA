@@ -82,6 +82,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "GreenEnergySearch.views.PossibleSelectionsMiddleware"
 ]
 
 ROOT_URLCONF = "Website.urls"
