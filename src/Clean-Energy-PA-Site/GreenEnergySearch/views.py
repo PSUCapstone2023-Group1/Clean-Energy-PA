@@ -106,8 +106,9 @@ def current_selection(request:HttpRequest):
         return HttpResponseForbidden("Not authenticated")
     user_pref = User_Preferences.objects.get(user_id=request.user)
     if request.method == "DELETE":
-        user_pref.selected_offer = dict
+        user_pref.selected_offer = {}
         user_pref.save()
+        return HttpResponse("Current selection successfully deleted.")
     if request.method == "GET":
         return JsonResponse(user_pref.selected_offer)
     elif request.method == "PUT":
@@ -117,7 +118,6 @@ def current_selection(request:HttpRequest):
         today = datetime.today()
         user_pref.selected_offer_selected_date = today
         end = today + relativedelta(months=int(_offer.term_length))
-        print(end)
         user_pref.selected_offer_expected_end = end
         user_pref.save()
         return HttpResponse("Offer selected!")
@@ -132,8 +132,7 @@ class PossibleSelectionsMiddleware:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
         response = self.get_response(request)
-        print(request.path)
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and "user/preferences/possible_selections" not in request.path:
             user_pref = User_Preferences.objects.get(user_id=request.user)
             poss_sel = user_pref.get_possible_selections()
             if len(poss_sel)>0:

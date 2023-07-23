@@ -44,11 +44,11 @@ class User_Preferences(models.Model):
     """The rate schedule that the user saved"""
     selected_offer = models.JSONField(default=dict)
     """The offer that the user has selected"""
-    selected_offer_selected_date = models.DateField(default=date.today())
+    selected_offer_selected_date = models.DateField(auto_now_add=True)
     """The date that the user selected the offer on our site"""
-    selected_offer_expected_end = models.DateField(default=date.today())
+    selected_offer_expected_end = models.DateField(auto_now_add=True)
     """The expected end date of the offer based on when the user selected on our site"""
-    possible_selections= models.JSONField(default=dict)
+    possible_selections= models.JSONField(default={"last_updated":None, "offers":[]})
     """The possible selections that the user has chosen"""
     email_notifications = models.BooleanField(default=True)
     """Users email notification preference"""
@@ -63,6 +63,9 @@ class User_Preferences(models.Model):
         output = possible_selections_obj()
         output.build(self.possible_selections)
         return output
+
+    def get_selected_offer(self)->offer:
+        return offer(self.selected_offer)
 
     def has_selected_offer(self)->bool:
         return len(self.selected_offer)>0
