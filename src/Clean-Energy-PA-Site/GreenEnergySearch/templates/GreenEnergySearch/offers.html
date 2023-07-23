@@ -58,12 +58,16 @@
       fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
         .then((response)=>{
           if (!response.ok) {
-            window.alert('Unable to save the offer!');
+            console.error('Unable to save the offer!');
           }
+          //Redirect
+          location.href = redirect;
         });
+        {% else %}
+        //Redirect
+        location.href = redirect;
       {% endif %}
-      //Redirect
-      location.href = redirect;
+      
     }
     </script>
 </div>
