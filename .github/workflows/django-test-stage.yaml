@@ -4,8 +4,7 @@ on:
   push:
     paths:
       - src/**
-      - requirements.txt
-      - requirements.dev.txt
+      - requirements*.txt
 
 jobs:
   SAST:
