@@ -50,6 +50,7 @@ jobs:
         env:
           DEBUG: "0"
           # Note: Anything with vars.* is pulled from the pipeline variables.
+          CURRENT_DOMAIN: ${{ vars.CURRENT_ACTIVE_DOMAIN }}
           SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}

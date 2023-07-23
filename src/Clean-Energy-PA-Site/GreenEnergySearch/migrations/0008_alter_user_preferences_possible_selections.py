@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("GreenEnergySearch", "0007_alter_user_preferences_possible_selections"),
+        ('GreenEnergySearch', '0007_alter_user_preferences_possible_selections')
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="user_preferences",
-            name="possible_selections",
+            model_name='user_preferences',
+            name='possible_selections',
             field=models.JSONField(default={"last_updated": None, "offers": []}),
         ),
     ]
