@@ -71,6 +71,9 @@ class offer:
     def __str__(self):
         return self.id + ': ' + self.name
     
+    def equals(self, compare_offer):
+        return self.id == compare_offer.id
+
     def filter(self, #NOSONAR
                 name:Union[None,str]=None,
                 discount_available:Union[None,bool]=None,
