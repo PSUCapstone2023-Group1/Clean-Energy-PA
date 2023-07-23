@@ -11,3 +11,5 @@ django-ebhealthcheck
 django-health-check
 selenium
 gunicorn
+apscheduler
+pandas
