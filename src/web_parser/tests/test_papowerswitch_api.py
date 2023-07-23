@@ -153,3 +153,8 @@ class TestRatesearch:
         assert len(filtered_offers)==1
         assert str(filtered_offers[0].id) == str(data["id"])
         assert str(filtered_offers[0]) == str(data["id"]) + ": " + str(data["Name"])
+    
+    def test_offer_equals(self):
+        offers = offer_collection(ratesearch_test_data.expected_example)
+        assert not offers[0].equals(offers[1])
+        assert offers[0].equals(offers[0])
