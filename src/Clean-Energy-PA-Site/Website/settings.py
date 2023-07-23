@@ -51,7 +51,7 @@ CURRENT_DOMAIN = env("CURRENT_DOMAIN")
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "clean-energy-pa.us-east-2.elasticbeanstalk.com",
+    "Clean-Energy-PA-Production.us-east-2.elasticbeanstalk.com",
 ]
 
 # Application definition

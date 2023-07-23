@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
+from django.http.request import HttpRequest
+from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
+from web_parser.responses.ratesearch import offer
+from GreenEnergySearch.models import User_Preferences
+import json
 
 def build_zip_search_path(zipcode):
      return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}"
@@ -75,3 +80,18 @@ def offer_search(request, zipcode, distributor_id, rate_type):
                                                                     "distributor_rate":distributor_rate})
     else:
         return redirect(reverse('notfound'))
+
+def possible_selections(request:HttpRequest):
+    """Manage the possible selections endpoint"""
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Not authenticated")
+    if request.method == "GET":
+        user_pref = User_Preferences.objects.get(user_id=request.user)
+        return JsonResponse(user_pref.possible_selections)
+    elif request.method == "POST":
+        # Add offer as a possible selection
+        user_pref = User_Preferences.objects.get(user_id=request.user)
+        user_pref.add_possible_selection(offer(json.loads(request.body)))
+        user_pref.save()
+        return HttpResponse("Offer added!")
+

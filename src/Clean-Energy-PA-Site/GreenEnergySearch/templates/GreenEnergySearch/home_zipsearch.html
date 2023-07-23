@@ -10,6 +10,7 @@
     <div id="distributor-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
         {% for distributor in distributors %}
             <button 
+                class = 'btn btn-success'
                 style="width:70%"
                 onclick="location.href = '{% url 'green_energy_search:rate_type' %}/?zipcode={{zipcode}}&distributor_id={{distributor.id}}';">
                 {{distributor.name}}
@@ -24,6 +25,7 @@
         <div id="rate-schedule-container" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
         {% for rate in distributor_sel.rates %}
             <button 
+                class = 'btn btn-success'
                 style="width:70%"
                 onclick="location.href = '{% url 'green_energy_search:offer_search' zipcode=zipcode distributor_id=distributor_sel.id rate_type=rate.rate_schedule %}';">
                 {{rate.rate_schedule}}

@@ -43,11 +43,33 @@
       {% endif %}
       <p>Contract length: {{offer.term_length|format_contract_length}}</p>
       <div style="display: flex; justify-content: center;">
-        <button onclick="location.href = '{{offer.website}}';">Select and Save</button>
+        <button class="btn btn-success" onclick="post_possible_selection({{offer.raw_json}}, '{{offer.website}}')">View</button>
       </div>
     </div>
     <hr />
     {% endfor %}
   </div>
+  <script>
+    function post_possible_selection(offer_json, redirect){
+      {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the content type for JSON data
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(offer_json), // Convert the JavaScript object to JSON format
+      };
+      fetch("{% url 'green_energy_search:possible_selections' %}", requestOptions)
+        .then((response)=>{
+          if (!response.ok) {
+            window.alert('Unable to save the offer!');
+          }
+        });
+      {% endif %}
+      //Redirect
+      location.href = redirect;
+    }
+    </script>
 </div>
 {% endblock content %}
