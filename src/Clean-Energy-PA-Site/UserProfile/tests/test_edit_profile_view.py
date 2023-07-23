@@ -1,6 +1,7 @@
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
 from django.contrib.auth.models import User
 from django.urls import reverse
+from unittest.mock import patch
 
 
 class UserProfileTest(UserProfileBaseTest):
@@ -14,7 +15,9 @@ class UserProfileTest(UserProfileBaseTest):
         initial_first_name = response.context["form"]["first_name"].value()
         self.assertEqual(first_name_in_database.first_name, initial_first_name)
         # Send POST request to update first name
-        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
+        response = self.client.post(
+            reverse("user_profile:edit_profile"), self.form_data
+        )
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -40,7 +43,9 @@ class UserProfileTest(UserProfileBaseTest):
         initial_last_name = response.context["form"]["last_name"].value()
         self.assertEqual(last_name_in_database.last_name, initial_last_name)
         # Send POST request to update last name
-        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
+        response = self.client.post(
+            reverse("user_profile:edit_profile"), self.form_data
+        )
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -71,7 +76,9 @@ class UserProfileTest(UserProfileBaseTest):
             initial_email_notifications,
         )
         # Send POST request to update email_notifications name
-        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
+        response = self.client.post(
+            reverse("user_profile:edit_profile"), self.form_data
+        )
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -110,7 +117,9 @@ class UserProfileTest(UserProfileBaseTest):
             initial_zip_code,
         )
         # Send POST request to update zip_code name
-        response = self.client.post(reverse("user_profile:edit_profile"), self.form_data)
+        response = self.client.post(
+            reverse("user_profile:edit_profile"), self.form_data
+        )
         # Refresh the user and preferences from the database
         self.user.refresh_from_db()
         self.user_preferences.refresh_from_db()
@@ -131,3 +140,13 @@ class UserProfileTest(UserProfileBaseTest):
             zip_code_in_response,
             self.form_data["zip_code"],
         )
+
+    def test_edit_profile_without_user_preferences(self):
+        self.test_user = User.objects.create_user(
+            username="testuserwithoutpref", password="testpassword"
+        )
+        self.client.login(username="testuserwithoutpref", password="testpassword")
+        with self.assertRaises(AttributeError):
+            response = self.client.get(reverse("user_profile:edit_profile"))
+
+            self.assertEqual(response.status_code, 200)

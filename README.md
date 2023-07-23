@@ -29,6 +29,7 @@ DB_HOST=
 DB_PORT=
 SMTP_USER=
 SMTP_PASSWORD=
+CURRENT_DOMAIN=
 ```
 
 ### Django Commands

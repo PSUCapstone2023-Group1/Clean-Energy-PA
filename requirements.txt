@@ -1,8 +1,13 @@
 Django
 django-environ
-psycopg2
+psycopg2-binary
 django-crispy-forms
 crispy-bootstrap5
 uszipcode
 six
 python-dateutil
+beautifulsoup4
+django-ebhealthcheck
+django-health-check
+selenium
+gunicorn

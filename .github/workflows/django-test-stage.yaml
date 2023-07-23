@@ -50,6 +50,7 @@ jobs:
         env:
           DEBUG: "0"
           # Note: Anything with vars.* is pulled from the pipeline variables.
+          CURRENT_DOMAIN: ${{ vars.CURRENT_ACTIVE_DOMAIN }}
           SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
@@ -83,7 +84,7 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: Website
-        environment_name: Clean-Energy-PA
+        application_name: Clean-Energy-PA-Production
+        environment_name: Clean-Energy-PA-Production-dev
         version_label: ${{ vars.VERSION_LABEL }}
         region: us-east-2

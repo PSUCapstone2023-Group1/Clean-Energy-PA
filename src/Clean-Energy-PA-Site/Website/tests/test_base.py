@@ -78,7 +78,10 @@ class BaseTest(TestCase):
     def _login_user(self):
         # Make sure user is active
         form_data = {"username": "testuser", "password": "testpass"}
-        url = reverse("UserRegistration:activate", kwargs={"uidb64": self.uid, "token": self.token})
+        url = reverse(
+            "UserRegistration:activate",
+            kwargs={"uidb64": self.uid, "token": self.token},
+        )
         self.client.get(url)
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_active)
