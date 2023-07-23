@@ -12,8 +12,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user_preferences',
             name='possible_selections',
-            model_name="user_preferences",
-            name="possible_selections",
             field=models.JSONField(default=list),
         ),
     ]
