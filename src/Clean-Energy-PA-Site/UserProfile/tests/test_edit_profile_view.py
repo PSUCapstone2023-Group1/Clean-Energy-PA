@@ -1,4 +1,5 @@
 from UserProfile.tests.test_user_profile_base_view import UserProfileBaseTest
+from GreenEnergySearch.models import User_Preferences
 from django.contrib.auth.models import User
 from django.urls import reverse
 from unittest.mock import patch
@@ -146,7 +147,7 @@ class UserProfileTest(UserProfileBaseTest):
             username="testuserwithoutpref", password="testpassword"
         )
         self.client.login(username="testuserwithoutpref", password="testpassword")
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(User_Preferences.DoesNotExist):
             response = self.client.get(reverse("user_profile:edit_profile"))
 
             self.assertEqual(response.status_code, 200)
