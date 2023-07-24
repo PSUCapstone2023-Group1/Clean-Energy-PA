@@ -80,6 +80,8 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2  
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v21
       with:
@@ -89,3 +91,4 @@ jobs:
         environment_name: Clean-Energy-PA-Production-dev
         version_label: ${{ vars.VERSION_LABEL }}
         region: us-east-2
+        deployment_package: deploy.zip
