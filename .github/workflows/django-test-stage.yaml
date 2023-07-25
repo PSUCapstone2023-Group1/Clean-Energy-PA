@@ -2,6 +2,9 @@ name: Django CI/CD
 
 on:
   push:
+    paths:
+      - src/**
+      - requirements*.txt
 
 jobs:
   SAST:
