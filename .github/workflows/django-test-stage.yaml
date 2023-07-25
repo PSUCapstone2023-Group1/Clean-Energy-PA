@@ -25,7 +25,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ vars.POSTGRES_DB }}
           SMTP_MAIL_USER: ${{ vars.SMTP_MAIL_USER }}
-          SMTP_MAIL_PASSWORD: ${{ vars.SMTP_MAIL_PASSWORD}}
+          SMTP_MAIL_PASSWORD: ${{ secrets.SMTP_MAIL_PASSWORD}}
         ports:
           - 5432:5432
         options: >-
@@ -51,14 +51,14 @@ jobs:
           DEBUG: "0"
           # Note: Anything with vars.* is pulled from the pipeline variables.
           CURRENT_DOMAIN: ${{ vars.CURRENT_ACTIVE_DOMAIN }}
-          SECRET_KEY: ${{ vars.DJANGO_SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DB_USER: ${{ vars.POSTGRES_USER }}
           DB_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           DB_HOST: ${{ vars.POSTGRES_HOST }}
           DB_NAME: ${{ vars.POSTGRES_DB }}
           DB_PORT: ${{ vars.POSTGRES_PORT }}
           SMTP_USER: ${{ vars.SMTP_MAIL_USER}}
-          SMTP_PASSWORD: ${{ vars.SMTP_MAIL_PASSWORD }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_MAIL_PASSWORD }}
         run: |
           echo ***Executing Django Tests***
           cd src/Clean-Energy-PA-Site/
@@ -79,6 +79,8 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2  
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v21
       with:
@@ -86,5 +88,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: Clean-Energy-PA-Production
         environment_name: Clean-Energy-PA-Production-dev
-        version_label: ${{ vars.VERSION_LABEL }}
+        version_label: ${{ github.sha }}
         region: us-east-2
+        deployment_package: deploy.zip
