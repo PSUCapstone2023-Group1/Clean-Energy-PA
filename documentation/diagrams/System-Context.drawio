@@ -1,0 +1,113 @@
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="oS52QM52yj54MPYiF2gj">
+        <mxGraphModel dx="881" dy="703" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-1" value="Clean Energy PA" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="280" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-2" value="PA Power Switch&amp;nbsp;&lt;br&gt;(Government Source)" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="450" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-4" value="Energy Provider" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="585" y="450" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-5" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="255" y="80" width="45" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-8" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="420" y="460" as="sourcePoint"/>
+                        <mxPoint x="460" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-11" value="Respond all&lt;br&gt;&amp;nbsp;Possible Options" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-8" vertex="1" connectable="0">
+                    <mxGeometry x="-0.08" y="-3" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-9" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="420" y="370" as="sourcePoint"/>
+                        <mxPoint x="360" y="440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-10" value="Request Raw&lt;br&gt;Provider Options" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-9" vertex="1" connectable="0">
+                    <mxGeometry x="-0.34" y="-4" relative="1" as="geometry">
+                        <mxPoint y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-12" value="User Email" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="160" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-13" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="350" y="150" as="sourcePoint"/>
+                        <mxPoint x="450" y="270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-14" value="Request Green&lt;br&gt;Energy Options" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-13" vertex="1" connectable="0">
+                    <mxGeometry x="0.264" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-15" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="425" y="300" as="sourcePoint"/>
+                        <mxPoint x="320" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-16" value="Respond with&lt;br&gt;Optimal Options" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-15" vertex="1" connectable="0">
+                    <mxGeometry x="-0.0625" y="4" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-17" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="270" y="220" as="sourcePoint"/>
+                        <mxPoint x="410" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-18" value="Sign Up and &lt;br&gt;Persist Selections" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-17" vertex="1" connectable="0">
+                    <mxGeometry x="0.264" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-21" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" target="W3GieXv_JQ9aLw4y9F2u-4" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="530" y="370" as="sourcePoint"/>
+                        <mxPoint x="560" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-22" value="Direct User to Chosen Provider" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-21" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2434" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-23" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="530" y="290" as="sourcePoint"/>
+                        <mxPoint x="600" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-24" value="Send E-mail when&lt;br&gt;&amp;nbsp;better deal available" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-23" vertex="1" connectable="0">
+                    <mxGeometry x="0.22" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-25" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="560" y="320" as="sourcePoint"/>
+                        <mxPoint x="650" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W3GieXv_JQ9aLw4y9F2u-26" value="Send E-mail when&lt;br&gt;&amp;nbsp;contract end is near" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W3GieXv_JQ9aLw4y9F2u-25" vertex="1" connectable="0">
+                    <mxGeometry x="0.22" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
