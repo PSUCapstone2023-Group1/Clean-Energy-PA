@@ -9,7 +9,7 @@ from web_parser import offer_collection, distributor_collection
 class Email_Scheduler_View_Test(EmailSchedulerBaseTest):
     @mock.patch("web_parser.papowerswitch_api.get_offers")
     def test_offers_results(self, mock_get_offers):
-        # Mock the distributors reponses
+        # Mock the distributors reponse
         mock_get_offers.return_value = offer_collection(
             ratesearch_test_data.expected_example
         )
