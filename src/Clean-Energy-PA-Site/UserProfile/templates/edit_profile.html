@@ -39,7 +39,7 @@
             <div class="mb-3">
               <div class="d-flex align-items-center">
                 <h5 class="card-title">Search Settings:</h5>
-                <button class="mx-2 btn btn-primary btn-sm">Update</button>
+                <button type="button" class="mx-2 btn btn-primary btn-sm">Update</button>
               </div>
               <div class="px-3">
                 <span class="form-text"><b>Zip Code:</b></span>
@@ -52,7 +52,9 @@
             <div class="mb-3">
               <div class="d-flex align-items-center">
                 <h5 class="card-title">Current Contract:</h5>
-                <button class="mx-2 btn btn-danger btn-sm">Clear</button>
+                {% if user_pref and user_pref.has_selected_offer %}
+                  <button type="button" class="mx-2 btn btn-danger btn-sm" onclick="clearCurrentContract()">Clear</button>
+                {% endif %}
               </div>
               <div class="px-3">
                 {% if user_pref and user_pref.has_selected_offer %}
@@ -102,7 +104,25 @@
       form.appendChild(csrfInput);
       document.body.appendChild(form);
       form.submit();
+      form.remove();
     }
+  }
+  function clearCurrentContract(){
+
+    fetch("{% url 'green_energy_search:current_selection' %}",{
+      method:"DELETE",
+      headers: {
+        'Content-Type': 'application/json', // Set the content type for JSON data
+        'X-CSRFToken': '{{ csrf_token }}'
+      }
+    }).then(response=>{
+      if (!response.ok) {
+        alert('Failed to clear');
+      }else{
+        //Refresh the page
+        location.reload();
+      }
+    })
   }
 </script>
 {% endblock %}
