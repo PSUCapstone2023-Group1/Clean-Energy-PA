@@ -136,7 +136,7 @@ class PossibleSelectionsMiddleware:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
         response = self.get_response(request)
-        if request.user.is_authenticated and "user/preferences/possible_selections" not in request.path:
+        if request.user.is_authenticated and "user/preferences/" not in request.path:
             user_pref = User_Preferences.objects.get(user_id=request.user)
             poss_sel = user_pref.get_possible_selections()
             if len(poss_sel)>0:

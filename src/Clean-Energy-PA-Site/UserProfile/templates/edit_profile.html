@@ -36,20 +36,37 @@
             <div class="mb-6">
               {{ form.zip_code|as_crispy_field }}
             </div>
-            <div class="mb-6">
-              <h5 class="card-title">Most Recent Supplier:</h5>
-              <span class="form-text">TODO: Supplier Name</span>
-              <br></br>
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Search Settings:</h5>
+                <button class="mx-2 btn btn-primary btn-sm">Update</button>
+              </div>
+              <div class="px-3">
+                <span class="form-text"><b>Zip Code:</b></span>
+                <br>
+                <span class="form-text"><b>Distributor:</b></span>
+                <br>
+                <span class="form-text"><b>Rate Schedule:</b></span>
+              </div>
             </div>
-            <div class="mb-6">
-              <h5 class="card-title">Current Rate:</h5>
-              <span class="form-text">TODO: Add the current rate</span>
-              <br></br>
-            </div>
-            <div class="mb-6">
-              <h5 class="card-title">Time Left on Contract:</h5>
-              <span class="form-text">TODO: Add time left on contract</span>
-              <br></br>
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Current Contract:</h5>
+                <button class="mx-2 btn btn-danger btn-sm">Clear</button>
+              </div>
+              <div class="px-3">
+                {% if user_pref and user_pref.has_selected_offer %}
+                  {% with user_pref.get_selected_offer as current_contract %}
+                    <span class="form-text"><b>Provider:</b> {{current_contract.name}}</span>
+                    <br>
+                    <span class="form-text"><b>Rate:</b> ${{current_contract.rate}}</span>
+                    <br>
+                    <span class="form-text"><b>Expected End Date:</b> {{user_pref.selected_offer_expected_end}}</span>
+                  {% endwith %}
+                {% else %}
+                  <span>No contract currently selected</span>
+                {% endif %}
+              </div>
             </div>
             <div class="mb-3 d-flex justify-content-between">
               <button type="submit" class="btn btn-success">Save Changes</button>
@@ -58,7 +75,7 @@
               <form method="POST" action="{% url 'user_profile:delete_account' %}" id="delete-account-form">
                 {% csrf_token %}
                 <input type="hidden" name="delete-account-post" value="true">
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete Account</button>
+                <button type="button" class="btn btn-danger btn-md" onclick="confirmDelete()">Delete Account</button>
               </form>
             </div>
           </form>
