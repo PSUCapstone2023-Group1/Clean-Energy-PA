@@ -20,7 +20,8 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 In addition, make sure to have a local copy of Postgres installed.
 
 You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
-```
+
+```YAML
 SECRET_KEY=
 DB_USER=
 DB_PASSWORD=
@@ -37,21 +38,25 @@ CURRENT_DOMAIN=
 > First be sure your terminal is at the same directory as `manage.py`, which will be under `src/Clean-Energy-PA-Site` (the Django starting point)
 
 - Run server: `python manage.py runserver`
-- Run Tests: `python manage.py test`
-- Run coverage report:
-  - `coverage run manage.py test -v 2`
-  - `coverage report`
-  - `coverage html`
+- Run Tests (without coverage):
+  - `python manage.py test`
+- Run Tests (with coverage):
+  - `coverage run manage.py test`
+    - > Note: adding the `-v 2` flag will provide a verbose test output
+  - `coverage report` (generates report in terminal)
+  - `coverage html` (generates html version of report)
 
 ### Web Parser Commands
 
 > First change your terminal's directory to `src/web_parser`
 
-- Run Tests: `pytest .`
-- Run coverage report:
-  - `coverage run -m pytest .`
-  - `coverage report`
-  - `coverage html`
+- Run Tests (without coverage):
+  - `python -m pytest .`
+- Run Tests (with coverage):
+  - `coverage run pytest .`
+- Run Coverage Report
+  - `coverage report` (generates report in terminal)
+  - `coverage html` (generates html version of report)
 
 ## PyTest
 

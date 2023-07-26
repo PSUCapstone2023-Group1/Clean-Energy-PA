@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from web_parser.papowerswitch_api import papowerswitch_api
-from web_parser.responses.ratesearch import price_structure
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
-from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
+from web_parser import offer, price_structure, papowerswitch_api
 import json
-from datetime import date, datetime
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 def build_zip_search_path(zipcode):
@@ -74,7 +72,7 @@ def offer_search(request, zipcode, distributor_id, rate_type):
         def sorter(val):
             return val.rate
         filtered_offers = offers.filter(renewable_energy=True,
-                                price_structure=price_structure.fixed,
+                                price_structure= price_structure.fixed,
                                 upper_rate=distributor_rate.rate + 0.05)
         filtered_offers.sort(key=sorter)
         return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
