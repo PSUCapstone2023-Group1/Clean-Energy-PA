@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from web_parser.responses.ratesearch import offer, offer_collection
+from web_parser import offer, offer_collection
 
 from datetime import date, datetime
 import json 
@@ -23,7 +23,7 @@ class possible_selections_obj:
         try:
             self.last_updated:datetime = datetime.fromisoformat(data["last_updated"])
             self.offers:offer_collection = offer_collection(data["offers"])
-        except:
+        except Exception:
             return False
 
     def dump(self):
