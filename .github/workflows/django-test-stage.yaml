@@ -5,6 +5,7 @@ on:
     paths:
       - src/**
       - requirements*.txt
+      - .github/workflows/**
 
 jobs:
   SAST:
