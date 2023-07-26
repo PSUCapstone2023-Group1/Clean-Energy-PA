@@ -19,7 +19,7 @@ class EmailBatchTestCase(PriceWatchDogTestCase):
 
         self.subscribed_users_end_dates_df["contract_end_date"] = pd.to_datetime(
             self.subscribed_users_end_dates_df["contract_end_date"]
-        )
+        ).dt.date
 
         self.contract_watch_dog_instance = Contract_Watch_Dog_Instance
 

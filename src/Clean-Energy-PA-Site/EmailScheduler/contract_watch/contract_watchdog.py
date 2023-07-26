@@ -3,7 +3,7 @@ from GreenEnergySearch.models import User_Preferences
 from web_parser.papowerswitch_api import papowerswitch_api
 from web_parser.responses.ratesearch import price_structure
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from EmailScheduler.views import build_offer_path_less_than_rate
 from EmailScheduler.price_watch.price_watchdog_instance import Price_Watch_Dog_Instance
 
@@ -26,13 +26,14 @@ class Contract_Watch_Dog:
                 )
 
                 # Get the current end date and convert to usable format
-                user_offer = user_preferences.get_selected_offer()
-                # TODO: Last_Updated does not represent term_end_date
-                # Need to add another attribute to user_pref for contract_end
-                # And a means for user to update
-                contract_end_date = self.convert_date_string_format(
-                    user_offer.last_updated
-                )
+                try:
+                    user_offer = user_preferences.get_selected_offer()
+                except:
+                    # there is no offer id
+                    pass
+
+                # Get contract end date from db
+                contract_end_date = user_preferences.selected_offer_expected_end
 
                 subscribed_users_end_dates.append(
                     {
@@ -51,14 +52,8 @@ class Contract_Watch_Dog:
         subscribed_users_end_dates_df = pd.DataFrame(subscribed_users_end_dates)
         return subscribed_users_end_dates_df
 
-    def convert_date_string_format(self, date_string):
-        contract_end_date = date_string
-        input_date_format = "%B %d, %Y"
-        converted_date_string = datetime.strptime(contract_end_date, input_date_format)
-        return converted_date_string
-
     def calculate_days_left(self, df, date_column):
-        current_date = datetime.now()
+        current_date = date.today()
         df["days_left"] = df[date_column].apply(
             lambda date: (date - current_date).days
             if (date - current_date) > timedelta(days=0)

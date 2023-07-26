@@ -113,8 +113,13 @@ class Email_Batch:
             # Get First Name and User
             first_name, user = self.get_first_name(email)
             # Get rate and User_Pref
-            rate, user_preferences = self.get_rate(user)
+            try:
+                rate, user_preferences = self.get_rate(user)
+            except:
+                # offer doesnt exist for user
+                pass
             last_updated = user_preferences.get_selected_offer().last_updated
+            print("running")
 
             # Render the HTML template with the dynamic values
             html_content = render_to_string(
