@@ -63,7 +63,7 @@ def _handle_selected_distributor(zipcode, distributor):
         #If you've gotten here without a return something went wrong
         return redirect(reverse('notfound'))
 
-def offer_search(request, zipcode, distributor_id, rate_type):
+def offer_search(request:HttpRequest, zipcode, distributor_id, rate_type):
     api = papowerswitch_api()
     distributor = api.get_distributors(zipcode).find_distributor(distributor_id)
     if distributor is not None:
@@ -75,9 +75,15 @@ def offer_search(request, zipcode, distributor_id, rate_type):
                                 price_structure= price_structure.fixed,
                                 upper_rate=distributor_rate.rate + 0.05)
         filtered_offers.sort(key=sorter)
+        current_contract=None
+        if request.user.is_authenticated:
+            user_pref = User_Preferences.objects.get(user_id=request.user)
+            if user_pref.has_selected_offer():
+                current_contract = user_pref.get_selected_offer()
         return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
                                                                     "distributor":distributor,
-                                                                    "distributor_rate":distributor_rate})
+                                                                    "distributor_rate":distributor_rate,
+                                                                    "current_contract":current_contract})
     else:
         return redirect(reverse('notfound'))
 
