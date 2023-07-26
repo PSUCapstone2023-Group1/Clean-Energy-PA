@@ -119,7 +119,6 @@ class Email_Batch:
                 # offer doesnt exist for user
                 pass
             last_updated = user_preferences.get_selected_offer().last_updated
-            print("running")
 
             # Render the HTML template with the dynamic values
             html_content = render_to_string(

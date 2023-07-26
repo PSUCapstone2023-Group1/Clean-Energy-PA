@@ -24,6 +24,16 @@ from GreenEnergySearch.models import User_Preferences
 from .tokens import account_activation_token
 
 
+def send_success_message(request, msg):
+    success_message = f'<div class="alert alert-success">{msg}</div>'
+    messages.success(request, mark_safe(success_message))
+
+
+def send_error_message(request, msg):
+    success_message = f'<div class="alert alert-danger">{msg}</div>'
+    messages.success(request, mark_safe(success_message))
+
+
 def activate(request, uidb64, token):
     """Handles the logic once user clicks activation link from email"""
     User = get_user_model()
@@ -36,14 +46,12 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-
-        messages.success(
-            request,
-            "Thank you for your email confirmation. Now you can login your account.",
-        )
+        msg = "Thank you for your email confirmation. Now you can login your account."
+        send_success_message(request, msg)
         return redirect(reverse("UserRegistration:login"))
     else:
-        messages.error(request, "Activation link is invalid!")
+        msg = "Activation link is invalid!"
+        send_error_message(request, msg)
     return redirect(reverse("UserRegistration:login"))
 
 
@@ -62,15 +70,12 @@ def activateEmail(request, user, to_email):
     )
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        message = f"Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
+        msg = f"Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
             received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder."
-        success_message = f'<div class="alert alert-success">{message}</div>'
-        messages.success(request, mark_safe(success_message))
+        send_success_message(request, msg)
     else:
-        messages.error(
-            request,
-            f"Problem sending confirmation email to {to_email}, check if you typed it correctly.",
-        )
+        msg = f"Problem sending confirmation email to {to_email}, check if you typed it correctly."
+        send_error_message(request, msg)
 
 
 def register(request):
@@ -85,7 +90,8 @@ def register(request):
                 # Look for a user matching that email
                 User = get_user_model()
                 user = User.objects.get(email=email)
-                messages.info(request, "An account with this email already exists!")
+                msg = "An account with this email already exists!"
+                send_error_message(request, msg)
                 return render(request, "register.html", {"form": form})
             except User.DoesNotExist:
                 # If user with that email does not exist proceed
@@ -125,7 +131,11 @@ def user_login(request):
                 login(request, user)
                 return redirect(reverse("home"))
             else:
-                messages.error(request, "Invalid username or password")
+                msg = "Invalid username or password"
+                send_error_message(request, msg)
+        else:
+            msg = "Invalid username or password"
+            send_error_message(request, msg)
     else:
         form = AuthenticationForm()
 
@@ -136,5 +146,6 @@ def user_login(request):
 def user_logout(request):
     """Logic for handling the user logout view"""
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    msg = "Logged out successfully!"
+    send_success_message(request, msg)
     return redirect(reverse("home"))
