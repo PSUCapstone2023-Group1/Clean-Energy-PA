@@ -11,13 +11,13 @@
           {% if user.is_authenticated %}
           <div class="text-center">
             <button 
-            type="button" 
-            class="btn btn-success btn-block"
-            {% if user_pref.distributor_id > 0 %}
-              onclick="location.href = '{% url 'green_energy_search:offer_search' zipcode=user_pref.zip_code distributor_id=user_pref.distributor_id rate_type=user_pref.rate_schedule %}';"
-            {% else %}
-              onclick="location.href = '{% url 'green_energy_search:zip_search' %}/?zipcode={{ user_pref.zip_code }}';"
-            {% endif %}
+              type="button" 
+              class="btn btn-success btn-block"
+              {% if user_pref.distributor_id > 0 %}
+                onclick="location.href = '{% url 'green_energy_search:offer_search' zipcode=user_pref.zip_code distributor_id=user_pref.distributor_id rate_type=user_pref.rate_schedule %}';"
+              {% else %}
+                onclick="location.href = '{% url 'green_energy_search:zip_search' %}/?zipcode={{ user_pref.zip_code }}';"
+              {% endif %}
             >
             Search with Saved Options
             </button>

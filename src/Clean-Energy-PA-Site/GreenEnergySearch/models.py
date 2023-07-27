@@ -95,3 +95,10 @@ class User_Preferences(models.Model):
         curr.offers = []
         self.possible_selections = curr.dump()
         self.save()
+    
+    def set_search_options(self, zipcode, distributor_id, distributor_name, rate_schedule):
+        self.zip_code = zipcode
+        self.distributor_id = int(distributor_id)
+        self.distributor_name = distributor_name
+        self.rate_schedule = rate_schedule.replace("%20", " ")
+        self.save()
