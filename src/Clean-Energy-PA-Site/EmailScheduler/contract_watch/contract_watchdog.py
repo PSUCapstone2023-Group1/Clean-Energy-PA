@@ -19,46 +19,50 @@ class Contract_Watch_Dog:
     def get_susbscribers_contract_end_date(self):
         users = User.objects.all()
         subscribed_users_end_dates = []
-        try:
-            for user in users:
+        for user in users:
+            try:
                 user_preferences = User_Preferences.objects.get(
                     user_id=user, email_notifications=True
                 )
+            except:
+                # No user pref continue
+                continue
 
-                # Get the current end date and convert to usable format
-                try:
-                    user_offer = user_preferences.get_selected_offer()
-                except:
-                    # there is no offer id
-                    pass
+            # Get the current end date and convert to usable format
+            try:
+                user_offer = user_preferences.get_selected_offer()
+            except:
+                # No offer ID, skip that user
+                continue
 
-                # Get contract end date from db
-                contract_end_date = user_preferences.selected_offer_expected_end
+            # Get contract end date from db
+            contract_end_date = user_preferences.selected_offer_expected_end
 
-                subscribed_users_end_dates.append(
-                    {
-                        "email": user.email,
-                        "zip_code": user_preferences.zip_code,
-                        "distributor_id": user_preferences.distributor_id,
-                        "rate_schedule": user_preferences.rate_schedule,
-                        "contract_end_date": contract_end_date,
-                        "selected_offer_rate": user_offer.rate,
-                    }
-                )
+            subscribed_users_end_dates.append(
+                {
+                    "email": user.email,
+                    "zip_code": user_preferences.zip_code,
+                    "distributor_id": user_preferences.distributor_id,
+                    "rate_schedule": user_preferences.rate_schedule,
+                    "contract_end_date": contract_end_date,
+                    "selected_offer_rate": user_offer.rate,
+                }
+            )
 
-        except User_Preferences.DoesNotExist:
-            pass
         # Create the subscribers DataFrame
         subscribed_users_end_dates_df = pd.DataFrame(subscribed_users_end_dates)
         return subscribed_users_end_dates_df
 
     def calculate_days_left(self, df, date_column):
         current_date = date.today()
-        df["days_left"] = df[date_column].apply(
-            lambda date: (date - current_date).days
-            if (date - current_date) > timedelta(days=0)
-            else 0
-        )
+        try:
+            df["days_left"] = df[date_column].apply(
+                lambda date: (date - current_date).days
+                if (date - current_date) > timedelta(days=0)
+                else 0
+            )
+        except:
+            df["days_left"] = 0
         return df
 
     def check_contract_end_dates_df(self):

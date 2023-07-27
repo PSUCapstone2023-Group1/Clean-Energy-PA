@@ -107,6 +107,7 @@ class Email_Batch:
                 3,  # Top 3 from each distributor
             )
 
+            # Get contract end date and days left
             contract_end_date = row["contract_end_date"]
             days_left = row["days_left"]
 
@@ -116,9 +117,8 @@ class Email_Batch:
             try:
                 rate, user_preferences = self.get_rate(user)
             except:
-                # offer doesnt exist for user
-                pass
-            last_updated = user_preferences.get_selected_offer().last_updated
+                # offer doesnt exist for user, skip them
+                continue
 
             # Render the HTML template with the dynamic values
             html_content = render_to_string(
@@ -126,7 +126,7 @@ class Email_Batch:
                 {
                     "first_name": first_name,
                     "rate": rate,
-                    "contract_end_date": last_updated,
+                    "contract_end_date": contract_end_date,
                     "days_left": days_left,
                     "lower_contract_offers": lower_contract_offers_df,
                     "domain": settings.CURRENT_DOMAIN,
