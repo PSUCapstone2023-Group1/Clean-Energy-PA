@@ -36,7 +36,6 @@
 <script>
 function handleOption_click(offer_json, redirect){
     {% if user.is_authenticated %} //Skip storage request if the user is not authenticated
-    //TODO: Update selected offer for user
         const requestOptions = {
             method: 'PUT',
             headers: {
