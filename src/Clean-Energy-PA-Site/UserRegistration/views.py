@@ -47,21 +47,13 @@ def activate(request):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            message = (
-                "Thank you for your email confirmation. Now you can login your account."
+            messages.success(
+                request,
+                "Thank you for your email confirmation. Now you can login your account.",
             )
-            success_message = f'<div class="alert alert-success">{message}</div>'
-            messages.success(request, mark_safe(success_message))
-            # messages.success(
-            #     request,
-            #     "Thank you for your email confirmation. Now you can login your account.",
-            # )
             return redirect(reverse("UserRegistration:login"))
         else:
-            message = "Activation link is invalid!"
-            success_message = f'<div class="alert alert-danger">{message}</div>'
-            messages.success(request, mark_safe(success_message))
-            # messages.error(request, "Activation link is invalid!")
+            messages.error(request, "Activation link is invalid!")
     else:
         return redirect(reverse("UserRegistration:activate"))
     return redirect(reverse("UserRegistration:login"))
