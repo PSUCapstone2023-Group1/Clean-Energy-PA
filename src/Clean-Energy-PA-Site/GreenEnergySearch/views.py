@@ -94,10 +94,10 @@ def offer_search(request:HttpRequest, zipcode, distributor_id, rate_type):
             user_pref = User_Preferences.objects.get(user_id=request.user)
             if user_pref.has_selected_offer():
                 current_contract = user_pref.get_selected_offer() 
-            return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
-                                                                        "distributor":distributor,
-                                                                        "distributor_rate":distributor_rate,
-                                                                        "current_contract":current_contract})
+        return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
+                                                                    "distributor":distributor,
+                                                                    "distributor_rate":distributor_rate,
+                                                                    "current_contract":current_contract})
     else:
         return redirect(reverse('notfound'))
 
