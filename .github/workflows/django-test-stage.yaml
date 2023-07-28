@@ -5,6 +5,7 @@ on:
     paths:
       - src/**
       - requirements*.txt
+      - .github/workflows/**
 
 jobs:
   SAST:
@@ -65,13 +66,11 @@ jobs:
         run: |
           echo ***Executing Django Tests***
           cd src/Clean-Energy-PA-Site/
-          python manage.py test
           coverage run manage.py test -v 2
           coverage report --fail-under=90
 
           echo ***Executing WebParser Tests***
           cd ../web_parser
-          pytest .
           coverage run -m pytest .
           coverage report --fail-under=90
 

@@ -109,5 +109,5 @@ def edit_profile(request):
             instance=user, initial={"preferences": user_preferences}
         )
 
-    context = {"user": request.user, "form": form}
+    context = {"user": request.user, "form": form, "user_pref": user_preferences}
     return render(request, "edit_profile.html", context)

@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from web_parser.papowerswitch_api import papowerswitch_api
-from web_parser.responses.ratesearch import price_structure
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
-from web_parser.responses.ratesearch import offer
 from GreenEnergySearch.models import User_Preferences
+from web_parser import offer, price_structure, papowerswitch_api
 import json
-from datetime import date, datetime
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 def build_zip_search_path(zipcode):
@@ -65,7 +63,7 @@ def _handle_selected_distributor(zipcode, distributor):
         #If you've gotten here without a return something went wrong
         return redirect(reverse('notfound'))
 
-def offer_search(request, zipcode, distributor_id, rate_type):
+def offer_search(request:HttpRequest, zipcode, distributor_id, rate_type):
     api = papowerswitch_api()
     distributor = api.get_distributors(zipcode).find_distributor(distributor_id)
     if distributor is not None:
@@ -74,12 +72,18 @@ def offer_search(request, zipcode, distributor_id, rate_type):
         def sorter(val):
             return val.rate
         filtered_offers = offers.filter(renewable_energy=True,
-                                price_structure=price_structure.fixed,
+                                price_structure= price_structure.fixed,
                                 upper_rate=distributor_rate.rate + 0.05)
         filtered_offers.sort(key=sorter)
+        current_contract=None
+        if request.user.is_authenticated:
+            user_pref = User_Preferences.objects.get(user_id=request.user)
+            if user_pref.has_selected_offer():
+                current_contract = user_pref.get_selected_offer()
         return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
                                                                     "distributor":distributor,
-                                                                    "distributor_rate":distributor_rate})
+                                                                    "distributor_rate":distributor_rate,
+                                                                    "current_contract":current_contract})
     else:
         return redirect(reverse('notfound'))
 
@@ -132,7 +136,7 @@ class PossibleSelectionsMiddleware:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
         response = self.get_response(request)
-        if request.user.is_authenticated and "user/preferences/possible_selections" not in request.path:
+        if request.user.is_authenticated and "user/preferences/" not in request.path:
             user_pref = User_Preferences.objects.get(user_id=request.user)
             poss_sel = user_pref.get_possible_selections()
             if len(poss_sel)>0:

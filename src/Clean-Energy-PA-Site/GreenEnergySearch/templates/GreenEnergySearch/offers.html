@@ -25,14 +25,24 @@
       <hr>
       <p>{{offer.rate|format_rate:7}} per kWh</p>
       <p 
-      {% with offer_rate as distributor_rate.rate|subtract:offer.rate %}
-      style={% if offer_rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
-      {% endwith %}
+      {% with offer_diff_rate as distributor_rate.rate|subtract:offer.rate %}
+      style={% if offer_diff_rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
         {{distributor_rate.rate|subtract:offer.rate|format_rate_diff:8}}
+      {% endwith %}
         {{distributor.name}}
       </p>
       {% if user.is_authenticated%}
-      <p>(insert current contract diff) less than current contract</p>
+        {% if current_contract %}
+          {% if current_contract.id == offer.id %}
+            <p style = "color: blue">This is your currently selected offer!</p>
+          {% else %}
+            <p 
+            {% with current_contract_diff_rate as distributor_rate.rate|subtract:current_contract.rate %}
+              style={% if current_contract_diff_rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
+              {{distributor_rate.rate|subtract:current_contract.rate|format_rate_diff:8}} less than current contract</p>
+            {% endwith %}
+          {% endif %}
+        {% endif %}
       {%else%}
       <p><a href="{% url "UserRegistration:login" %}">login</a> to see the difference from your currently saved contract</p>
       {% endif %}

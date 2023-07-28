@@ -1,7 +1,5 @@
 from .test_green_energy_base import GreenEnergySearchBaseTest
 from web_parser.tests import ratesearch_test_data
-from web_parser.responses.ratesearch import offer
-from GreenEnergySearch.models import User_Preferences
 import json
 import copy
 

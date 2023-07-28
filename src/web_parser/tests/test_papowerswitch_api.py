@@ -1,14 +1,10 @@
 #Need to append root to sys path
-from papowerswitch_api import papowerswitch_api
 import zipsearch_test_data
 import ratesearch_test_data
-import api_settings
 import requests_mock
 import requests
 import pytest
-from responses.ratesearch import offer_collection
-from responses.zipsearch import distributor_collection
-from responses.ratesearch import price_structure
+from .. import offer_collection, distributor_collection, price_structure, papowerswitch_api, api_settings
 
 class TestZipSearch:
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from web_parser.responses.ratesearch import offer, offer_collection
+from web_parser import offer, offer_collection
 
 from datetime import date, datetime
 import json
@@ -23,9 +23,9 @@ class possible_selections_obj:
 
     def build(self, data):
         try:
-            self.last_updated: datetime = datetime.fromisoformat(data["last_updated"])
-            self.offers: offer_collection = offer_collection(data["offers"])
-        except:
+            self.last_updated:datetime = datetime.fromisoformat(data["last_updated"])
+            self.offers:offer_collection = offer_collection(data["offers"])
+        except Exception:
             return False
 
     def dump(self):
@@ -42,23 +42,33 @@ class possible_selections_obj:
 class User_Preferences(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default="default")
     """Relationship to the user model"""
+
+    # Preferences
+    email_notifications = models.BooleanField(default=True)
+    """Users email notification preference"""
+
+    # Search Options
     zip_code = models.CharField(max_length=10, default="default")
     """The users zip code"""
     distributor_id = models.BigIntegerField(default=-1)
     """Distributor id from the api"""
+    distributor_name = models.CharField(max_length=80, default="")
+    """The name of the distributor"""
     rate_schedule = models.CharField(max_length=80, default="default")
     """The rate schedule that the user saved"""
+
+    # Current Contract Info
     selected_offer = models.JSONField(default=dict)
     """The offer that the user has selected"""
     selected_offer_selected_date = models.DateField(auto_now_add=True)
     """The date that the user selected the offer on our site"""
     selected_offer_expected_end = models.DateField(auto_now_add=True)
     """The expected end date of the offer based on when the user selected on our site"""
-    possible_selections = models.JSONField(default={"last_updated": None, "offers": []})
-    """The possible selections that the user has chosen"""
-    email_notifications = models.BooleanField(default=True)
-    """Users email notification preference"""
 
+    # Storage for possible selections for the user
+    possible_selections= models.JSONField(default={"last_updated":None, "offers":[]})
+    """The possible selections that the user has chosen""" 
+    
     def __str__(self):
         return str(self.user_id)
 

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from web_parser.papowerswitch_api import papowerswitch_api
-from web_parser.responses.ratesearch import price_structure
+from web_parser import papowerswitch_api, price_structure
 
 
 # Create your views here.
