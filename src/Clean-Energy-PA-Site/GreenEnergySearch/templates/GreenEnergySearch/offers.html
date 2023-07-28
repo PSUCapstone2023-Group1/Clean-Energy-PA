@@ -74,12 +74,12 @@
           if (!response.ok) {
             console.error('Unable to save the offer!');
           }
-          //Redirect
-          location.href = redirect;
+          //Redirect in new tab
+          window.open(redirect, '_blank')
         });
         {% else %}
-        //Redirect
-        location.href = redirect;
+        //Redirect in new tab
+        window.open(redirect, '_blank')
       {% endif %}
     }
     </script>
