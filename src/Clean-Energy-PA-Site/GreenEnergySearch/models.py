@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from web_parser import offer, offer_collection
+from web_parser.responses import offer, offer_collection
 
 from datetime import date, datetime
 import json 
