@@ -34,6 +34,7 @@ class BaseTest(TestCase):
         self.register_url = reverse("UserRegistration:register")
         self.login_url = reverse("UserRegistration:login")
         self.logout_url = reverse("UserRegistration:user_logout")
+        self.activate_url = reverse("UserRegistration:activate")
 
         # Dummy Form Data
         password = generate_password()

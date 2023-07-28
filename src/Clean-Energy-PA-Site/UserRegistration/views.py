@@ -55,7 +55,7 @@ def activate(request):
         else:
             messages.error(request, "Activation link is invalid!")
     else:
-        return redirect(reverse("UserRegistration:activate"))
+        return redirect(reverse("UserRegistration:register"))
     return redirect(reverse("UserRegistration:login"))
 
 
