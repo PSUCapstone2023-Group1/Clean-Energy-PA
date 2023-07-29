@@ -1,7 +1,7 @@
 {% extends 'base/home.html' %}
 
 {% block modal %}
-<a class="close" href="/home">&times;</a>
+<a class="close" href={% if redirect %}"{{redirect}}"{% else %}"/home"{% endif %}>&times;</a>
 <div>
     <a href="javascript:void(0);" onclick="history.back();">Go Back</a>
 {% if distributors|length != 1 %}
@@ -11,7 +11,7 @@
         {% for distributor in distributors %}
             <button 
                 class = 'btn btn-success wide-btn'
-                onclick="location.href = '{% url 'green_energy_search:rate_type' %}/?zipcode={{zipcode}}&distributor_id={{distributor.id}}';">
+                onclick="location.href = '{% url 'green_energy_search:rate_type' %}/?zipcode={{zipcode}}&distributor_id={{distributor.id}}{% if redirect != None %}&redirect={{redirect}}{% endif %}{% if save != None %}&save={{save}}{% endif %}';">
                 {{distributor.name}}
             </button>
         {% endfor %}
@@ -25,12 +25,46 @@
         {% for rate in distributor_sel.rates %}
             <button 
                 class = 'btn btn-success wide-btn'
-                onclick="location.href = '{% url 'green_energy_search:offer_search' zipcode=zipcode distributor_id=distributor_sel.id rate_type=rate.rate_schedule %}';">
-                {{rate.rate_schedule}}
+                {% if redirect == None %}
+                    onclick="handle_button_click('{{zipcode}}', '{{distributor_sel.id}}', '{{rate.rate_schedule}}',  '{% url 'green_energy_search:offer_search' zipcode=zipcode distributor_id=distributor_sel.id rate_type=rate.rate_schedule %}'{% if save != None %},{{save|yesno:"true,false"}}{% endif %})"
+                {% else %}
+                    onclick="handle_button_click('{{zipcode}}', '{{distributor_sel.id}}', '{{rate.rate_schedule}}','{{redirect}}'{% if save != None %},{{save|yesno:"true,false"}}{% endif %})"
+                {% endif %}
+                >
+            {{rate.rate_schedule}}
             </button>
         {% endfor %}
         </div>
     {% endwith %}
+    <script>
+    function handle_button_click(zipcode, distributor_id, rate_type, redirect="", save=false){
+        {% if user.is_authenticated %}
+        if(save){
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json', // Set the content type for JSON data
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({"zip_code":zipcode, "distributor_id":Number(distributor_id), "rate_schedule":rate_type})
+            };
+            fetch("{% url 'green_energy_search:search_options' %}", requestOptions)
+                .then((response)=>{
+                    if (!response.ok) {
+                        console.log('Unable to save the search options');
+                    }
+                    //Redirect
+                    location.href = redirect;
+                })
+        }else{
+            //Redirect
+            location.href = redirect;
+        }
+        {% else %}
+        location.href = redirect;
+        {% endif %}
+    }
+    </script>
 {% endif %}
 </div>
 {% endblock modal %}
