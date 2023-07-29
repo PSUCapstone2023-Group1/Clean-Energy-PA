@@ -53,6 +53,6 @@ class ActivateViewTest(BaseTest):
         self.assertRaises(Exception)
 
     def test_activate_exception_path(self):
-        """Test ID TBD: Test covers the non-POST path"""
+        """Test ID 85: Test covers the non-POST path"""
         response = self.client.get(self.activate_url)
         self.assertRedirects(response, reverse("UserRegistration:register"))
