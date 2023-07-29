@@ -1,6 +1,6 @@
 from GreenEnergySearch.views import build_offer_path
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 valid_input_row = {
     "email": "test@example.com",
@@ -63,9 +63,8 @@ expected_data = {
 
 empty_mailing_df = pd.DataFrame(expected_data)
 
-current_date = datetime.now()
-# Indexing book keeping input 31 days is really 30
-thirty_days_left = current_date + timedelta(days=31)
+current_date = date.today()
+thirty_days_left = current_date + timedelta(days=30)
 expected_subscribed_users_end_dates_thirty_days = {
     "email": ["test@example.com"],
     "zip_code": ["15025"],
@@ -80,7 +79,7 @@ expected_subscribed_users_end_dates = {
     "zip_code": ["15025"],
     "distributor_id": [27498],
     "rate_schedule": [rate_type],
-    "contract_end_date": ["June 03, 2023"],
+    "contract_end_date": [current_date],
     "selected_offer_rate": [0.0839],
 }
 

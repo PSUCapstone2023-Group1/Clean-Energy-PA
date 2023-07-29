@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from GreenEnergySearch.models import User_Preferences
 from web_parser import papowerswitch_api, price_structure
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from EmailScheduler.views import build_offer_path_less_than_rate
 from EmailScheduler.price_watch.price_watchdog_instance import Price_Watch_Dog_Instance
 
@@ -18,51 +18,50 @@ class Contract_Watch_Dog:
     def get_susbscribers_contract_end_date(self):
         users = User.objects.all()
         subscribed_users_end_dates = []
-        try:
-            for user in users:
+        for user in users:
+            try:
                 user_preferences = User_Preferences.objects.get(
                     user_id=user, email_notifications=True
                 )
+            except:
+                # No user pref continue
+                continue
 
-                # Get the current end date and convert to usable format
+            # Get the current end date and convert to usable format
+            try:
                 user_offer = user_preferences.get_selected_offer()
-                # TODO: Last_Updated does not represent term_end_date
-                # Need to add another attribute to user_pref for contract_end
-                # And a means for user to update
-                contract_end_date = self.convert_date_string_format(
-                    user_offer.last_updated
-                )
+            except:
+                # No offer ID, skip that user
+                continue
 
-                subscribed_users_end_dates.append(
-                    {
-                        "email": user.email,
-                        "zip_code": user_preferences.zip_code,
-                        "distributor_id": user_preferences.distributor_id,
-                        "rate_schedule": user_preferences.rate_schedule,
-                        "contract_end_date": contract_end_date,
-                        "selected_offer_rate": user_offer.rate,
-                    }
-                )
+            # Get contract end date from db
+            contract_end_date = user_preferences.selected_offer_expected_end
 
-        except User_Preferences.DoesNotExist:
-            pass
+            subscribed_users_end_dates.append(
+                {
+                    "email": user.email,
+                    "zip_code": user_preferences.zip_code,
+                    "distributor_id": user_preferences.distributor_id,
+                    "rate_schedule": user_preferences.rate_schedule,
+                    "contract_end_date": contract_end_date,
+                    "selected_offer_rate": user_offer.rate,
+                }
+            )
+
         # Create the subscribers DataFrame
         subscribed_users_end_dates_df = pd.DataFrame(subscribed_users_end_dates)
         return subscribed_users_end_dates_df
 
-    def convert_date_string_format(self, date_string):
-        contract_end_date = date_string
-        input_date_format = "%B %d, %Y"
-        converted_date_string = datetime.strptime(contract_end_date, input_date_format)
-        return converted_date_string
-
     def calculate_days_left(self, df, date_column):
-        current_date = datetime.now()
-        df["days_left"] = df[date_column].apply(
-            lambda date: (date - current_date).days
-            if (date - current_date) > timedelta(days=0)
-            else 0
-        )
+        current_date = date.today()
+        try:
+            df["days_left"] = df[date_column].apply(
+                lambda date: (date - current_date).days
+                if (date - current_date) > timedelta(days=0)
+                else 0
+            )
+        except:
+            df["days_left"] = 0
         return df
 
     def check_contract_end_dates_df(self):

@@ -7,18 +7,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 col-lg-4">
-        <form method="POST" class="form-group">
+        <form method="POST" class="form-group" action="{% url 'login' %}?next=/edit_profile/">
           {% csrf_token %}
           <div class="row mb-3">
             <div class="col">{{ form.username|as_crispy_field }}</div>
@@ -49,17 +41,15 @@
     </div>
   </div>
 
-  
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var resetPasswordLink = document.getElementById('reset-password-link');
-      var resetPasswordForm = document.getElementById('reset-password-form');
-      
-      resetPasswordLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        resetPasswordForm.submit();
-      });
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+      var resetPasswordLink = document.getElementById('reset-password-link')
+      var resetPasswordForm = document.getElementById('reset-password-form')
+    
+      resetPasswordLink.addEventListener('click', function (event) {
+        event.preventDefault()
+        resetPasswordForm.submit()
+      })
+    })
   </script>
-  
 {% endblock %}

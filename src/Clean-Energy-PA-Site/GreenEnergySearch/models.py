@@ -4,20 +4,22 @@ from django.contrib.auth.models import User
 from web_parser import offer, offer_collection
 
 from datetime import date, datetime
-import json 
+import json
+
 
 class possible_selections_obj:
     """The data model for the possible selections field"""
+
     def __init__(self):
-        self.last_updated:datetime
-        self.offers:offer_collection= offer_collection([])
-    
-    def add_offer(self, offer:offer):
+        self.last_updated: datetime
+        self.offers: offer_collection = offer_collection([])
+
+    def add_offer(self, offer: offer):
         for known_offer in self.offers.collection:
             if known_offer.equals(offer):
                 return False
         self.offers.collection.append(offer)
-        return True        
+        return True
 
     def build(self, data):
         try:
@@ -27,10 +29,14 @@ class possible_selections_obj:
             return False
 
     def dump(self):
-        return {"last_updated":str(self.last_updated), "offers":[json.loads(o.raw_json) for o in self.offers]}
-    
+        return {
+            "last_updated": str(self.last_updated),
+            "offers": [json.loads(o.raw_json) for o in self.offers],
+        }
+
     def __len__(self):
         return len(self.offers)
+
 
 # Create your models here.
 class User_Preferences(models.Model):
@@ -65,22 +71,22 @@ class User_Preferences(models.Model):
     
     def __str__(self):
         return str(self.user_id)
-    
-    def get_selected_offer(self)->offer:
+
+    def get_selected_offer(self) -> offer:
         return offer(self.selected_offer)
-    
-    def get_possible_selections(self)->possible_selections_obj:
+
+    def get_possible_selections(self) -> possible_selections_obj:
         output = possible_selections_obj()
         output.build(self.possible_selections)
         return output
 
-    def get_selected_offer(self)->offer:
+    def get_selected_offer(self) -> offer:
         return offer(self.selected_offer)
 
-    def has_selected_offer(self)->bool:
-        return len(self.selected_offer)>0
+    def has_selected_offer(self) -> bool:
+        return len(self.selected_offer) > 0
 
-    def add_possible_selection(self, offer:offer):
+    def add_possible_selection(self, offer: offer):
         curr = self.get_possible_selections()
         if curr.add_offer(offer):
             curr.last_updated = datetime.now()

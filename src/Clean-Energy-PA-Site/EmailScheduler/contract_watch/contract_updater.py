@@ -7,12 +7,11 @@ from EmailScheduler.contract_watch.contract_watchdog_instance import (
 
 def start():
     scheduler = BackgroundScheduler()
-    # Checks for rates every 1 day
-    # Rates are checked more frequently than emails are sent
+    # Check contracts daily
     scheduler.add_job(
         Contract_Watch_Dog_Instance.check_contract_end_dates_df,
         id="check_contract_end_dates_df",
         trigger="interval",
-        days=1,
+        hours=12,
     )
     scheduler.start()
