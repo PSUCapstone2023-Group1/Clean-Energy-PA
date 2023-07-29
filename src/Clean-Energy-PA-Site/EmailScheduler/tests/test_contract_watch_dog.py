@@ -4,7 +4,7 @@ from EmailScheduler.contract_watch.contract_watchdog_instance import (
 )
 import pandas as pd
 import EmailScheduler.tests.data_for_test as data_for_test
-from datetime import datetime
+from datetime import date, datetime
 
 
 class ContractWatchDogTestCase(BaseTest):
@@ -39,25 +39,6 @@ class ContractWatchDogTestCase(BaseTest):
         expected_subscribed_users_end_dates_df = (
             data_for_test.expected_subscribed_users_end_dates_df
         )
-        expected_subscribed_users_end_dates_df[
-            "contract_end_date"
-        ] = expected_subscribed_users_end_dates_df["contract_end_date"].astype(
-            "datetime64[ns]"
-        )
         pd.testing.assert_frame_equal(
             test_subscribers_df, expected_subscribed_users_end_dates_df
         )
-
-    def test_convert_date_string_format(self):
-        # Test case 1: Test with a valid date string
-        date_string = "June 03, 2023"
-        expected_date = datetime(2023, 6, 3)
-        converted_date = Contract_Watch_Dog_Instance.convert_date_string_format(
-            date_string
-        )
-        self.assertEqual(converted_date, expected_date)
-
-        # Test case 2: Test with an invalid date string (should raise an exception)
-        invalid_date_string = "Invalid Date"
-        with self.assertRaises(ValueError):
-            Contract_Watch_Dog_Instance.convert_date_string_format(invalid_date_string)

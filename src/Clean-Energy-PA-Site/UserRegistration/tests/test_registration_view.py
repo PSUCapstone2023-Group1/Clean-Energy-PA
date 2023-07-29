@@ -6,6 +6,7 @@
 
 # Django
 from django.contrib.messages import get_messages
+from unittest.mock import patch
 
 # local Django
 from Website.tests.test_base import BaseTest
@@ -92,3 +93,10 @@ class RegistrationViewTest(BaseTest):
             error_message["last_name"],
             ["Ensure this value has at most 30 characters (it has 151)."],
         )
+
+    @patch("django.core.mail.EmailMessage.send")
+    def test_invalid_send_email(self, mock_send):
+        mock_send.return_value = False
+        response = self.client.post(self.register_url, self.form_data, follow=True)
+        expected_error_message = "Problem sending confirmation email"
+        self.assertContains(response, expected_error_message)

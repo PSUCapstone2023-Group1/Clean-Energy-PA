@@ -9,6 +9,8 @@
 # local Django
 from Website.tests.test_base import BaseTest
 from unittest.mock import patch
+import unittest
+from django.contrib.auth.backends import ModelBackend
 
 
 class LoginViewTest(BaseTest):
