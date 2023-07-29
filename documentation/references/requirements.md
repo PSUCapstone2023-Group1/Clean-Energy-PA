@@ -108,3 +108,8 @@ The non-functional requirements will focus on the qualities and attributes of th
 
 - 1.2.4.1 The website shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
 - 1.2.4.2 The CI/CD pipeline shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
+
+### 1.2.5 Application Testability 
+
+* 1.2.5.1 The website shall require a minimum coverage of 90% upon deployment into a production enviornment.
+* 1.2.5.2 The CI/CD pipeline shall continously check for coverage to be maintained above 90% in order to merge into stable branches.
