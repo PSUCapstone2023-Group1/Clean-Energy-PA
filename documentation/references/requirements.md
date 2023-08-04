@@ -78,6 +78,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.8.2. The system shall only display a profile settings link when the user is logged on and authenticated.
 - 1.1.8.3. The system shall display the user's persisted search options (zip code, distributor, and rate schedule)
 - 1.1.8.4. The system shall allow the user to reselect their search options from the user profile. If they choose to reselect, the system shall use the same prompts as the primary search routine to maintain a similar feel.
+- 1.1.8.5. The system shall allow the user to update their contract end date.
 
 ### 1.1.9 Offer Results
 
