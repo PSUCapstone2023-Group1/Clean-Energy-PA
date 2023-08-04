@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
 from GreenEnergySearch.models import User_Preferences
-from web_parser.responses import offer
+from web_parser.responses.ratesearch import offer
 from web_parser import price_structure, papowerswitch_api
 import json
 from datetime import datetime
