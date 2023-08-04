@@ -92,4 +92,4 @@ jobs:
         environment_name: Clean-Energy-PA-Production-dev
         version_label: ${{ github.sha }}
         region: us-east-2
-        deployment_package: deploy.zip
+        deployment_package: ${{ github.sha }}.zip
