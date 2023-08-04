@@ -4,7 +4,9 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponseForbidden, HttpResponse, JsonResponse
 from GreenEnergySearch.models import User_Preferences
 from web_parser.responses.ratesearch import offer
-from web_parser import price_structure, papowerswitch_api
+from web_parser import papowerswitch_api
+from web_parser.responses.ratesearch import price_structure 
+
 import json
 from datetime import datetime
 from dateutil.relativedelta import relativedelta

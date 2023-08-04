@@ -3,7 +3,9 @@ from GreenEnergySearch.views import build_zip_search_path, build_rate_type_path,
 from bs4 import BeautifulSoup
 from unittest import mock
 from web_parser.tests import zipsearch_test_data, ratesearch_test_data
-from web_parser.responses import offer_collection, distributor_collection
+from web_parser.responses.zipsearch import distributor_collection
+from web_parser.responses.ratesearch import offer_collection
+
 
 class Zip_Search_View_Test(GreenEnergySearchBaseTest):
     @mock.patch('web_parser.papowerswitch_api.get_distributors')

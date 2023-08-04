@@ -2,8 +2,8 @@ from .test_email_scheduler_base import EmailSchedulerBaseTest
 from ..views import build_offer_path_less_than_rate, offer_search_less_than_rate
 from bs4 import BeautifulSoup
 from unittest import mock
-from web_parser.tests import zipsearch_test_data, ratesearch_test_data
-from web_parser.responses import offer_collection, distributor_collection
+from web_parser.tests import ratesearch_test_data
+from web_parser.responses.ratesearch import offer_collection
 
 
 class Email_Scheduler_View_Test(EmailSchedulerBaseTest):

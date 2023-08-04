@@ -1,9 +1,4 @@
 from Website.tests.test_base import BaseTest
-from unittest import mock
-
-from web_parser.tests import zipsearch_test_data, ratesearch_test_data
-from web_parser.responses import offer_collection, distributor_collection
-
 
 # Create your tests here.
 class EmailSchedulerBaseTest(BaseTest):

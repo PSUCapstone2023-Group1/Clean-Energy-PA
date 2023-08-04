@@ -4,7 +4,9 @@ import ratesearch_test_data
 import requests_mock
 import requests
 import pytest
-from .. import offer_collection, distributor_collection, price_structure, papowerswitch_api, api_settings
+from web_parser import papowerswitch_api, api_settings
+from web_parser.responses.ratesearch import price_structure, offer_collection
+from web_parser.responses.zipsearch import distributor_collection
 
 class TestZipSearch:
 
