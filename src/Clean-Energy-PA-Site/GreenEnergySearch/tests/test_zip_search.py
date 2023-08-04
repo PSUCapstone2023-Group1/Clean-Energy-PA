@@ -6,9 +6,8 @@ from web_parser.tests import zipsearch_test_data, ratesearch_test_data
 from web_parser.responses.zipsearch import distributor_collection
 from web_parser.responses.ratesearch import offer_collection
 
-
 class Zip_Search_View_Test(GreenEnergySearchBaseTest):
-    @mock.patch('web_parser.papowerswitch_api.get_distributors')
+    @mock.patch('web_parser.papowerswitch_api.papowerswitch_api.get_distributors')
     def test_distributors_selection(self, mock_get_distributors):
         """Test ID 59: Test verifies that the distributors are shown"""
 
@@ -30,7 +29,7 @@ class Zip_Search_View_Test(GreenEnergySearchBaseTest):
 
         self.assertEqual(len(element.findChildren()), 2)
 
-    @mock.patch('web_parser.papowerswitch_api.get_distributors')
+    @mock.patch('web_parser.papowerswitch_api.papowerswitch_api.get_distributors')
     def test_rateschedule_selection(self, mock_get_distributors):
         """Test ID 60: Test verifies that the rate schedules are shown"""
 
@@ -52,7 +51,7 @@ class Zip_Search_View_Test(GreenEnergySearchBaseTest):
 
         self.assertEqual(len(element.findChildren()), 2)
     
-    @mock.patch('web_parser.papowerswitch_api.get_offers')
+    @mock.patch('web_parser.papowerswitch_api.papowerswitch_api.get_offers')
     def test_offers_results(self, mock_get_offers):
         """Test ID 61: Test verifies that the offers are shown"""
 

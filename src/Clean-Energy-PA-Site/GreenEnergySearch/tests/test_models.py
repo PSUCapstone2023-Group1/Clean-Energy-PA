@@ -1,6 +1,6 @@
 from .test_green_energy_base import GreenEnergySearchBaseTest
 from web_parser.tests import ratesearch_test_data
-from web_parser.responses import offer
+from web_parser.responses.ratesearch import offer
 import copy
 
 class TestModels(GreenEnergySearchBaseTest):

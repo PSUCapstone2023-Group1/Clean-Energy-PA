@@ -7,7 +7,7 @@ from web_parser.responses.ratesearch import offer_collection
 
 
 class Email_Scheduler_View_Test(EmailSchedulerBaseTest):
-    @mock.patch("web_parser.papowerswitch_api.get_offers")
+    @mock.patch("web_parser.papowerswitch_api.papowerswitch_api.get_offers")
     def test_offers_results(self, mock_get_offers):
         # Mock the distributors reponse
         mock_get_offers.return_value = offer_collection(
