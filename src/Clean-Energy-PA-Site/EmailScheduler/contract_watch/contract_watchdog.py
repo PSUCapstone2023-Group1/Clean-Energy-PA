@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from GreenEnergySearch.models import User_Preferences
-from web_parser import papowerswitch_api
-from web_parser.responses.ratesearch import price_structure 
+from web_parser.papowerswitch_api import papowerswitch_api
 
 import pandas as pd
 from datetime import date, datetime, timedelta
