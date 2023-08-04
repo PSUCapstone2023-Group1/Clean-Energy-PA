@@ -37,6 +37,9 @@ class EmailBatchTestCase(PriceWatchDogTestCase):
                 self.contract_watch_dog_instance.check_contract_end_dates_df()
 
     def test_send_lower_rate_emails(self):
+        """Test ID 80: Verify that an email will be sent to a 
+        subscriber when there are rates lower than the subscribers selected rate
+        """
         email_batch_instance = email_batch.Email_Batch()
         email_batch_instance.send_lower_rate_emails()
         self.assertTrue(email_batch_instance.send_lower_rate_email_return)
@@ -48,6 +51,9 @@ class EmailBatchTestCase(PriceWatchDogTestCase):
 
     @patch("django.core.mail.send_mail")
     def test_send_lower_rate_emails_empty_dataframe(self, mock_send_mail):
+        """Test ID 81: Verify that an email will not be sent to a 
+        subscriber when there are not rates lower than the subscribers selected rate
+        """
         Price_Watch_Dog_Instance.subscribers_df = pd.DataFrame()
         Price_Watch_Dog_Instance.mailing_list_df = pd.DataFrame()
 

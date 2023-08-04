@@ -31,6 +31,10 @@ class ContractWatchDogTestCase(BaseTest):
         self.contract_watch_dog_instance = Contract_Watch_Dog_Instance
 
     def test_get_susbscribers_contract_end_date(self):
+        """
+        Test ID 87: Verify that a subscribers data frame is returned 
+        when get_subscribers_conrtact_end date is called
+        """
         # Call the get_all_subscribers function
         test_subscribers_df = (
             self.contract_watch_dog_instance.get_susbscribers_contract_end_date()

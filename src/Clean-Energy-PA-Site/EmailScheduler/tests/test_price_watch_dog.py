@@ -47,6 +47,8 @@ class PriceWatchDogTestCase(BaseTest):
                 self.price_watch_dog_instance.update_lower_rate_mailing_list_df()
 
     def test_remove_rows_with_zero(self):
+        """Test ID 72: Verify that the remove_rows_with_zero function 
+        removes rows that have a value of 0 in the specified column"""
         # Create a sample DataFrame with a column containing zeros
         data = {"col1": [1, 2, 3, 0, 5]}
         df = pd.DataFrame(data)
@@ -59,6 +61,8 @@ class PriceWatchDogTestCase(BaseTest):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_compare_rates(self):
+        """Test ID 73: Verify that the compare_rates function removes 
+        rows that have rates higher or equal to threshold (users current rate)"""
         # price_watch_dog = Price_Watch_Dog_Instance
         # Create a sample DataFrame with rate and lower_rate_threshold columns
         data = {"rate": [1, 2, 3, 4, 5], "lower_rate_threshold": [3, 3, 3, 3, 3]}
@@ -75,6 +79,9 @@ class PriceWatchDogTestCase(BaseTest):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_row_series_to_multiple_row_df(self):
+        """Test ID 74: Verify that the row_series_to_multiple_row_df 
+        converts the Pandas Series from a column Series to a row DataFrame 
+        with repeating rows that match the number of offers found"""
         series = self.invalid_test_series
         # Call the row_series_to_multiple_row_df function with row_count = 3
         result = self.price_watch_dog_instance.row_series_to_multiple_row_df(series, 3)
@@ -94,6 +101,8 @@ class PriceWatchDogTestCase(BaseTest):
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_get_all_subscribers(self):
+        """Test ID 77: Verify that the test_get_all_subscribers returns 
+        a DataFrame with all users that have “email_notifications” selected True"""
         # Call the get_all_subscribers function
         test_subscribers_df = self.price_watch_dog_instance.get_all_subscribers()
 
@@ -108,6 +117,9 @@ class PriceWatchDogTestCase(BaseTest):
         pd.testing.assert_frame_equal(test_subscribers_df, expected_subscribers_df)
 
     def test_build_lower_rate_mailing_list_df_w_valid_series(self):
+        """Test ID 78: Verify that the build_lower_rate_mailing_list_df
+        returns a DataFrame with all users that have “email_notifications” selected True
+        """
         # Create a sample row Series
         row = self.valid_test_series
 
@@ -130,6 +142,9 @@ class PriceWatchDogTestCase(BaseTest):
         self.assertTrue(result.empty)
 
     def test_update_lower_rate_mailing_list_df(self):
+        """Test ID 79: Verify that the lower_rate_mailing_list_df
+        returns a DataFrame with mailing list of subscribers that have lower rate offers
+        """
         # Assert that the subscribers_df and mailing_list_df attributes have been updated correctly
         self.assertTrue(
             self.subscriber_df.equals(self.price_watch_dog_instance.subscribers_df)
