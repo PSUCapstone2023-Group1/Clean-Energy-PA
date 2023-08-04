@@ -17,6 +17,9 @@
   <hr />
   <hr />
   <div id="offer-container" style="display: flex; flex-direction:column; justify-content: center; align-items:center">
+    {% if offers|length == 0 %}
+    <h2>We're sorry, but there are no offers that match the requirements 🙁</h2>
+    {% else %}
     {% for offer in offers %}
     <div
       class = "paper" style = "width:600px; padding:50px"
@@ -53,6 +56,7 @@
     </div>
     <hr />
     {% endfor %}
+    {% endif %}
   </div>
   <script>
     function post_possible_selection(offer_json, redirect){
@@ -70,14 +74,13 @@
           if (!response.ok) {
             console.error('Unable to save the offer!');
           }
-          //Redirect
-          location.href = redirect;
+          //Redirect in new tab
+          window.open(redirect, '_blank')
         });
         {% else %}
-        //Redirect
-        location.href = redirect;
+        //Redirect in new tab
+        window.open(redirect, '_blank')
       {% endif %}
-      
     }
     </script>
 </div>

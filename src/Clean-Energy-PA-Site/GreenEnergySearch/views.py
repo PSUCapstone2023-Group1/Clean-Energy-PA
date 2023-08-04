@@ -9,11 +9,15 @@ import json
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-def build_zip_search_path(zipcode):
-     return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}"
+def build_zip_search_path(zipcode, save=False, redirect=None):
+     save_query="&save=True" if save else ""
+     redirect_query = f"&redirect={redirect}" if redirect != None else ""
+     return reverse("green_energy_search:zip_search") + f"/?zipcode={zipcode}{save_query}{redirect_query}"
 
-def build_rate_type_path(zipcode, distributor_id):
-     return reverse("green_energy_search:rate_type") + f"/?zipcode={zipcode}&distributor_id={distributor_id}"
+def build_rate_type_path(zipcode, distributor_id, save=False, redirect=None):
+     save_query="&save=True" if save else ""
+     redirect_query = f"&redirect={redirect}" if redirect != None else ""
+     return reverse("green_energy_search:rate_type") + f"/?zipcode={zipcode}&distributor_id={distributor_id}{save_query}{redirect_query}"
 
 def build_offer_path(zipcode, distributor_id, rate_type):
     rate_type_query = rate_type.replace(" ", "+") # Replace any spaces with a + character to use as a query parameter.
@@ -23,34 +27,38 @@ def build_offer_path(zipcode, distributor_id, rate_type):
 # Create your views here.
 def zip_search(request):
     zipcode = request.GET.get('zipcode')
+    save = request.GET.get('save')
+    redirect_url = request.GET.get('redirect')
     # Get distributors from api using zipcode
     distributors = papowerswitch_api().get_distributors(zipcode)
     if len(distributors)==1: # Only one option, redirect to offersearch endpoint
         if len(distributors[0].rates)>1:
             # There are more than 1 rate to select from, redirect to let the user choose
-            return redirect(build_rate_type_path(zipcode,distributors[0].id))
-        return _handle_selected_distributor(zipcode, distributors[0])
+            return redirect(build_rate_type_path(zipcode,distributors[0].id, save, redirect_url))
+        return _handle_selected_distributor(request, zipcode, distributors[0], bool(save), redirect_url)
     elif len(distributors)==0:
         return redirect(reverse('notfound'))
     else:
-        return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":distributors, "zipcode":zipcode, "show_modal":True})
+        return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":distributors, "zipcode":zipcode, "show_modal":True, "save":save, "redirect":redirect_url})
 
 def zip_search_distributor_selected(request):
     zipcode = request.GET.get('zipcode')
     distributor_id = request.GET.get('distributor_id')
+    save = request.GET.get('save')
+    redirect_url = request.GET.get('redirect')
     # Get distributors from api using zipcode
     distributors = papowerswitch_api().get_distributors(zipcode)
     # Get matching distributor
     for distributor in distributors:
         if str(distributor.id) == distributor_id:
             if len(distributor.rates)>1:
-                return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":[distributor], "zipcode":zipcode, "show_modal":True})
+                return render(request, "GreenEnergySearch/home_zipsearch.html", {"distributors":[distributor], "zipcode":zipcode, "show_modal":True, "save":save, "redirect":redirect_url})
             else:
-                return _handle_selected_distributor(zipcode, distributor)
+                return _handle_selected_distributor(request, zipcode, distributor, bool(save), redirect_url)
     # No matching distributor
     return redirect(reverse('notfound'))
     
-def _handle_selected_distributor(zipcode, distributor):
+def _handle_selected_distributor(request:HttpRequest, zipcode, distributor, save=False, redirect_url = None):
     if distributor!=None:
         num_rates = len(distributor.rates)
         if num_rates==0:
@@ -58,8 +66,14 @@ def _handle_selected_distributor(zipcode, distributor):
             return redirect(reverse('notfound'))
         elif num_rates==1:
             # There is only one rate option, there isn't anything the user can select.
-            # Go straight to offer search
-            return redirect(build_offer_path(zipcode,distributor.id,distributor.rates[0].rate_schedule))
+            if request.user.is_authenticated and save:
+                user_pref = User_Preferences.objects.get(user_id=request.user)
+                user_pref.set_search_options(zipcode, distributor.id, distributor.name, distributor.rates[0].rate_schedule)
+            if not redirect_url:
+                # Go straight to offer search
+                return redirect(build_offer_path(zipcode,distributor.id,distributor.rates[0].rate_schedule))
+            else:
+                return redirect(redirect_url)
     else:
         #If you've gotten here without a return something went wrong
         return redirect(reverse('notfound'))
@@ -80,7 +94,7 @@ def offer_search(request:HttpRequest, zipcode, distributor_id, rate_type):
         if request.user.is_authenticated:
             user_pref = User_Preferences.objects.get(user_id=request.user)
             if user_pref.has_selected_offer():
-                current_contract = user_pref.get_selected_offer()
+                current_contract = user_pref.get_selected_offer() 
         return render(request, "GreenEnergySearch/offers.html", {"offers": filtered_offers,
                                                                     "distributor":distributor,
                                                                     "distributor_rate":distributor_rate,
@@ -126,8 +140,34 @@ def current_selection(request:HttpRequest):
         user_pref.selected_offer_expected_end = end
         user_pref.save()
         return HttpResponse("Offer selected!")
-
-
+    
+def search_options(request:HttpRequest):
+    """Manage the search options for a user"""
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Not authenticated")
+    user_pref = User_Preferences.objects.get(user_id=request.user)
+    if request.method == "DELETE":
+        user_pref.distributor_id = -1
+        user_pref.distributor_name = ""
+        user_pref.rate_schedule = ""
+        user_pref.save()
+        return HttpResponse("Search Options successfully cleared.")
+    if request.method == "GET":
+        return JsonResponse({"zipcode":user_pref.zip_code,
+                                "distributor":{
+                                    "id":user_pref.distributor_id,
+                                    "name":user_pref.distributor_name
+                                },
+                                "rate_schedule":user_pref.rate_schedule})
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        zip_code = str(data["zip_code"])
+        distributor_id = int(data["distributor_id"])
+        distributor_name = papowerswitch_api().get_distributors(zip_code=zip_code).find_distributor(distributor_id).name
+        rate_schedule = str(data["rate_schedule"])
+        user_pref.set_search_options(zip_code, distributor_id, distributor_name, rate_schedule)
+        return HttpResponse("Search Options saved!")
+    
 class PossibleSelectionsMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response

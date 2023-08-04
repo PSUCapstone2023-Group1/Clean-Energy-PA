@@ -1,14 +1,12 @@
-# Due Dates
-
-| Assignment                                                                                                         | Due Date |
-| ------------------------------------------------------------------------------------------------------------------ | -------- |
-| [Week 11 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886672)                             | Jul 23   |
-| [Week 12 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886673)                             | Jul 30   |
-| [Product Demo II](https://psu.instructure.com/courses/2258208/assignments/14886665)                                | Aug 6    |
-| [Week 13 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886674)                             | Aug 13   |
-| [SRTE Extra Credit](https://psu.instructure.com/courses/2258208/assignments/14886670)                              | Aug 13   |
-| [Software Requirements Specification](https://psu.instructure.com/courses/2258208/assignments/14886668)            | Aug 13   |
-| [Software Architecture and Design Documentation](https://psu.instructure.com/courses/2258208/assignments/14886666) | Aug 13   |
-| [Software Testing Report](https://psu.instructure.com/courses/2258208/assignments/14886669)                        | Aug 13   |
-| [Week 14 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886675)                             | Aug 13   |
-| [Peer Review 2](https://psu.instructure.com/courses/2258208/assignments/15115984)                                  | Aug 13   |
+| Assignment                                                                                                         | Due Date | Link on Google Drive                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Week 11 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886672)                             | Jul 23   | [Week 11 Google Doc](https://docs.google.com/document/d/1yGtwGHa6c_mGJoPuIMowqJYrJlAICoMDdbbhcZ6Nve8/edit)                                                               |
+| [Week 12 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886673)                             | Jul 30   | [Week 12 Google Doc](https://docs.google.com/document/d/1mcyxWgKQo-CkOKejn2mLsHLFZFN0e7gOHw94vaiE_b4/edit#heading=h.aqt15s1kyx5r)                                        |
+| [Product Demo II](https://psu.instructure.com/courses/2258208/assignments/14886665)                                | Aug 6    | [Product Demo II Google Doc Transcript](https://docs.google.com/document/d/1VcWPEZsy0hBbyhuqU3nv7TCJXMJu_vmDeQP2SLuNAbM/edit)                                            |
+| [Week 13 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886674)                             | Aug 6   | [Week 13 Google Doc](https://docs.google.com/document/d/1zYlnhPsmn3VBXPaFPlPZVF2WDemZREq0__FD3jlKXIk/edit)                                                               |
+| [SRTE Extra Credit](https://psu.instructure.com/courses/2258208/assignments/14886670)                              | Aug 13   | N/A                                                                                                                                                                      |
+| [Software Requirements Specification](https://psu.instructure.com/courses/2258208/assignments/14886668)            | Aug 13   | [Software Requirements Specification Google Doc](https://docs.google.com/document/d/1kmnhZMusrgXEWKetYZUHa3gzBPXVSQHPplqBQirbT4E/edit)                                   |
+| [Software Architecture and Design Documentation](https://psu.instructure.com/courses/2258208/assignments/14886666) | Aug 13   | [Software Architecture and Design Documentation Google Doc](https://docs.google.com/document/d/1Od9q_6UI38XzcIAbdTI1yhaP_OW7pilChgBcHyY14aY/edit#heading=h.c36nkocszhr7) |
+| [Software Testing Report](https://psu.instructure.com/courses/2258208/assignments/14886669)                        | Aug 13   | [Software Testing Report Google Doc](https://docs.google.com/document/d/1iMSdzZs94ZwvMu3__r1rEOXGRRIp9V8LpTnYyyRWay0/edit)                                               |
+| [Week 14 Assignment](https://psu.instructure.com/courses/2258208/assignments/14886675)                             | Aug 13   | [Week 14 Google Doc](https://docs.google.com/document/d/1DG3BfwXQqXQOzD6TsvwdlNfhKjbCsqzfJ8QUb-KCtNE/edit)                                                               |
+| [Peer Review 2](https://psu.instructure.com/courses/2258208/assignments/15115984)                                  | Aug 13   | N/A                                                                                                                                                                      |

@@ -39,14 +39,14 @@
             <div class="mb-3">
               <div class="d-flex align-items-center">
                 <h5 class="card-title">Search Settings:</h5>
-                <button type="button" class="mx-2 btn btn-primary btn-sm">Update</button>
+                <button type="button" class="mx-2 btn btn-primary btn-sm" onclick="location.href='{% url 'user_profile:update_search_options' %}';">Update</button>
               </div>
               <div class="px-3">
-                <span class="form-text"><b>Zip Code:</b></span>
+                <span class="form-text"><b>Zip Code:</b> {{user_pref.zip_code}}</span>
                 <br>
-                <span class="form-text"><b>Distributor:</b></span>
+                <span class="form-text"><b>Distributor:</b> {{user_pref.distributor_name}}</span>
                 <br>
-                <span class="form-text"><b>Rate Schedule:</b></span>
+                <span class="form-text"><b>Rate Schedule:</b> {{user_pref.rate_schedule}}</span>
               </div>
             </div>
             <div class="mb-3">

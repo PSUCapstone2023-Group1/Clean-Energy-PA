@@ -111,3 +111,8 @@ def edit_profile(request):
 
     context = {"user": request.user, "form": form, "user_pref": user_preferences}
     return render(request, "edit_profile.html", context)
+
+@login_required
+def update_search_options(request):
+    return render(request, "update_search_options.html", {"show_modal":True})
+

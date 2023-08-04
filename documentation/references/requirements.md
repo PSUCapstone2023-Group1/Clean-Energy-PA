@@ -78,6 +78,7 @@ The functional requirements section outlines all of the essential requirements f
 - 1.1.8.2. The system shall only display a profile settings link when the user is logged on and authenticated.
 - 1.1.8.3. The system shall display the user's persisted search options (zip code, distributor, and rate schedule)
 - 1.1.8.4. The system shall allow the user to reselect their search options from the user profile. If they choose to reselect, the system shall use the same prompts as the primary search routine to maintain a similar feel.
+- 1.1.8.5. The system shall allow the user to update their contract end date.
 
 ### 1.1.9 Offer Results
 
@@ -108,3 +109,21 @@ The non-functional requirements will focus on the qualities and attributes of th
 
 - 1.2.4.1 The website shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
 - 1.2.4.2 The CI/CD pipeline shall continuously check for vulnerabilities in existing frameworks, libraries, and deployments.
+
+### 1.2.5 Application Testability
+
+- 1.2.5.1 The website shall require a minimum coverage of 90% upon deployment into a production environment.
+- 1.2.5.2 The CI/CD pipeline shall continuously check for coverage to be maintained above 90% in order to merge into stable branches.
+
+## Documentation Requirements
+
+### 1.3.1 End-User Documentation
+
+- 1.3.1.1. The end-user documentation shall include a product overview with a list of tools, frameworks, and services needed to run the system
+- 1.3.1.2. The end-user documentation shall include deployment instructions which details instructions to download and install each tool and environment configuration.
+- 1.3.1.3. The deployment instructions shall include screenshots to demonstrate all instructions.
+- 1.3.1.4. The end-user documentation shall include an application features section
+- 1.3.1.5. The application features section shall detail a list of all the application features by category and include a short description of each functionality.
+- 1.3.1.6. The end-user documentation shall include a features instruction section.
+- 1.3.1.7. The features instructions section shall include detailed instructions to execute each user story and use case.
+- 1.3.1.8. The features instructions section shall include screenshots for each application features provided to demonstrate the step-by-step instructions to execute the functionality.

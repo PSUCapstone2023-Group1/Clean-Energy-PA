@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="6">
     <diagram name="Landing Page" id="G5gbXoaZbaZ6ohgpXtbu">
-        <mxGraphModel dx="881" dy="496" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1240" dy="488" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -638,7 +638,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="f0DLmpm3_NobKzugPqu2" name="User Profile">
-        <mxGraphModel dx="2162" dy="1392" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2281" dy="1454" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -720,7 +720,7 @@
                 <mxCell id="7Hq619yCz5KEfyFNvJEa-8" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Rate: ${Rate Amount}&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;container=0;fontSize=12;" parent="MRyXEy1ct_PWMFDX6Iop-21" vertex="1">
                     <mxGeometry x="41.5" y="512" width="239.43065693430657" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="7Hq619yCz5KEfyFNvJEa-9" value="Contract End Date: {End Date}" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;container=0;fontSize=12;" parent="MRyXEy1ct_PWMFDX6Iop-21" vertex="1">
+                <mxCell id="7Hq619yCz5KEfyFNvJEa-9" value="Contract End Date:" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;container=0;fontSize=12;" parent="MRyXEy1ct_PWMFDX6Iop-21" vertex="1">
                     <mxGeometry x="41.5" y="537" width="346.5" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="7Hq619yCz5KEfyFNvJEa-18" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Provider: {Provider Name}&lt;/font&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;container=0;fontSize=12;" parent="MRyXEy1ct_PWMFDX6Iop-21" vertex="1">
@@ -756,6 +756,9 @@
                 <mxCell id="XT6ir3erfnNBT2us2f07-3" value="Delete Account" style="rounded=1;whiteSpace=wrap;html=1;container=0;fillColor=#e51400;fontColor=#ffffff;fontSize=16;strokeColor=#B20000;" parent="7Hq619yCz5KEfyFNvJEa-10" vertex="1">
                     <mxGeometry x="356" width="129" height="39" as="geometry"/>
                 </mxCell>
+                <mxCell id="80fXbmh1O-3iJ0o3SPFa-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fontStyle=1;strokeColor=#A8A8A8;align=left;" vertex="1" parent="MRyXEy1ct_PWMFDX6Iop-21">
+                    <mxGeometry x="158" y="539.55" width="116" height="24.9" as="geometry"/>
+                </mxCell>
                 <mxCell id="MRyXEy1ct_PWMFDX6Iop-9" value="&lt;font style=&quot;font-size: 32px;&quot;&gt;Clean Energy PA&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;container=0;" parent="MRyXEy1ct_PWMFDX6Iop-2" vertex="1">
                     <mxGeometry x="95" y="79.60482985729968" width="640" height="34.11635565312843" as="geometry"/>
                 </mxCell>
@@ -775,7 +778,13 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="-A1pZjPTTQnvm1jtOl_c-8" value="This will clear their current contract" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;rounded=1;shadow=0;fillStyle=auto;strokeColor=#36393d;strokeWidth=1;fontSize=12;fillColor=#f9f7ed;" parent="1" vertex="1">
-                    <mxGeometry x="837" y="554" width="114" height="75" as="geometry"/>
+                    <mxGeometry x="829" y="458" width="114" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="80fXbmh1O-3iJ0o3SPFa-5" style="edgeStyle=none;html=1;" edge="1" parent="1" source="80fXbmh1O-3iJ0o3SPFa-4" target="80fXbmh1O-3iJ0o3SPFa-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="80fXbmh1O-3iJ0o3SPFa-4" value="Allows user to modify the contract end date (if a contract is selected)" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=25;verticalAlign=top;align=center;rounded=1;shadow=0;fillStyle=auto;strokeColor=#36393d;strokeWidth=1;fontSize=12;fillColor=#f9f7ed;" vertex="1" parent="1">
+                    <mxGeometry x="859" y="581" width="114" height="108" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
