@@ -96,7 +96,7 @@ jobs:
   
   Retrieve-EB-Logs:
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() }}
+    if: ${{ success() || failure() }}
     needs: "Deploy"
     container:
       image: registry.hub.docker.com/coxauto/aws-ebcli
