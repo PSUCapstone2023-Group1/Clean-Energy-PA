@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from GreenEnergySearch.models import User_Preferences
 from EmailScheduler.views import build_offer_path_less_than_rate
 from django.urls import reverse
-from web_parser import papowerswitch_api, price_structure
+from web_parser.papowerswitch_api import papowerswitch_api
+from web_parser.responses.ratesearch import price_structure 
+
 import pandas as pd
 
 api = papowerswitch_api()

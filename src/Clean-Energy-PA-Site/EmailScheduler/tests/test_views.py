@@ -2,12 +2,12 @@ from .test_email_scheduler_base import EmailSchedulerBaseTest
 from ..views import build_offer_path_less_than_rate, offer_search_less_than_rate
 from bs4 import BeautifulSoup
 from unittest import mock
-from web_parser.tests import zipsearch_test_data, ratesearch_test_data
-from web_parser import offer_collection, distributor_collection
+from web_parser.tests import ratesearch_test_data
+from web_parser.responses.ratesearch import offer_collection
 
 
 class Email_Scheduler_View_Test(EmailSchedulerBaseTest):
-    @mock.patch("web_parser.papowerswitch_api.get_offers")
+    @mock.patch("web_parser.papowerswitch_api.papowerswitch_api.get_offers")
     def test_offers_results(self, mock_get_offers):
         """Test ID 84 Verify that the offer_search_less_than_rate can 
         successfully be accessed and displayed

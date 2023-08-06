@@ -1,7 +1,9 @@
-from .papowerswitch_api import papowerswitch_api
-from .responses.ratesearch import offer, offer_collection, price_structure
-from .responses.zipsearch import distributor, distributor_collection
-
 import sys
+import os 
 sys.path.append('.')
 sys.path.append('./tests')
+
+path = os.path.dirname(os.path.abspath(__file__))
+test_path = os.path.abspath(os.path.join(path, "test")) 
+sys.path.append(path)
+sys.path.append(test_path)

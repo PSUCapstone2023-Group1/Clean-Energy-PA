@@ -6,6 +6,7 @@ on:
       - src/**
       - requirements*.txt
       - .github/workflows/**
+      - .ebextensions/**
 
 jobs:
   SAST:
@@ -82,7 +83,7 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v2  
     - name: Generate deployment package
-      run: zip -r deploy.zip . -x '*.git*'
+      run: zip -r ${{ github.sha }}.zip . -x '*.git*'
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v21
       with:
@@ -92,4 +93,28 @@ jobs:
         environment_name: Clean-Energy-PA-Production-dev
         version_label: ${{ github.sha }}
         region: us-east-2
-        deployment_package: deploy.zip
+        deployment_package: ${{ github.sha }}.zip
+  
+  Retrieve-EB-Logs:
+    runs-on: ubuntu-latest
+    if: ${{ success() || failure() }}
+    needs: "Deploy"
+    container:
+      image: registry.hub.docker.com/coxauto/aws-ebcli
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: configure
+        run: eb init Clean-Energy-PA-Production --region us-east-2 --platform Python
+      - name: pause for EB to settle
+        run: sleep 20
+      - name: Status
+        run: eb status -v Clean-Energy-PA-Production-dev
+      - name: retrieve logs
+        run: eb logs --zip
+      - name: upload logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: eb_logs_${{ github.sha }}
+          path: /__w/Clean-Energy-PA/Clean-Energy-PA/.elasticbeanstalk/logs/*.zip
