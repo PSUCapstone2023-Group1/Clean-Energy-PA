@@ -96,6 +96,10 @@ class RegistrationViewTest(BaseTest):
 
     @patch("django.core.mail.EmailMessage.send")
     def test_invalid_send_email(self, mock_send):
+        """
+        Test ID 86: Verify the path in user registration where 
+        an email is not sent to the user due to invalid data
+        """
         mock_send.return_value = False
         response = self.client.post(self.register_url, self.form_data, follow=True)
         expected_error_message = "Problem sending confirmation email"
