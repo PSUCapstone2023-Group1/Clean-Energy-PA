@@ -65,7 +65,7 @@
                     <br>
                     {{ form.contract_end_date|as_crispy_field }}
                     {% if not user_pref.selected_offer_expected_end|future_date %}
-                    <span class="text-danger">Please update the contract end date, it is currently set in the past.</span>
+                    <span class="text-danger">This contract has expired. Please udpate.</span>
                     {% endif %}
                     {{ form|as_crispy_errors }}
                   {% endwith %}
