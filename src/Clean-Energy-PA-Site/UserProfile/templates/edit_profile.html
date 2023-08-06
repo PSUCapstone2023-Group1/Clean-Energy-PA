@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %} {% load user_profile_custom_filters %}
 
 {% block title %}
   Edit User Profile
@@ -63,7 +63,11 @@
                     <br>
                     <span class="form-text"><b>Rate:</b> ${{current_contract.rate}}</span>
                     <br>
-                    <span class="form-text"><b>Expected End Date:</b> {{user_pref.selected_offer_expected_end}}</span>
+                    {{ form.contract_end_date|as_crispy_field }}
+                    {% if not user_pref.selected_offer_expected_end|future_date %}
+                    <span class="text-danger">This contract has expired. Please udpate.</span>
+                    {% endif %}
+                    {{ form|as_crispy_errors }}
                   {% endwith %}
                 {% else %}
                   <span>No contract currently selected</span>
