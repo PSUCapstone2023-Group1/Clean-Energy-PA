@@ -102,13 +102,15 @@ def edit_profile(request):
                 user_preferences.email_notifications = form.cleaned_data[
                     "email_notifications"
                 ]
+                user_preferences.selected_offer_expected_end = form.cleaned_data["contract_end_date"]
                 user_preferences.save()
 
     else:
         form = UserProfileChangeForm(
             instance=user, initial={"preferences": user_preferences}
         )
-
+        form.is_valid()
+    
     context = {"user": request.user, "form": form, "user_pref": user_preferences}
     return render(request, "edit_profile.html", context)
 

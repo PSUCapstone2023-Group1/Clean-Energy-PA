@@ -12,7 +12,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from GreenEnergySearch.models import User_Preferences
 from web_parser.tests import ratesearch_test_data
-from datetime import datetime
+from datetime import date
 
 # local Django
 from UserRegistration.utils import (
@@ -47,6 +47,7 @@ class BaseTest(TestCase):
             "password1": password,
             "password2": password,
             "email_notifications": False,
+            "contract_end_date":date.today()
         }
 
         # Create a new user
