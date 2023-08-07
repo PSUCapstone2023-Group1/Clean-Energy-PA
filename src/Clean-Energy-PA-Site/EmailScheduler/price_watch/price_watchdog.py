@@ -43,21 +43,24 @@ class Price_Watch_Dog:
         users = User.objects.all()
         subscribed_users = []
         for user in users:
-            user_preferences = User_Preferences.objects.get(
-                user_id=user, email_notifications=True
-            )
-
-            user_offer = user_preferences.get_selected_offer()
-            # Create a list that will be converted to pandas DataFrame
-            subscribed_users.append(
-                {
-                    "email": user.email,
-                    "zip_code": user_preferences.zip_code,
-                    "rate_schedule": user_preferences.rate_schedule,
-                    "distributor_id": user_preferences.distributor_id,
-                    "selected_offer_rate": user_offer.rate,
-                }
-            )
+            try:
+                user_preferences = User_Preferences.objects.get(user_id=user)
+                # Only add if they have selected that they want email notifications.
+                if user_preferences.email_notifications:
+                    user_offer = user_preferences.get_selected_offer()
+                    # Create a list that will be converted to pandas DataFrame
+                    subscribed_users.append(
+                        {
+                            "email": user.email,
+                            "zip_code": user_preferences.zip_code,
+                            "rate_schedule": user_preferences.rate_schedule,
+                            "distributor_id": user_preferences.distributor_id,
+                            "selected_offer_rate": user_offer.rate,
+                        }
+                    )
+            except User_Preferences.DoesNotExist:
+                print("Wasn't able to find preferences for user:", user)
+                continue #If preferences do not exist, continue
         # Create the subscribers DataFrame
         subscribers_df = pd.DataFrame(subscribed_users)
         return subscribers_df
