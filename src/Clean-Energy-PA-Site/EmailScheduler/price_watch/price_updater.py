@@ -11,6 +11,6 @@ def start():
         Price_Watch_Dog_Instance.update_lower_rate_mailing_list_df,
         id="update_lower_rate_mailing_list_df",
         trigger="interval",
-        seconds=30,
+        days=1,
     )
     scheduler.start()
