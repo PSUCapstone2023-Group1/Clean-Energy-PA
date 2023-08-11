@@ -98,7 +98,6 @@ def edit_profile(request):
 
             # Update the user_preferences
             if user_preferences:
-                user_preferences.zip_code = form.cleaned_data["zip_code"]
                 user_preferences.email_notifications = form.cleaned_data[
                     "email_notifications"
                 ]

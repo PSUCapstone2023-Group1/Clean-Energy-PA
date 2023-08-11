@@ -105,43 +105,6 @@ class UserProfileTest(UserProfileBaseTest):
             self.form_data["email_notifications"],
         )
 
-    def test_edit_zip_code(self):
-        """Test ID 65: User should be able to modify their zip_code"""
-        response = self.client.get(self.profile_url)
-        self.assertEqual(response.status_code, 200)
-        # Retrieve the test users zip code from db
-        email_notificaitons_from_db = self.user_preferences.zip_code
-        # Assert that the zip_code is same as test user
-        initial_zip_code = int(response.context["form"]["zip_code"].value())
-        self.assertEqual(
-            email_notificaitons_from_db,
-            initial_zip_code,
-        )
-        # Send POST request to update zip_code name
-        response = self.client.post(
-            reverse("user_profile:edit_profile"), self.form_data
-        )
-        # Refresh the user and preferences from the database
-        self.user.refresh_from_db()
-        self.user_preferences.refresh_from_db()
-        # Assert that the user model is updated with the new values
-        self.assertEqual(
-            self.user_preferences.zip_code,
-            self.form_data["zip_code"],
-        )
-        # Assert that the zip_code is not equal to initial value
-        self.assertNotEqual(self.user_preferences.zip_code, initial_zip_code)
-        # Assert that the zip_code name has changed in the view
-        # GET request to reload the page
-        response = self.client.get(reverse("user_profile:edit_profile"))
-        # Value of the zip_code name in the form from view
-        zip_code_in_response = response.context["form"]["zip_code"].value()
-        # Assert that the value on the page is equal to what was submitted in the form
-        self.assertEqual(
-            zip_code_in_response,
-            self.form_data["zip_code"],
-        )
-
     def test_edit_profile_without_user_preferences(self):
         self.test_user = User.objects.create_user(
             username="testuserwithoutpref", password="testpassword"
