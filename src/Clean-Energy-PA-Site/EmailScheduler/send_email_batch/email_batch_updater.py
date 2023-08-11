@@ -11,14 +11,14 @@ def start():
         Email_Batch_Instance.send_lower_rate_emails,
         id="send_lower_rate_emails",
         trigger="interval",
-        seconds=30,
+        days=7,
     )
 
     scheduler.add_job(
         Email_Batch_Instance.send_contract_expiration_emails,
         id="send_contract_expiration_emails",
         trigger="interval",
-        seconds=30,
+        days=1,
     )
 
     scheduler.start()

@@ -12,6 +12,6 @@ def start():
         Contract_Watch_Dog_Instance.check_contract_end_dates_df,
         id="check_contract_end_dates_df",
         trigger="interval",
-        seconds=30,
+        hours=12,
     )
     scheduler.start()
