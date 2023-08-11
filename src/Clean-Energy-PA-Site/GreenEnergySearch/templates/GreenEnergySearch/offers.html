@@ -38,8 +38,8 @@
             <p style = "color: blue">This is your currently selected offer!</p>
           {% else %}
             <p 
-              style={% if offer.rate|subtract:current_contract.rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
-              {{distributor_rate.rate|subtract:current_contract.rate|format_rate_diff:8}} your current contract</p>
+              style={% if current_contract.rate|subtract:offer.rate < 0 %}"color: red"{% else %}"color: green"{% endif %}>
+              {{current_contract.rate|subtract:offer.rate|format_rate_diff:8}} your current contract</p>
           {% endif %}
         {% endif %}
       {%else%}
