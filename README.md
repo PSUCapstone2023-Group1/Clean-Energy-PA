@@ -21,17 +21,25 @@ In addition, make sure to have a local copy of Postgres installed.
 
 You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
 
+> Note: Examples provided are not used in production
+
 ```YAML
-SECRET_KEY=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-DB_HOST=
-DB_PORT=
-SMTP_USER=
-SMTP_PASSWORD=
-CURRENT_DOMAIN=
+SECRET_KEY=django-insecure-s2n+&9@6-is&v951p)!j)-8=pr_7r1*=@*8z-x)(rlis*wf9%7
+DB_USER=postgres
+DB_PASSWORD=ExampleDBPassword123
+DB_NAME=mydb
+DB_HOST=localhost
+DB_PORT=5001
+SMTP_USER=exampleuser@gmail.com
+SMTP_PASSWORD=ExampleEmailPassword123
+CURRENT_DOMAIN=https://127.0.0.1:8000
 ```
+
+> Notes:
+>
+> - `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_HOST`, and `DB_PORT` are all values defined by your instance of `PostgreSQL`.
+> - The `SECRET_KEY` can be any random 50 characters with the django-insecure prefix for local use. You can use the online [django-secret-key-generator](https://django-secret-key-generator.netlify.app/) to generate one for you.
+> - The `SMTP_USER` and `SMTP_PASSWORD` values are based on the email service setup for your environment.
 
 ### Django Commands
 
