@@ -19,13 +19,18 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 
 ### Environment Setup
 
-1. Setup PostgreSQL locally
-   1. To setup and run PostgreSQL locally follow this guide.
-      -  Tip: On windows, after installing and setting up PostgreSQL you can also use the very popular pgadmin4 client application to navigate and interact with the server and database.
-   2. Create a database within your server
-      - https://www.postgresql.org/docs/15/tutorial-createdb.html
+#### PostgreSQL Setup
 
-2. You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
+Setup PostgreSQL locally
+
+ 1. To setup and run PostgreSQL locally follow this guide.
+    - Tip: On windows, after installing and setting up PostgreSQL you can also use the very popular pgadmin4 client application to navigate and interact with the server and database.
+ 2. Create a database within your server
+    - [Create db Tutorial](https://www.postgresql.org/docs/15/tutorial-createdb.html)
+
+#### .Env Setup
+
+You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
 
 > Note: Examples provided are not used in production
 
