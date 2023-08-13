@@ -17,7 +17,18 @@ PaPowerSwitch support application to help connect PA citizens with the best ener
 - `pip install -r requirements.txt` -- production requirements
 - `pip install -r requirements.dev.txt` -- development requirements
 
-In addition, make sure to have a local copy of Postgres installed.
+### Environment Setup
+
+#### PostgreSQL Setup
+
+Setup PostgreSQL locally
+
+ 1. To setup and run PostgreSQL locally follow this guide.
+    - Tip: On windows, after installing and setting up PostgreSQL you can also use the very popular pgadmin4 client application to navigate and interact with the server and database.
+ 2. Create a database within your server
+    - [Create db Tutorial](https://www.postgresql.org/docs/15/tutorial-createdb.html)
+
+#### .Env Setup
 
 You also should create a `.env` file in the `src/Clean-Energy-PA-Site/Website` directory, that includes the following variables with the values set:
 
