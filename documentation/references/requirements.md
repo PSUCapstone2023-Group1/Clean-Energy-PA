@@ -67,7 +67,7 @@ The functional requirements section outlines all of the essential requirements f
 ### 1.1.7 Web Parsing
 
 - 1.1.7.1. The web parser shall be capable of retrieving the distributors for a given zip code.
-- 1.1.7.2. The web parser shall be capable of filtering offers based on monthly usage.
+- ~~1.1.7.2. The web parser shall be capable of filtering offers based on monthly usage.~~
 - 1.1.7.3. The web parser shall be capable of filtering offers based on "price structure" (e.g. "fixed").
 - 1.1.7.4. The web parser shall be capable of filtering offers based on renewable energy percentage.
 - 1.1.7.5. The web parser shall raise an HTTP Error if it does not receive a 200 response
