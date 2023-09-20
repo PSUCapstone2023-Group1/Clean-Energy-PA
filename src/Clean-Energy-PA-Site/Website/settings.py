@@ -52,7 +52,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "Clean-Energy-PA-Production.us-east-2.elasticbeanstalk.com",
-    "greenenergypa.com"
+    "greenenergypa.com",
+    "www.greenenergypa.com"
 ]
 
 # Application definition
